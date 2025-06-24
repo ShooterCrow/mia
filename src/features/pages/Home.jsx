@@ -100,7 +100,7 @@ function Home() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-white dark:bg-gray-800 border border-gray-700 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
+                            <div key={product.id} className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
                                 <div className='relative'>
                                     <div className="w-full h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30"></div>
                                     {product.trending && (
