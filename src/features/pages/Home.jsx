@@ -106,9 +106,9 @@ function Home() {
             </section>
 
             {/* Post Ad Section */}
-            <section className='bg-white max-w-7xl mx-auto py-10 px-4'>
+            <section className='bg-white dark:bg-gray-900 max-w-7xl mx-auto py-10 px-4'>
                 {/* Main Post Ad Box */}
-                <div className="relative gap-4 rounded-lg flex flex-col h-[50vh] md:h-[80vh] justify-center items-center overflow-hidden bg-gradient-to-br from-red-400 to-red-600">
+                <div className="relative gap-4 rounded-lg flex flex-col h-[50vh] md:h-[80vh] justify-center items-center overflow-hidden bg-gradient-to-br from-red-400 to-red-600 dark:from-red-500 dark:to-red-700">
                     {/* Background Image */}
                     <div
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out"
@@ -118,7 +118,7 @@ function Home() {
                     />
 
                     {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-50" />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-60" />
 
                     {/* Content */}
                     <div className="relative z-10 text-center px-4">
@@ -147,19 +147,19 @@ function Home() {
                         />
 
                         {/* Dark Overlay */}
-                        <div className="absolute inset-0 bg-black bg-opacity-60" />
+                        <div className="absolute inset-0 bg-black bg-opacity-60 dark:bg-opacity-70" />
 
                         {/* Content */}
                         <div className="relative z-10">
-                            <h2 className='text-2xl md:text-3xl font-bold'>Discount Picks of the Week</h2>
+                            <h2 className='text-2xl md:text-3xl font-bold text-white'>Discount Picks of the Week</h2>
                             <div className="flex flex-col mt-4">
-                                <p className='text-xs md:text-sm opacity-90'>Top Gadgets</p>
-                                <h4 className='text-lg md:text-xl font-semibold mt-2'>
+                                <p className='text-xs md:text-sm opacity-90 text-gray-200 dark:text-gray-300'>Top Gadgets</p>
+                                <h4 className='text-lg md:text-xl font-semibold mt-2 text-white'>
                                     Classic iPhone 16 <br /> Pro Max
                                 </h4>
                                 <div className="flex mt-3 gap-3 items-center">
                                     <span className="text-white text-xl md:text-2xl font-bold">$45</span>
-                                    <span className="text-gray-300 line-through text-lg">$60</span>
+                                    <span className="text-gray-300 dark:text-gray-400 line-through text-lg">$60</span>
                                 </div>
                             </div>
                         </div>
@@ -176,14 +176,14 @@ function Home() {
                         />
 
                         {/* Dark Overlay */}
-                        <div className="absolute inset-0 bg-black bg-opacity-60" />
+                        <div className="absolute inset-0 bg-black bg-opacity-60 dark:bg-opacity-70" />
 
                         {/* Content */}
                         <div className="relative z-10 px-4">
-                            <h2 className='text-2xl md:text-3xl font-bold leading-tight'>
+                            <h2 className='text-2xl md:text-3xl font-bold leading-tight text-white'>
                                 Big Discount, Bigger <br /> Savings
                             </h2>
-                            <p className="text-xs md:text-sm mt-3 opacity-90 max-w-md mx-auto">
+                            <p className="text-xs md:text-sm mt-3 opacity-90 max-w-md mx-auto text-gray-200 dark:text-gray-300">
                                 Up to 70% OFF on Fashion, Tech, Home Essentials & More – <br className="hidden sm:block" />
                                 <span className="sm:hidden"> </span>Shop Now Before It's Gone!
                             </p>
@@ -191,7 +191,7 @@ function Home() {
 
                         {/* Arrow Button */}
                         <Link to={"#"} className="inline-block mt-6 lg:mt-0 lg:absolute lg:bottom-10 lg:right-10 ">
-                            <div className="border-2 border-white rounded-full p-3 hover:bg-white hover:text-blue-500 transition-all duration-300 transform -rotate-45 hover:scale-110">
+                            <div className="border-2 border-white dark:border-gray-200 rounded-full p-3 hover:bg-white dark:hover:bg-gray-200 hover:text-blue-500 dark:hover:text-blue-600 transition-all duration-300 transform -rotate-45 hover:scale-110">
                                 <ArrowRightIcon className="w-5 h-5" />
                             </div>
                         </Link>
@@ -206,7 +206,7 @@ function Home() {
                     <div className="flex justify-between">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Explore All Products</h2>
                         <Link to={"#"}>
-                            <p className='h-fit py-1 px-2 rounded-lg border border-gray-500'>See more</p>
+                            <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
                         </Link>
                     </div>
                     <ProductCard1 products={products} />
