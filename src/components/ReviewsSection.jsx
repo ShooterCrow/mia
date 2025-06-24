@@ -147,21 +147,6 @@ const ReviewsSection = () => {
 
         {/* Mobile/Tablet Slider View */}
         <div className="lg:hidden relative max-w-7xl mx-auto">
-          {/* Navigation Buttons */}
-          <div className="flex justify-center gap-4 mb-8">
-            <button
-              onClick={handlePrevious}
-              className="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-3 border border-white border-opacity-30 text-white hover:bg-opacity-30 transition-all duration-200"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-3 border border-white border-opacity-30 text-white hover:bg-opacity-30 transition-all duration-200"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
 
           {/* Horizontal Scroll Container */}
           <div
@@ -172,8 +157,7 @@ const ReviewsSection = () => {
             {reviews.map((review, index) => (
               <div
                 key={review.id}
-                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-white border-opacity-20 flex-shrink-0 w-80 sm:w-96 snap-center"
-              >
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-white border-opacity-20 flex-shrink-0 w-80 sm:w-96 snap-center">
                 <div className="flex items-center mb-6">
                   <div className="w-12 h-12 rounded-full overflow-hidden mr-4 bg-gray-600 flex items-center justify-center">
                     <img
@@ -207,11 +191,27 @@ const ReviewsSection = () => {
                   scrollToIndex(index);
                 }}
                 className={`w-2 h-2 rounded-full transition-all duration-200 ${index === currentIndex
-                    ? 'bg-white w-8'
-                    : 'bg-white bg-opacity-40 hover:bg-opacity-60'
+                  ? 'bg-white w-8'
+                  : 'bg-white bg-opacity-40 hover:bg-opacity-60'
                   }`}
               />
             ))}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center gap-4 mt-8">
+            <button
+              onClick={handlePrevious}
+              className="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-3 border border-white border-opacity-30 text-white hover:bg-opacity-30 transition-all duration-200"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-3 border border-white border-opacity-30 text-white hover:bg-opacity-30 transition-all duration-200"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </div>
