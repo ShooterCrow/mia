@@ -35,10 +35,10 @@ function Home() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+            <section className="pt-[50] bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
+                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 sm:py-60 md:py-20">
                     {/* Mobile Layout */}
-                    <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
+                    <div className="sm:hidden flex flex-col items-center text-center min-h-[100vh] justify-center">
                         <h1 className="text-4xl font-bold mb-6 leading-tight">
                             Discover Your Perfect Product Today
                         </h1>
@@ -94,13 +94,13 @@ function Home() {
             </section>
 
             {/* Promotions Section */}
-            <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
+            <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad</h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-white dark:bg-gray-900 border rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
+                            <div key={product.id} className="bg-white dark:bg-gray-800 border border-gray-700 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
                                 <div className='relative'>
                                     <div className="w-full h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30"></div>
                                     {product.trending && (
@@ -117,7 +117,7 @@ function Home() {
                                     <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed line-clamp-3">
                                         By Ajara Inc. I found all my essentials without having to shop lots. The site is easy to use, and the checkout was smooth.
                                     </p>
-                                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-500 space-x-2">
+                                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 space-x-2">
                                         <div className='flex gap-1 justify-between items-center'>
                                             <MapPin color='red' size={15} />
                                             <span className="truncate flex-1"> Ajara, Lagos, Nigeria</span>
