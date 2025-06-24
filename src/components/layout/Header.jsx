@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
+import Dropdown from '../Dropdown';
 
 const Header = () => {
     const { isDarkMode, toggleDarkMode, resetToSystem, hasUserPreference } = useTheme();
@@ -179,8 +180,8 @@ const Header = () => {
                                                 setShowLanguageMenu(false);
                                             }}
                                             className={`w-full px-4 py-2 text-left text-sm flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700/50 ${selectedLanguage === language.code
-                                                    ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
-                                                    : 'text-gray-700 dark:text-gray-200'
+                                                ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+                                                : 'text-gray-700 dark:text-gray-200'
                                                 }`}
                                         >
                                             <Flag
@@ -242,7 +243,7 @@ const Header = () => {
             </div>
 
             {/* Floating Mobile Menu Button - Only visible on mobile/tablet */}
-            <div className="lg:hidden fixed top-20 right-4 z-50">
+            <div className="lg:hidden absolute top-20 right-4 z-50">
                 <button
                     onClick={() => setShowMobileMenu(!showMobileMenu)}
                     className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:shadow-xl transition-shadow"
@@ -253,39 +254,129 @@ const Header = () => {
 
             {/* Mobile Menu Overlay */}
             {showMobileMenu && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-40">
-                    <div className="px-4 py-4 space-y-4">
-                        {/* Mobile Navigation */}
-                        <nav className="space-y-3">
-                            <a href="#" className="block text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 py-2">Home</a>
-                            <a href="#" className="block text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 py-2">Products</a>
-                            <a href="#" className="block text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 py-2">About</a>
-                            <a href="#" className="block text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 py-2">Contact</a>
+                <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-40 shadow-lg">
+                    <div className="px-4 py-4 space-y-5">
+                        {/* Mobile Navigation Links */}
+                        <nav className="flex items-center gap-6">
+                            <a href="#" className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</a>
                         </nav>
+                        <Dropdown />
 
-                        {/* Mobile Categories */}
-                        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                            <select className="w-full px-3 py-2 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200">
-                                <option>Categories</option>
-                                <option>Products</option>
-                                <option>About</option>
-                                <option>Contact</option>
-                            </select>
+                        {/* Account & Support Section */}
+                        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
+                            <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Account & Support
+                            </h3>
+
+                            <div className="space-y-1">
+                                <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                                    <User className="w-4 h-4" />
+                                    <span>My Account</span>
+                                </button>
+
+                                <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                                    <Headset className="w-4 h-4" />
+                                    <span>Help & Support</span>
+                                </button>
+
+                                <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
+                                    <Phone className="w-4 h-4" />
+                                    <span>+234 813 975 3870</span>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Mobile Account & Support */}
-                        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-3">
-                            <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 py-2">
-                                <User className="w-4 h-4" />
-                                <span className="text-sm">Account</span>
-                            </div>
-                            <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 py-2">
-                                <Headset className="w-4 h-4" />
-                                <span className="text-sm">Support</span>
-                            </div>
-                            <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 py-2">
-                                <Phone className="w-4 h-4" />
-                                <span className="text-sm">+234 813 975 3870</span>
+                        {/* Settings Section with Theme Control */}
+                        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
+                            <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                Settings
+                            </h3>
+
+                            <div className="space-y-1">
+                                {/* Theme Toggle Section */}
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setShowThemeMenu(!showThemeMenu)}
+                                        className="flex items-center justify-between w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            {isDarkMode ? (
+                                                <Moon className="w-4 h-4" />
+                                            ) : (
+                                                <Sun className="w-4 h-4" />
+                                            )}
+                                            <span>
+                                                {!hasUserPreference
+                                                    ? 'System Theme'
+                                                    : isDarkMode
+                                                        ? 'Dark Mode'
+                                                        : 'Light Mode'
+                                                }
+                                            </span>
+                                        </div>
+                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showThemeMenu ? 'rotate-180' : ''}`} />
+                                    </button>
+
+                                    {/* Theme Menu Dropdown */}
+                                    {showThemeMenu && (
+                                        <div className="mt-1 ml-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                            <button
+                                                onClick={() => {
+                                                    if (isDarkMode) {
+                                                        toggleDarkMode();
+                                                    }
+                                                    setShowThemeMenu(false);
+                                                }}
+                                                className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${!isDarkMode && hasUserPreference
+                                                    ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    }`}
+                                            >
+                                                <Sun className="w-4 h-4" />
+                                                <span>Light Mode</span>
+                                                {!isDarkMode && hasUserPreference && (
+                                                    <div className="ml-auto w-2 h-2 bg-green-500 rounded-full"></div>
+                                                )}
+                                            </button>
+
+                                            <button
+                                                onClick={() => {
+                                                    if (!isDarkMode) {
+                                                        toggleDarkMode();
+                                                    }
+                                                    setShowThemeMenu(false);
+                                                }}
+                                                className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${isDarkMode && hasUserPreference
+                                                    ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    }`}
+                                            >
+                                                <Moon className="w-4 h-4" />
+                                                <span>Dark Mode</span>
+                                                {isDarkMode && hasUserPreference && (
+                                                    <div className="ml-auto w-2 h-2 bg-green-500 rounded-full"></div>
+                                                )}
+                                            </button>
+
+                                            <button
+                                                onClick={() => {
+                                                    resetToSystem();
+                                                    setShowThemeMenu(false);
+                                                }}
+                                                className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${!hasUserPreference
+                                                    ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    }`}
+                                            >
+                                                <Monitor className="w-4 h-4" />
+                                                <span>Match System</span>
+                                                {!hasUserPreference && (
+                                                    <div className="ml-auto w-2 h-2 bg-green-500 rounded-full"></div>
+                                                )}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
