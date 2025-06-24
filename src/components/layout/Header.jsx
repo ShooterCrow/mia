@@ -96,6 +96,11 @@ const Header = () => {
                         <span className="text-sm">+234 813 975 3870</span>
                     </div>
 
+                    <div className="hidden md:flex items-center gap-1 text-white dark:text-gray-100">
+                        <Phone className="w-4 h-4" />
+                        <span className="text-sm">+234 813 975 3870</span>
+                    </div>
+
                     {/* Shop Link */}
                     <div className="flex items-center gap-1 text-white dark:text-gray-100">
                         <ShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -105,7 +110,7 @@ const Header = () => {
             </div>
 
             {/* Main Header - Only visible on desktop */}
-            <div className="hidden lg:block relative w-full max-w-[1378px] px-4 lg:px-8 pt-2 sm:pt-1 pb-4">
+            <div className="hidden lg:block relative w-full max-w-[1378px] px-4 lg:px-8 py-[20px]">
                 <div className="flex items-center justify-between w-full h-full">
                     {/* Desktop Navigation */}
                     <div className="flex items-center gap-6">
