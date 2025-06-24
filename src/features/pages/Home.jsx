@@ -37,7 +37,21 @@ function Home() {
             {/* Hero Section */}
             <section className="relative bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                    {/* Mobile Layout */}
+                    <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
+                        <h1 className="text-4xl font-bold mb-6 leading-tight">
+                            Discover Your Perfect Product Today
+                        </h1>
+                        <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
+                            Discover the latest styles with our featured products and exclusive promotions.
+                        </p>
+                        <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold text-base transition-colors duration-200">
+                            Shop now
+                        </button>
+                    </div>
+
+                    {/* Desktop/Tablet Layout */}
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
                         <div className="flex-1 text-center lg:text-left">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                                 Discover Your Perfect<br className="hidden sm:block" />
