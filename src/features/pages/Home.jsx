@@ -51,7 +51,7 @@ function Home() {
                     </div>
 
                     {/* Desktop/Tablet Layout */}
-                    <div className="hidden sm:flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center min-h-[100vh] gap-8 lg:gap-12">
                         <div className="flex-1 text-center lg:text-left">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                                 Discover Your Perfect<br className="hidden sm:block" />
