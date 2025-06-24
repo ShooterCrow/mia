@@ -22,6 +22,7 @@ import Dropdown from '../Dropdown';
 const Header = () => {
     const { isDarkMode, toggleDarkMode, resetToSystem, hasUserPreference } = useTheme();
     const [showThemeMenu, setShowThemeMenu] = useState(false);
+    const [showMobileThemeMenu, setShowMobileThemeMenu] = useState(false); // Separate state for mobile
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
@@ -54,6 +55,9 @@ const Header = () => {
             }
             if (!event.target.closest('.language-menu')) {
                 setShowLanguageMenu(false);
+            }
+            if (!event.target.closest('.mobile-theme-menu')) {
+                setShowMobileThemeMenu(false);
             }
         };
 
@@ -89,7 +93,7 @@ const Header = () => {
             </div>
             {/* Top Bar - Always visible */}
             <div className="lg:hidden flex flex-col items-start gap-2.5 px-4 lg:px-8 py-5 w-full bg-green-600 dark:bg-green-700">
-                <div className="flex 0 items-center justify-between w-full">
+                <div className="flex items-center justify-between w-full">
 
                     {/* Phone Number - Hidden on small screens */}
                     <div className="hidden md:flex items-center gap-1 text-white dark:text-gray-100">
@@ -246,14 +250,14 @@ const Header = () => {
             <div className="lg:hidden absolute top-20 right-4 z-50">
                 <button
                     onClick={() => setShowMobileMenu(!showMobileMenu)}
-                    className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:shadow-xl transition-shadow">
+                    className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-200 hover:shadow-xl transition-shadow">
                     {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>
 
             {/* Mobile Menu Overlay */}
             {showMobileMenu && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-40 shadow-lg">
+                <div className="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-40 shadow-lg">
                     <div className="px-4 py-4 space-y-5">
                         {/* Mobile Navigation Links */}
                         <nav className="flex items-center gap-6">
@@ -293,9 +297,9 @@ const Header = () => {
 
                             <div className="space-y-1">
                                 {/* Theme Toggle Section */}
-                                <div className="relative">
+                                <div className="relative mobile-theme-menu">
                                     <button
-                                        onClick={() => setShowThemeMenu(!showThemeMenu)}
+                                        onClick={() => setShowMobileThemeMenu(!showMobileThemeMenu)}
                                         className="flex items-center justify-between w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200"
                                     >
                                         <div className="flex items-center gap-3">
@@ -313,18 +317,26 @@ const Header = () => {
                                                 }
                                             </span>
                                         </div>
-                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showThemeMenu ? 'rotate-180' : ''}`} />
+                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showMobileThemeMenu ? 'rotate-180' : ''}`} />
                                     </button>
 
                                     {/* Theme Menu Dropdown */}
-                                    {showThemeMenu && (
+                                    {showMobileThemeMenu && (
                                         <div className="mt-1 ml-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                                             <button
                                                 onClick={() => {
-                                                    if (isDarkMode) {
-                                                        toggleDarkMode();
+                                                    // Switch to light mode if currently dark or system
+                                                    if (isDarkMode || !hasUserPreference) {
+                                                        if (isDarkMode && hasUserPreference) {
+                                                            toggleDarkMode(); // Switch from dark to light
+                                                        } else if (!hasUserPreference) {
+                                                            toggleDarkMode(); // Set user preference and go to light
+                                                            if (isDarkMode) {
+                                                                toggleDarkMode(); // If system was dark, toggle again to light
+                                                            }
+                                                        }
                                                     }
-                                                    setShowThemeMenu(false);
+                                                    setShowMobileThemeMenu(false);
                                                 }}
                                                 className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${!isDarkMode && hasUserPreference
                                                     ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
@@ -340,10 +352,18 @@ const Header = () => {
 
                                             <button
                                                 onClick={() => {
-                                                    if (!isDarkMode) {
-                                                        toggleDarkMode();
+                                                    // Switch to dark mode if currently light or system
+                                                    if (!isDarkMode || !hasUserPreference) {
+                                                        if (!isDarkMode && hasUserPreference) {
+                                                            toggleDarkMode(); // Switch from light to dark
+                                                        } else if (!hasUserPreference) {
+                                                            toggleDarkMode(); // Set user preference and go to dark
+                                                            if (!isDarkMode) {
+                                                                toggleDarkMode(); // If system was light, toggle again to dark
+                                                            }
+                                                        }
                                                     }
-                                                    setShowThemeMenu(false);
+                                                    setShowMobileThemeMenu(false);
                                                 }}
                                                 className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${isDarkMode && hasUserPreference
                                                     ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
@@ -360,7 +380,7 @@ const Header = () => {
                                             <button
                                                 onClick={() => {
                                                     resetToSystem();
-                                                    setShowThemeMenu(false);
+                                                    setShowMobileThemeMenu(false);
                                                 }}
                                                 className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${!hasUserPreference
                                                     ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
