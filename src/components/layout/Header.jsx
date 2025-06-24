@@ -76,7 +76,7 @@ const Header = () => {
                             <div className="flex items-center">
                                 <div className="h-6 w-20 sm:w-28 bg-white dark:bg-gray-100 rounded flex items-center justify-center">
                                     <Store className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 dark:text-green-700" />
-                                    <span className="ml-1 text-green-600 dark:text-green-700 font-bold text-xs sm:text-sm">UPAM</span>
+                                    <span className="ml-1 text-green-600 dark:text-green-700 font-bold text-xs sm:text-sm">MIA</span>
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@ const Header = () => {
                             {/* Shop Link */}
                             <div className="flex items-center gap-1 text-white dark:text-gray-100">
                                 <ShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
-                                <span className="text-xs sm:text-sm">Shop on UPAM Stores</span>
+                                <span className="text-xs sm:text-sm">Shop on MIA Stores</span>
                             </div>
                         </div>
                     </div>
@@ -103,14 +103,14 @@ const Header = () => {
                             <div className="flex items-center">
                                 <div className="h-6 w-20 bg-white dark:bg-gray-100 rounded flex items-center justify-center">
                                     <Store className="h-3 w-3 text-green-600 dark:text-green-700" />
-                                    <span className="ml-1 text-green-600 dark:text-green-700 font-bold text-xs">UPAM</span>
+                                    <span className="ml-1 text-green-600 dark:text-green-700 font-bold text-xs">MIA</span>
                                 </div>
                             </div>
 
                             {/* Shop Link */}
                             <div className="flex items-center gap-1 text-white dark:text-gray-100">
                                 <ShoppingBag className="w-3 h-3" />
-                                <span className="text-xs">Shop on UPAM Stores</span>
+                                <span className="text-xs">Shop on MIA Stores</span>
                             </div>
                         </div>
                     </div>
