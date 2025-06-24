@@ -63,7 +63,7 @@ const Header = () => {
     return (
         <div className="flex flex-col bg-white dark:bg-gray-900 w-full mx-auto items-center relative">
             {/* Top Bar - Always visible */}
-            <div className="flex flex-col h-9 items-start gap-2.5 px-4 lg:px-8 py-1.5 w-full bg-green-600 dark:bg-green-700">
+            <div className="hidden lg:block flex flex-col h-9 items-start gap-2.5 px-4 lg:px-8 py-1.5 w-full bg-green-600 dark:bg-green-700">
                 <div className="flex items-center justify-between w-full">
                     {/* Logo */}
                     <div className="flex items-center">
@@ -72,6 +72,23 @@ const Header = () => {
                             <span className="ml-1 text-green-600 dark:text-green-700 font-bold text-xs sm:text-sm">UPAM</span>
                         </div>
                     </div>
+
+                    {/* Phone Number - Hidden on small screens */}
+                    <div className="hidden md:flex items-center gap-1 text-white dark:text-gray-100">
+                        <Phone className="w-4 h-4" />
+                        <span className="text-sm">+234 813 975 3870</span>
+                    </div>
+
+                    {/* Shop Link */}
+                    <div className="flex items-center gap-1 text-white dark:text-gray-100">
+                        <ShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="text-xs sm:text-sm">Shop on UPAM Stores</span>
+                    </div>
+                </div>
+            </div>
+            {/* Top Bar - Always visible */}
+            <div className="lg:hidden flex flex-col items-start gap-2.5 px-4 lg:px-8 py-5 w-full bg-green-600 dark:bg-green-700">
+                <div className="flex 0 items-center justify-between w-full">
 
                     {/* Phone Number - Hidden on small screens */}
                     <div className="hidden md:flex items-center gap-1 text-white dark:text-gray-100">
