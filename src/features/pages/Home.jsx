@@ -35,7 +35,7 @@ function Home() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
+            <section className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
                     {/* Mobile Layout */}
                     <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
@@ -51,8 +51,8 @@ function Home() {
                     </div>
 
                     {/* Desktop/Tablet Layout */}
-                    <div className="hidden sm:flex flex-col lg:flex-row items-center min-h-[100vh] gap-8 lg:gap-12">
-                        <div className="flex-1 text-center lg:text-left">
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center h-[screen] gap-8 lg:gap-12">
+                        <div className="flex-1 flex flex-col items-center justify-center text-center lg:text-left h-[screen]">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                                 Discover Your Perfect<br className="hidden sm:block" />
                                 <span className="sm:hidden"> </span>Product Today
@@ -100,8 +100,8 @@ function Home() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                                <div className="relative">
+                            <div key={product.id} className="bg-white dark:bg-gray-900 border border-gray-200 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
+                                <div className='relative'>
                                     <div className="w-full h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30"></div>
                                     {product.trending && (
                                         <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-gray-100 dark:bg-red-600 text-orange-400 px-2 py-1 rounded text-xs font-semibold">
