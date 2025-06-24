@@ -246,8 +246,7 @@ const Header = () => {
             <div className="lg:hidden absolute top-20 right-4 z-50">
                 <button
                     onClick={() => setShowMobileMenu(!showMobileMenu)}
-                    className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:shadow-xl transition-shadow"
-                >
+                    className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:shadow-xl transition-shadow">
                     {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>
