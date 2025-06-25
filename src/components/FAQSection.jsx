@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { Link } from 'react-router';
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0); // First FAQ is open by default
@@ -50,7 +51,7 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <div 
               key={faq.id} 
-              className="bg-white dark:bg-gray-800 w-full shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 hover:shadow-md dark:hover:shadow-lg">
+              className="dark:bg-gray-900 w-full shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 hover:shadow-md dark:hover:shadow-lg">
               {/* Question Header */}
               <button
                 onClick={() => toggleFAQ(index)}
@@ -92,11 +93,10 @@ const FAQSection = () => {
         <div className="text-center mt-12 sm:mt-16">
           <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
             Still have questions? 
-            <a 
-              href="#contact" 
+            <Link to={"/contact"}
               className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 font-medium ml-1 transition-colors duration-200">
               Contact our support team
-            </a>
+            </Link>
           </p>
         </div>
       </div>
