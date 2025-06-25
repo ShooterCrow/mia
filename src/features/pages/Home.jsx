@@ -26,15 +26,11 @@ function Home() {
         { id: 5, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
         { id: 6, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
         { id: 7, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 8, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 9, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 10, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 11, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 12, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 13, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 14, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 15, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 16, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
+        // { id: 8, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
+        // { id: 9, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
+        // { id: 10, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
+        // { id: 11, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
+        // { id: 12, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
     ];
 
     return (
@@ -50,9 +46,7 @@ function Home() {
                         <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
                             Discover the latest styles with our featured products and exclusive promotions.
                         </p>
-                        <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold text-base transition-colors duration-200">
-                            <PrimaryButton text={"Shop Now"} />
-                        </button>
+                        <PrimaryButton text={"Shop Now"} />
                     </div>
 
                     {/* Desktop/Tablet Layout */}

@@ -67,7 +67,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div className='relative z-50 py-10'>
+        <div className='relative z-50 lg:py-10 md: py-5'>
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col bg-white dark:bg-gray-900 w-full mx-auto items-center shadow-sm">
                 {/* Top Bar - Always visible */}
                 <div className="hidden lg:block w-full bg-green-600 dark:bg-green-700">
