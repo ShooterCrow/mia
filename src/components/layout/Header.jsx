@@ -18,6 +18,7 @@ import {
 import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
+import { Link } from 'react-router';
 
 const Header = () => {
     const { isDarkMode, toggleDarkMode, resetToSystem, hasUserPreference } = useTheme();
@@ -66,7 +67,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div className='relative z-50'>
+        <div className='relative z-50 py-10'>
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col bg-white dark:bg-gray-900 w-full mx-auto items-center shadow-sm">
                 {/* Top Bar - Always visible */}
                 <div className="hidden lg:block w-full bg-green-600 dark:bg-green-700">
@@ -124,7 +125,7 @@ const Header = () => {
                             <div className="flex items-center gap-6">
                                 {/* Navigation Menu */}
                                 <nav className="flex items-center gap-6">
-                                    <a href="#" className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</a>
+                                    <Link to={"/"} className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</Link>
                                 </nav>
                                 <div>
                                     <select className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]">
@@ -151,10 +152,12 @@ const Header = () => {
                             {/* Right Section */}
                             <div className="flex items-center gap-2 sm:gap-3 lg:gap-5">
                                 {/* Account Menu */}
-                                <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
-                                    <User className="w-4 h-4" />
-                                    <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
-                                </div>
+                                <Link to={"/login"}>
+                                    <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
+                                        <User className="w-4 h-4" />
+                                        <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
+                                    </div>
+                                </Link>
 
                                 {/* Support Menu */}
                                 <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
@@ -242,9 +245,11 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button */}
-                                <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                                    <span className="text-xs sm:text-sm">Sign In</span>
-                                </div>
+                                <Link to={"/login"}>
+                                    <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
+                                        <span className="text-xs sm:text-sm">Sign In</span>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
