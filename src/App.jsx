@@ -15,6 +15,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
+          {/* Vomment */}
         </Route>
       </Routes>
     </ThemeProvider>
