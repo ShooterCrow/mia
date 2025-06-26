@@ -78,12 +78,12 @@ const SignUp = () => {
         <div className="w-full sm:rounded-lg flex flex-col lg:flex-row overflow-hidden">
           {/* Left Image Section */}
           <div className="lg:flex hidden lg:w-1/2 xl:w-5/12">
-            <div className="relative w-full h-[90%] rounded-[10px] bg-[url('/Signup.jpg')] bg-cover bg-center bg-no-repeat flex items-center justify-center">
-              <div className="text-center max-w-lg px-6 py-12">
-                <div className="font-sans font-normal text-[39px] text-[#666666] leading-[100%] tracking-[0.05em] text-center">
+            <div className="relative w-full h-[90%] rounded-[10px] bg-[url('/Signup.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center">
+              <div className="text-center text-white max-w-lg px-6 py-12">
+                <div className="font-sans font-normal text-[39px]  leading-[100%] tracking-[0.05em] text-center">
                   Welcome to Upam Stores Your OneStop Online Marketplace
                 </div>
-                <div className="font-sans font-normal text-[#666666] text-[16px] leading-[145%] tracking-[0.05em] text-center mt-4">
+                <div className="font-sans font-normal  text-[16px] leading-[145%] tracking-[0.05em] text-center mt-4">
                   Upam Stores is a trusted and growing e-commerce platform designed
                   to bring convenience, variety, and value right to your fingertips.
                   Whether you're shopping for fashion, electronics, home essentials,
@@ -102,7 +102,7 @@ const SignUp = () => {
                 </h2>
               </div>
 
-              <div className="flex justify-center mb-8">
+              <div className="flex justify-center mb-4">
                 <button
                   onClick={handleGoogleSignUp}
                   disabled={isLoading}
@@ -169,7 +169,7 @@ const SignUp = () => {
                 </button>
               </div>
 
-              <div className="my-12 flex items-center">
+              <div className="my-4 flex items-center">
                 <div className="flex-1 border-t border-gray-300"></div>
                 <div className="px-4 text-[#666666] text-sm font-medium">Or</div>
                 <div className="flex-1 border-t border-gray-300"></div>
