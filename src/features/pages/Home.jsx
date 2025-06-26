@@ -7,32 +7,34 @@ import ReviewsSection from '../../components/ReviewsSection';
 import FAQSection from '../../components/FAQSection';
 import HeroSection from '../../components/HeroSection';
 
-function Home() {
-    const categories = [
-        { name: 'Vehicles', image: '/api/placeholder/80/80' },
-        { name: 'Properties', image: '/api/placeholder/80/80' },
-        { name: 'Gadgets', image: '/api/placeholder/80/80' },
-        { name: 'Electronics', image: '/api/placeholder/80/80' },
-        { name: 'Home Appliance', image: '/api/placeholder/80/80' },
-        { name: 'Fashion', image: '/api/placeholder/80/80' },
-        { name: 'Babies & Kids', image: '/api/placeholder/80/80' },
-        { name: 'Health & Beauty', image: '/api/placeholder/80/80' },
-    ];
+const categories = [
+    { name: 'Vehicles', image: '/api/placeholder/80/80' },
+    { name: 'Properties', image: '/api/placeholder/80/80' },
+    { name: 'Gadgets', image: '/api/placeholder/80/80' },
+    { name: 'Electronics', image: '/api/placeholder/80/80' },
+    { name: 'Home Appliance', image: '/api/placeholder/80/80' },
+    { name: 'Fashion', image: '/api/placeholder/80/80' },
+    { name: 'Babies & Kids', image: '/api/placeholder/80/80' },
+    { name: 'Health & Beauty', image: '/api/placeholder/80/80' },
+];
 
-    const products = [
-        { id: 1, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 2, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 3, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 4, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 5, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 6, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 7, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 8, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 9, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 10, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 11, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 12, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-    ];
+const products = [
+    { id: 1, name: 'Refrigerator', price: '$65', image: 'Rectangle.webp', trending: false },
+    { id: 2, name: 'Refrigerator', price: '$65', image: 'Rectangle2.webp', trending: true },
+    { id: 3, name: 'Refrigerator', price: '$65', image: 'Rectangle3.webp', trending: false },
+    { id: 4, name: 'Refrigerator', price: '$65', image: 'Rectangle4.webp', trending: true },
+    { id: 5, name: 'Refrigerator', price: '$65', image: 'Rectangle5.webp', trending: true },
+    { id: 6, name: 'Refrigerator', price: '$65', image: 'Rectangle6.webp', trending: false },
+    { id: 7, name: 'Refrigerator', price: '$65', image: 'Rectangle.webp', trending: false },
+    { id: 8, name: 'Refrigerator', price: '$65', image: 'Rectangle2.webp', trending: true },
+    { id: 9, name: 'Refrigerator', price: '$65', image: 'Rectangle3.webp', trending: false },
+    { id: 10, name: 'Refrigerator', price: '$65', image: 'Rectangle4.webp', trending: true },
+    { id: 11, name: 'Refrigerator', price: '$65', image: 'Rectangle5.webp', trending: false },
+    { id: 12, name: 'Refrigerator', price: '$65', image: 'Rectangle6.webp', trending: true },
+];
+
+function Home() {
+
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
@@ -94,7 +96,7 @@ function Home() {
             {/* Promotions Section */}
             <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad Test</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad</h2>
                     <ProductCard1 products={products} />
 
                 </div>

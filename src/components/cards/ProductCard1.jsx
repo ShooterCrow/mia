@@ -8,7 +8,9 @@ const ProductCard1 = ({ products }) => {
             {products.map((product) => (
                 <div key={product.id} className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
                     <div className='relative'>
-                        <div className="w-full h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30"></div>
+                        <div className="w-full sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 bg-cover bg-center bg-no-repeat"
+                            style={{ height: "240px", backgroundImage: `url(${product.image})` }}>
+                        </div>
                         {product.trending && (
                             <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-gray-100 dark:bg-red-600 text-orange-400 px-2 py-1 rounded text-xs font-semibold">
                                 Trending
