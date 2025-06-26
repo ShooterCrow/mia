@@ -17,7 +17,7 @@ const SignUp = () => {
       console.log(result)
       const user = result.user;
       console.log(user)
-      console.log("User signed in:", {
+      console.log("User signed in now:", {
         uid: user.uid,
         displayName: user.displayName,
         email: user.email,
