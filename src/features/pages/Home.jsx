@@ -42,7 +42,7 @@ function Home() {
             <section className="pt-[50] bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 sm:py-60 md:py-20">
                     {/* Mobile Layout */}
-                    <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
+                    <div className="sm:hidden flex flex-col items-center text-center min-h-[95vh] justify-center">
                         <h1 className="text-4xl font-bold mb-6 leading-tight">
                             Discover Your Perfect Product Today
                         </h1>

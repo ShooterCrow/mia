@@ -1,4 +1,4 @@
-import { auth, googleProvider } from "../../firebase";
+import { auth, googleProvider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -7,8 +7,11 @@ const SignUp = () => {
 
   const handleGoogleSignUp = async () => {
     try {
+      console.log(32)
       const result = await signInWithPopup(auth, googleProvider);
+      console.log(result)
       const user = result.user;
+      console.log(user)
       console.log("User signed in:", {
         uid: user.uid,
         displayName: user.displayName,
