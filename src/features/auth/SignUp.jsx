@@ -73,25 +73,25 @@ const SignUp = () => {
         pauseOnHover
         theme="light"
       />
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex justify-center items-center p-0">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex justify-center items-center p-0">
         <div className="w-full h-screen flex flex-col lg:flex-row overflow-hidden shadow-2xl">
           {/* Left Image Section */}
           <LeftSide />
 
           {/* Sign Up Form Section */}
-          <div className="flex-1 bg-white flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
+          <div className="flex-1 bg-white dark:bg-gray-900 flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
             {/* Mobile header for small screens */}
             <div className="lg:hidden w-full text-center mb-8 px-4">
-              <h1 className="font-bold text-2xl text-gray-800 mb-2">Welcome to Upam Stores</h1>
-              <p className="text-gray-600">Your OneStop Online Marketplace</p>
+              <h1 className="font-bold text-2xl text-gray-800 dark:text-white mb-2">Welcome to Upam Stores</h1>
+              <p className="text-gray-600 dark:text-gray-300">Your OneStop Online Marketplace</p>
             </div>
 
             <div className="w-full max-w-md">
               <div className="text-center mb-10">
-                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 mb-3 tracking-tight">
+                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-white mb-3 tracking-tight">
                   Create Account
                 </h2>
-                <p className="text-gray-600 text-lg">Join thousands of happy customers</p>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">Join thousands of happy customers</p>
               </div>
 
               {/* Google Sign Up Button */}
@@ -99,16 +99,16 @@ const SignUp = () => {
                 <button
                   onClick={handleGoogleSignUp}
                   disabled={isLoading}
-                  className={`w-full h-14 rounded-2xl px-6 py-4 flex items-center justify-center gap-4 border-2 border-gray-200 bg-white transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                    isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-gray-300 hover:bg-gray-50"
+                  className={`w-full h-14 rounded-2xl px-6 py-4 flex items-center justify-center gap-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 ${
+                    isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600"
                   }`}
                   aria-label="Sign up with Google"
                   aria-disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-                      <span className="text-gray-700 font-medium">Creating account...</span>
+                      <div className="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 border-t-blue-500 rounded-full animate-spin"></div>
+                      <span className="text-gray-700 dark:text-gray-200 font-medium">Creating account...</span>
                     </div>
                   ) : (
                     <>
@@ -120,7 +120,7 @@ const SignUp = () => {
                           <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                         </svg>
                       </div>
-                      <span className="text-gray-700 font-medium text-base">Continue with Google</span>
+                      <span className="text-gray-700 dark:text-gray-200 font-medium text-base">Continue with Google</span>
                     </>
                   )}
                 </button>
@@ -128,16 +128,16 @@ const SignUp = () => {
 
               {/* Divider */}
               <div className="my-8 flex items-center">
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                <div className="px-6 text-gray-500 text-sm font-medium bg-white">Or continue with</div>
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+                <div className="px-6 text-gray-500 dark:text-gray-400 text-sm font-medium bg-white dark:bg-gray-900">Or continue with</div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
               </div>
 
               {/* Email Button */}
               <div className="mb-8">
                 <button
                   onClick={handleEmailSignUp}
-                  className="w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-white flex items-center justify-center gap-3 px-6 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 font-medium text-base"
+                  className="w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white flex items-center justify-center gap-3 px-6 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 font-medium text-base"
                   aria-label="Continue with Email"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -148,23 +148,23 @@ const SignUp = () => {
               </div>
 
               {/* Terms */}
-              <p className="text-sm text-gray-600 text-center leading-relaxed mb-6 px-2">
+              <p className="text-sm text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6 px-2">
                 By creating an account you agree with our{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors">
+                <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                   Terms of Service
                 </a>{' '}
                 and{' '}
-                <a href="#" className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors">
+                <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                   Privacy Policy
                 </a>
               </p>
 
               {/* Sign In Link */}
               <div className="text-center">
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Already have an account?{' '}
                   <Link to={"/login"}>
-                    <button className="hover:text-blue-700 font-semibold transition-colors bg-transparent border-none cursor-pointer">
+                    <button className="hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors bg-transparent border-none cursor-pointer">
                       Login
                     </button>
                   </Link>
@@ -173,8 +173,8 @@ const SignUp = () => {
             </div>
 
             {/* Decorative elements */}
-            <div className="absolute top-10 right-10 w-20 h-20 bg-blue-100 rounded-full opacity-50 blur-xl hidden lg:block"></div>
-            <div className="absolute bottom-20 left-10 w-16 h-16 bg-red-100 rounded-full opacity-50 blur-lg hidden lg:block"></div>
+            <div className="absolute top-10 right-10 w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full opacity-50 blur-xl hidden lg:block"></div>
+            <div className="absolute bottom-20 left-10 w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full opacity-50 blur-lg hidden lg:block"></div>
           </div>
         </div>
       </div>

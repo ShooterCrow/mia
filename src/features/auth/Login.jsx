@@ -43,20 +43,20 @@ const LogIn = () => {
 
   return (
     <>
-      <div className=" bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex justify-center items-center p-0">
+      <div className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex justify-center items-center p-0">
         <div className="w-full lg:pt-[2rem] flex flex-col lg:flex-row overflow-hidden shadow-2xl">
           {/* Left Image Section */}
           <LeftSide />
 
           {/* Sign In Form Section */}
-          <div className="flex-1 bg-white flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
+          <div className="flex-1 bg-white dark:bg-gray-900 flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
             {/* Mobile header for small screens */}
             <div className="w-full pt-5 max-w-md">
               <div className="text-center mb-4">
-                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 tracking-tight">
+                <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-white tracking-tight">
                   Welcome Back
                 </h2>
-                <p className="text-gray-600 text-lg">Sign in to your account</p>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">Sign in to your account</p>
               </div>
 
               {/* Google Sign In Button */}
@@ -64,15 +64,15 @@ const LogIn = () => {
                 <button
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
-                  className={`w-full h-14 rounded-2xl px-6 py-4 flex items-center justify-center gap-4 border-2 border-gray-200 bg-white transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-gray-300 hover:bg-gray-50"
+                  className={`w-full h-14 rounded-2xl px-6 py-4 flex items-center justify-center gap-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600"
                     }`}
                   aria-label="Sign in with Google"
                   aria-disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-                      <span className="text-gray-700 font-medium">Signing in...</span>
+                      <div className="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 border-t-blue-500 rounded-full animate-spin"></div>
+                      <span className="text-gray-700 dark:text-gray-200 font-medium">Signing in...</span>
                     </div>
                   ) : (
                     <>
@@ -84,7 +84,7 @@ const LogIn = () => {
                           <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                         </svg>
                       </div>
-                      <span className="text-gray-700 font-medium text-base">Continue with Google</span>
+                      <span className="text-gray-700 dark:text-gray-200 font-medium text-base">Continue with Google</span>
                     </>
                   )}
                 </button>
@@ -92,16 +92,16 @@ const LogIn = () => {
 
               {/* Divider */}
               <div className="my-8 flex items-center">
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                <div className="px-6 text-gray-500 text-sm font-medium bg-white">Or sign in with email</div>
-                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
+                <div className="px-6 text-gray-500 dark:text-gray-400 text-sm font-medium bg-white dark:bg-gray-900">Or sign in with email</div>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
               </div>
 
               {/* Email Sign In Form */}
               <div onSubmit={handleEmailSignIn} className="space-y-6 mb-8">
                 {/* Email Field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Email Address
                   </label>
                   <input
@@ -110,14 +110,14 @@ const LogIn = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 bg-white text-gray-800 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none hover:border-gray-300"
+                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder="Enter your email address"
                   />
                 </div>
 
                 {/* Password Field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Password
                   </label>
                   <input
@@ -126,7 +126,7 @@ const LogIn = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 bg-white text-gray-800 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none hover:border-gray-300"
+                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -140,16 +140,16 @@ const LogIn = () => {
                       id="agreeToTerms"
                       checked={formData.agreeToTerms}
                       onChange={handleInputChange}
-                      className="w-5 h-5 rounded border-2 border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2 transition-colors cursor-pointer"
+                      className="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-2 transition-colors cursor-pointer dark:bg-gray-700"
                     />
                   </div>
-                  <label htmlFor="agreeToTerms" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
+                  <label htmlFor="agreeToTerms" className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed cursor-pointer">
                     I agree with Upam{' '}
-                    <a href="#" className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors">
+                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                       Terms of Service
                     </a>{' '}
                     and{' '}
-                    <a href="#" className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors">
+                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                       Privacy Policy
                     </a>
                   </label>
@@ -159,7 +159,7 @@ const LogIn = () => {
                 <button
                   onClick={handleEmailSignIn}
                   disabled={isLoading || !formData.agreeToTerms}
-                  className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 ${isLoading || !formData.agreeToTerms ? "opacity-50 cursor-not-allowed" : ""
+                  className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 ${isLoading || !formData.agreeToTerms ? "opacity-50 cursor-not-allowed" : ""
                     }`} >
                   {isLoading ? (
                     <div className="flex items-center justify-center gap-3">
@@ -174,10 +174,10 @@ const LogIn = () => {
 
               {/* Sign Up Link */}
               <div className="text-center">
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Don't have an account?{' '}
                   <Link to={"/signup"}>
-                    <button className="hover:text-blue-700 font-semibold transition-colors bg-transparent border-none cursor-pointer">
+                    <button className="hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors bg-transparent border-none cursor-pointer">
                       Sign Up
                     </button>
                   </Link>
@@ -186,8 +186,8 @@ const LogIn = () => {
             </div>
 
             {/* Decorative elements */}
-            <div className="absolute top-10 right-10 w-20 h-20 bg-blue-100 rounded-full opacity-50 blur-xl hidden lg:block"></div>
-            <div className="absolute bottom-20 left-10 w-16 h-16 bg-red-100 rounded-full opacity-50 blur-lg hidden lg:block"></div>
+            <div className="absolute top-10 right-10 w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full opacity-50 blur-xl hidden lg:block"></div>
+            <div className="absolute bottom-20 left-10 w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full opacity-50 blur-lg hidden lg:block"></div>
           </div>
         </div>
       </div>
