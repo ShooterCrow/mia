@@ -1,7 +1,7 @@
 import React from 'react'
 import PrimaryButton from './buttons/PrimaryButton'
 
-const HeroSection = ({text, btnTxt, border}) => {
+const HeroSection = ({text, btnTxt, border, image}) => {
     const words = text.split(" ");
     const chunks = [
         words.slice(0, 6).join(" "),
@@ -14,7 +14,7 @@ const HeroSection = ({text, btnTxt, border}) => {
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out"
                 style={{
-                    backgroundImage: 'url("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")'
+                    backgroundImage: `url(${image})`
                 }}
             />
 

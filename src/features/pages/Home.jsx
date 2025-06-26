@@ -25,12 +25,12 @@ const products = [
     { id: 4, name: 'Refrigerator', price: '$65', image: 'Rectangle4.webp', trending: true },
     { id: 5, name: 'Refrigerator', price: '$65', image: 'Rectangle5.webp', trending: true },
     { id: 6, name: 'Refrigerator', price: '$65', image: 'Rectangle6.webp', trending: false },
-    { id: 7, name: 'Refrigerator', price: '$65', image: 'Rectangle.webp', trending: false },
-    { id: 8, name: 'Refrigerator', price: '$65', image: 'Rectangle2.webp', trending: true },
-    { id: 9, name: 'Refrigerator', price: '$65', image: 'Rectangle3.webp', trending: false },
-    { id: 10, name: 'Refrigerator', price: '$65', image: 'Rectangle4.webp', trending: true },
-    { id: 11, name: 'Refrigerator', price: '$65', image: 'Rectangle5.webp', trending: false },
-    { id: 12, name: 'Refrigerator', price: '$65', image: 'Rectangle6.webp', trending: true },
+    { id: 7, name: 'Refrigerator', price: '$65', image: 'Rectangle7.webp', trending: false },
+    { id: 8, name: 'Refrigerator', price: '$65', image: 'Rectangle8.webp', trending: true },
+    { id: 9, name: 'Refrigerator', price: '$65', image: 'Rectangle9.webp', trending: false },
+    { id: 10, name: 'Refrigerator', price: '$65', image: 'Rectangle10.webp', trending: true },
+    { id: 11, name: 'Refrigerator', price: '$65', image: 'Rectangle11.webp', trending: false },
+    { id: 12, name: 'Refrigerator', price: '$65', image: 'Rectangle12.webp', trending: true },
 ];
 
 function Home() {
@@ -40,22 +40,33 @@ function Home() {
         <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
             {/* Hero Section */}
             <section className="pt-[50] bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 sm:py-60 md:py-20">
+                <div className="w-[100%] mx-auto">
                     {/* Mobile Layout */}
-                    <div className="sm:hidden flex flex-col items-center text-center min-h-[95vh] justify-center">
-                        <h1 className="text-4xl font-bold mb-6 leading-tight">
-                            Discover Your Perfect Product Today
-                        </h1>
-                        <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
-                            Discover the latest styles with our featured products and exclusive promotions.
-                        </p>
-                        <PrimaryButton text={"Shop Now"} />
+                    <div className="sm:hidden cover flex flex-col items-center text-center min-h-[95vh] justify-center relative bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: 'url(/Rectangle.webp)' }}>
+                        {/* Dark overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+                        {/* Content */}
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <h1 className="text-4xl font-bold mb-6 leading-tight text-white">
+                                Discover Your Perfect Product Today
+                            </h1>
+                            <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
+                                Discover the latest styles with our featured products and exclusive promotions.
+                            </p>
+                            <PrimaryButton text={"Shop Now"} />
+                        </div>
                     </div>
 
                     {/* Desktop/Tablet Layout */}
-                    <div className="hidden sm:flex flex-col lg:flex-row items-center min-h-[100vh] gap-8 lg:gap-12">
-                        <div className="flex-1 text-center lg:text-left">
-                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center bg-[url('/Rectangle.webp')] bg-cover bg-center bg-no-repeat min-h-[100vh] gap-8 lg:gap-12 relative">
+                        {/* Dark overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+                        {/* Content */}
+                        <div className="flex-1 px-20 text-center lg:text-left relative z-10 flex flex-col justify-center">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-white">
                                 Discover Your Perfect<br className="hidden sm:block" />
                                 <span className="sm:hidden"> </span>Product Today
                             </h1>
@@ -107,7 +118,7 @@ function Home() {
             {/* Post Ad Section */}
             <section className='bg-white dark:bg-gray-900 max-w-7xl mx-auto pb-10 px-4'>
                 {/* Main Post Ad Box */}
-                <HeroSection border={true} text={"Quickly post your ad and connect with buyers or sellers through our guest feature"} btnTxt={"Post Ad"} />
+                <HeroSection image={"/Rectangle2.webp"} border={true} text={"Quickly post your ad and connect with buyers or sellers through our guest feature"} btnTxt={"Post Ad"} />
 
                 {/* Bottom Cards */}
                 <div className="flex flex-col lg:flex-row justify-between gap-3 lg:gap-5 pt-5">
@@ -190,7 +201,7 @@ function Home() {
             </section>
             {/* Hero */}
             <section className='max-w-7xl mx-auto my-10 py-10 px-4'>
-                <HeroSection text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
+                <HeroSection image={"/Rectangle5.webp"} text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
                 <ProductCard1 products={products} />
             </section>
             <ReviewsSection />

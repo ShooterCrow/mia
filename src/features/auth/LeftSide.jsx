@@ -3,7 +3,7 @@ import React from 'react'
 const LeftSide = () => {
     return (
         <div className="lg:flex hidden lg:w-[45%] xl:w-[45%] relative">
-            <div className="relative w-full h-full bg-[url('/Signup.jpg')] bg-cover bg-center bg-no-repeat flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full bg-[url('/Rectangle6.webp')] bg-cover bg-center bg-no-repeat flex items-center justify-center overflow-hidden">
                 {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-black/40"></div>
 
