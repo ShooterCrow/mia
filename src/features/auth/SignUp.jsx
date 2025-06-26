@@ -81,11 +81,6 @@ const SignUp = () => {
           {/* Sign Up Form Section */}
           <div className="flex-1 bg-white dark:bg-gray-900 flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
             {/* Mobile header for small screens */}
-            <div className="lg:hidden w-full text-center mb-8 px-4">
-              <h1 className="font-bold text-2xl text-gray-800 dark:text-white mb-2">Welcome to Upam Stores</h1>
-              <p className="text-gray-600 dark:text-gray-300">Your OneStop Online Marketplace</p>
-            </div>
-
             <div className="w-full max-w-md">
               <div className="text-center mb-10">
                 <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-white mb-3 tracking-tight">
