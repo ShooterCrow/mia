@@ -247,7 +247,7 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button */}
-                                <Link to={"/login"}>
+                                <Link to={locationSignIn ? "/signup" : "/login"}>
                                     <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
                                         <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
                                     </div>
