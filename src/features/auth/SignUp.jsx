@@ -82,7 +82,7 @@ const SignUp = () => {
           <div className="flex-1 bg-white dark:bg-gray-900 flex flex-col justify-center items-center px-6 sm:px-12 py-8 lg:py-16 relative">
             {/* Mobile header for small screens */}
             <div className="w-full max-w-md">
-              <div className="text-center mb-10">
+              <div className="text-center mb-2">
                 <h2 className="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-white mb-3 tracking-tight">
                   Create Account
                 </h2>
