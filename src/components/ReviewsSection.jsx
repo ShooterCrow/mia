@@ -100,7 +100,7 @@ const ReviewsSection = () => {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920&h=1080&fit=crop')`
+          backgroundImage: `url('Rectangle6.webp')`
         }}
       />
       <div className="absolute inset-0 bg-black bg-opacity-75" />
