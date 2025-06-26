@@ -1,5 +1,11 @@
 import React from 'react';
-import { Search, User, ShoppingCart, Menu, Heart, MapPin } from 'lucide-react';
+import { Search, User, ShoppingCart, Menu, Heart, MapPin, ArrowRightIcon } from 'lucide-react';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import { Link } from 'react-router';
+import ProductCard1 from '../../components/cards/ProductCard1';
+import ReviewsSection from '../../components/ReviewsSection';
+import FAQSection from '../../components/FAQSection';
+import HeroSection from '../../components/HeroSection';
 
 function Home() {
     const categories = [
@@ -26,17 +32,13 @@ function Home() {
         { id: 10, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
         { id: 11, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
         { id: 12, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 13, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 14, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 15, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 16, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+            <section className="pt-[50] bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
+                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 sm:py-60 md:py-20">
                     {/* Mobile Layout */}
                     <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
                         <h1 className="text-4xl font-bold mb-6 leading-tight">
@@ -45,13 +47,11 @@ function Home() {
                         <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
                             Discover the latest styles with our featured products and exclusive promotions.
                         </p>
-                        <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold text-base transition-colors duration-200">
-                            Shop now
-                        </button>
+                        <PrimaryButton text={"Shop Now"} />
                     </div>
 
                     {/* Desktop/Tablet Layout */}
-                    <div className="hidden sm:flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center min-h-[100vh] gap-8 lg:gap-12">
                         <div className="flex-1 text-center lg:text-left">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                                 Discover Your Perfect<br className="hidden sm:block" />
@@ -61,9 +61,7 @@ function Home() {
                                 Explore our latest styles with our featured<br className="hidden sm:block" />
                                 <span className="sm:hidden"> </span>products and exclusive promotions.
                             </p>
-                            <button className="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-colors duration-200 w-full sm:w-auto">
-                                Shop now
-                            </button>
+                            <PrimaryButton text={"Shop Now"} />
                         </div>
                     </div>
                 </div>
@@ -94,42 +92,107 @@ function Home() {
             </section>
 
             {/* Promotions Section */}
-            <section className="py-12 sm:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
+            <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad Test</h2>
+                    <ProductCard1 products={products} />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                        {products.map((product) => (
-                            <div key={product.id} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                                <div className="relative">
-                                    <div className="w-full h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30"></div>
-                                    {product.trending && (
-                                        <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-gray-100 dark:bg-red-600 text-orange-400 px-2 py-1 rounded text-xs font-semibold">
-                                            Trending
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="p-3 sm:p-4">
-                                    <div className='flex justify-between items-center'>
-                                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1">{product.name}</h3>
-                                        <p className="text-xl sm:text-2xl font-bold text-teal-600 dark:text-teal-400 mb-2">{product.price}</p>
-                                    </div>
-                                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed line-clamp-3">
-                                        By Ajara Inc. I found all my essentials without having to shop lots. The site is easy to use, and the checkout was smooth.
-                                    </p>
-                                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-500 space-x-2">
-                                        <div className='flex gap-1 justify-between items-center'>
-                                            <MapPin color='red' size={15} />
-                                            <span className="truncate flex-1"> Ajara, Lagos, Nigeria</span>
-                                        </div>
-                                        <span className="whitespace-nowrap">🕒 10 min ago</span>
-                                    </div>
+                </div>
+            </section>
+            <div className='py-10 flex items-center justify-center'>
+                <p className='text-gray-900 pt-5 text-center dark:text-white'>Got something to sell or offer? Creating an ad is quick and easy. Just upload clear photos, add a short <br />description, set your price, and you're good to go.</p>
+            </div>
+            {/* Post Ad Section */}
+            <section className='bg-white dark:bg-gray-900 max-w-7xl mx-auto pb-10 px-4'>
+                {/* Main Post Ad Box */}
+                <HeroSection border={true} text={"Quickly post your ad and connect with buyers or sellers through our guest feature"} btnTxt={"Post Ad"} />
+
+                {/* Bottom Cards */}
+                <div className="flex flex-col lg:flex-row justify-between gap-3 lg:gap-5 pt-5">
+
+                    {/* Discount Picks Card */}
+                    <div className="relative px-6 md:px-10 flex flex-col justify-center gap-5 text-white rounded-lg w-full lg:w-[50%] h-[40vh] md:h-[50vh] overflow-hidden group">
+                        {/* Background Image */}
+                        <div
+                            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out group-hover:scale-110"
+                            style={{
+                                backgroundImage: 'url("https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")'
+                            }}
+                        />
+
+                        {/* Dark Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-60 dark:bg-opacity-70" />
+
+                        {/* Content */}
+                        <div className="relative z-10">
+                            <h2 className='text-2xl md:text-3xl font-bold text-white'>Discount Picks of the Week</h2>
+                            <div className="flex flex-col mt-4">
+                                <p className='text-xs md:text-sm opacity-90 text-gray-200 dark:text-gray-300'>Top Gadgets</p>
+                                <h4 className='text-lg md:text-xl font-semibold mt-2 text-white'>
+                                    Classic iPhone 16 <br /> Pro Max
+                                </h4>
+                                <div className="flex mt-3 gap-3 items-center">
+                                    <span className="text-white text-xl md:text-2xl font-bold">$45</span>
+                                    <span className="text-gray-300 dark:text-gray-400 line-through text-lg">$60</span>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                    </div>
+
+                    {/* Big Discount Card */}
+                    <div className="relative text-white flex flex-col justify-center items-center text-center py-10 md:py-20 rounded-lg w-full lg:w-[50%] h-[40vh] md:h-[50vh] overflow-hidden group">
+                        {/* Background Image */}
+                        <div
+                            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out group-hover:scale-110"
+                            style={{
+                                backgroundImage: 'url("https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")'
+                            }}
+                        />
+
+                        {/* Dark Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-60 dark:bg-opacity-70" />
+
+                        {/* Content */}
+                        <div className="relative z-10 px-4">
+                            <h2 className='text-2xl md:text-3xl font-bold leading-tight text-white'>
+                                Big Discount, Bigger <br /> Savings
+                            </h2>
+                            <p className="text-xs md:text-sm mt-3 opacity-90 max-w-md mx-auto text-gray-200 dark:text-gray-300">
+                                Up to 70% OFF on Fashion, Tech, Home Essentials & More – <br className="hidden sm:block" />
+                                <span className="sm:hidden"> </span>Shop Now Before It's Gone!
+                            </p>
+                        </div>
+
+                        {/* Arrow Button */}
+                        <Link to={"#"} className="inline-block mt-6 lg:mt-0 lg:absolute lg:bottom-10 lg:right-10 ">
+                            <div className="border-2 border-white dark:border-gray-200 rounded-full p-3 hover:bg-white dark:hover:bg-gray-200 hover:text-blue-500 dark:hover:text-blue-600 transition-all duration-300 transform -rotate-45 hover:scale-110">
+                                <ArrowRightIcon className="w-5 h-5" />
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </section>
+
+
+            {/* Explore All Section */}
+            <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
+                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+                    <div className="flex justify-between">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Explore All Products</h2>
+                        <Link to={"#"}>
+                            <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
+                        </Link>
+                    </div>
+                    <ProductCard1 products={products} />
+                </div>
+            </section>
+            {/* Hero */}
+            <section className='max-w-7xl mx-auto my-10 py-10 px-4'>
+                <HeroSection text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
+                <ProductCard1 products={products} />
+            </section>
+            <ReviewsSection />
+            <FAQSection />
         </div>
     );
 }
