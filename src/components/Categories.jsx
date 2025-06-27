@@ -46,7 +46,7 @@ const Categories = ({
                                 className="text-center group py-2 lg:px-5 cursor-pointer flex-shrink-0"
                                 onClick={() => handleCategoryClick(index, category)} >
                                 {/* Circle with image and green ring */}
-                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-3">
+                                <div className="relative w-20 h-20 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-3">
                                     {/* Green ring - always visible, changes color on hover */}
                                     <div className="absolute inset-0 rounded-full ring-2 ring-green-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 group-hover:ring-red-500 transition-all duration-200">
                                         {/* Image circle */}
