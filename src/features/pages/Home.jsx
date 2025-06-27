@@ -7,6 +7,7 @@ import ReviewsSection from '../../components/ReviewsSection';
 import FAQSection from '../../components/FAQSection';
 import HeroSection from '../../components/HeroSection';
 import Categories from '../../components/Categories';
+import { defaultCategories } from './AllProducts';
 
 export const categories = [
     { name: 'Vehicles', image: '/api/placeholder/80/80' },
@@ -82,10 +83,10 @@ function Home() {
             </section>
 
             {/* Categories Section */}
-            <Categories underline={false} />
+            <Categories categories={defaultCategories} underline={false} />
 
             {/* Promotions Section */}
-            <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
+            <section className="lg:py-10 sm:pb-12 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 sm:text-left">Promotions Ad</h2>
                     <ProductCard1 products={products} />

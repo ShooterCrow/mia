@@ -3,7 +3,7 @@ import Categories from '../../components/Categories'
 import ProductCard1 from '../../components/cards/ProductCard1'
 import { products } from './Home'
 
-const defaultCategories = [
+export const defaultCategories = [
         { name: "Vehicles", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100&h=100&fit=crop&crop=center" },
         { name: "Properties", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100&h=100&fit=crop&crop=center" },
         { name: "Gadgets", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100&h=100&fit=crop&crop=center" },
