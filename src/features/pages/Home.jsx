@@ -6,8 +6,9 @@ import ProductCard1 from '../../components/cards/ProductCard1';
 import ReviewsSection from '../../components/ReviewsSection';
 import FAQSection from '../../components/FAQSection';
 import HeroSection from '../../components/HeroSection';
+import Categories from '../../components/Categories';
 
-const categories = [
+export const categories = [
     { name: 'Vehicles', image: '/api/placeholder/80/80' },
     { name: 'Properties', image: '/api/placeholder/80/80' },
     { name: 'Gadgets', image: '/api/placeholder/80/80' },
@@ -18,7 +19,7 @@ const categories = [
     { name: 'Health & Beauty', image: '/api/placeholder/80/80' },
 ];
 
-const products = [
+export const products = [
     { id: 1, name: 'Refrigerator', price: '$65', image: 'Rectangle.webp', trending: false },
     { id: 2, name: 'Refrigerator', price: '$65', image: 'Rectangle2.webp', trending: true },
     { id: 3, name: 'Refrigerator', price: '$65', image: 'Rectangle3.webp', trending: false },
@@ -81,28 +82,7 @@ function Home() {
             </section>
 
             {/* Categories Section */}
-            <section className="py-12 sm:py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                    <div className="text-center mb-8 sm:mb-12">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Categories</h2>
-                        <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-sm sm:text-base leading-relaxed px-4 sm:px-0">
-                            Explore our wide range of products, carefully curated to suit your lifestyle. Whether you're looking for fashion, electronics, the latest tech,
-                            or home decor, we've got you covered. Discover your favorite products today!
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6">
-                        {categories.map((category, index) => (
-                            <div key={index} className="text-center group cursor-pointer">
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-2 sm:mb-3 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-                                </div>
-                                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium leading-tight px-1">{category.name}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <Categories underline={false} />
 
             {/* Promotions Section */}
             <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
@@ -192,7 +172,7 @@ function Home() {
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <div className="flex justify-between">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Explore All Products</h2>
-                        <Link to={"#"}>
+                        <Link to={"/all-products"}>
                             <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
                         </Link>
                     </div>
