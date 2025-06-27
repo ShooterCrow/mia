@@ -1,10 +1,14 @@
 import { MapPin } from 'lucide-react'
 import React from 'react'
 
-const ProductCard1 = ({ products }) => {
-    return (
+const ProductCard1 = ({ products, showTwoOnMobile = false }) => {
+    // Determine grid classes based on the prop
+    const gridClasses = showTwoOnMobile
+        ? "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+        : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6";
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+    return (
+        <div className={gridClasses}>
             {products.map((product) => (
                 <div key={product.id} className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg hover:shadow-lg dark:shadow-xl overflow-hidden hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300">
                     <div className='relative'>
@@ -25,12 +29,14 @@ const ProductCard1 = ({ products }) => {
                         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed line-clamp-3">
                             By Ajara Inc. I found all my essentials without having to shop lots. The site is easy to use, and the checkout was smooth.
                         </p>
-                        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 space-x-2">
+                        <div className={`flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 space-x-2`}>
                             <div className='flex gap-1 justify-between items-center'>
                                 <MapPin color='red' size={15} />
                                 <span className="truncate flex-1"> Ajara, Lagos, Nigeria</span>
                             </div>
-                            <span className="whitespace-nowrap">🕒 10 min ago</span>
+                            {!showTwoOnMobile &&
+                                <span className="whitespace-nowrap">🕒 10 min ago</span>
+                            }
                         </div>
                     </div>
                 </div>
