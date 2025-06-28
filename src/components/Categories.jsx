@@ -30,7 +30,7 @@ const Categories = ({
     const categoriesToUse = categories.length > 0 ? categories : defaultCategories;
 
     return (
-        <section className={`py-12 sm:py-16 bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
+        <section className={`py-5 max-w-7xl mx-auto bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
             <div className="w-[100%] mx-auto">
                 {title &&
                     <div className="text-center mb-8 sm:mb-12">

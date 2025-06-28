@@ -8,6 +8,8 @@ import FAQSection from '../../components/FAQSection';
 import HeroSection from '../../components/HeroSection';
 import Categories from '../../components/Categories';
 import { defaultCategories } from './AllProducts';
+import PromoCards from '../../components/cards/PromoCards';
+import PromotionCards from '../../components/cards/PromotionsCards';
 
 export const categories = [
     { name: 'Vehicles', image: '/api/placeholder/80/80' },
@@ -82,8 +84,14 @@ function Home() {
                 </div>
             </section>
 
+            {/* Promotions Slider */}
+            <PromotionCards />
+
             {/* Categories Section */}
             <Categories categories={defaultCategories} underline={false} />
+
+            {/* Promo Sales */}
+            <PromoCards />
 
             {/* Promotions Section */}
             <section className="lg:py-10 sm:pb-12 bg-white dark:bg-gray-800 transition-colors duration-200">
