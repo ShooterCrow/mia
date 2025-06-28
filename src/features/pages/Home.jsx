@@ -175,6 +175,10 @@ function Home() {
                 </div>
             </section>
 
+            {/* Advert Image */}
+            <section className='mx-auto py-3'>
+                <img className='mx-auto w-[100%] max-w-7xl' src='/Advert.png' />
+            </section>
 
             {/* Explore All Section */}
             <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
