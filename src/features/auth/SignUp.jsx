@@ -22,7 +22,7 @@ const SignUp = () => {
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
-        photoURL: user.photoURL,
+       
       });
       // Delay navigation slightly to allow toast to be visible
       setTimeout(() => navigate("/dashboard"), 1000);
