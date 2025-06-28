@@ -75,7 +75,7 @@ const PromotionCards = () => {
   const maxDots = Math.max(1, slides.length - 2);
 
   return (
-    <div className="w-full lg:max-w-7xl mx-auto p-4 lg:p-10">
+    <div className="w-full mx-auto p-4 lg:p-10">
       {/* Main Slider Container */}
       <div className="relative overflow-hidden rounded-lg">
         {/* Slider Wrapper */}
