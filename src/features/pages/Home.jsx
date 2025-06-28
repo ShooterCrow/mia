@@ -6,54 +6,69 @@ import ProductCard1 from '../../components/cards/ProductCard1';
 import ReviewsSection from '../../components/ReviewsSection';
 import FAQSection from '../../components/FAQSection';
 import HeroSection from '../../components/HeroSection';
+import Categories from '../../components/Categories';
+import { defaultCategories } from './AllProducts';
+
+export const categories = [
+    { name: 'Vehicles', image: '/api/placeholder/80/80' },
+    { name: 'Properties', image: '/api/placeholder/80/80' },
+    { name: 'Gadgets', image: '/api/placeholder/80/80' },
+    { name: 'Electronics', image: '/api/placeholder/80/80' },
+    { name: 'Home Appliance', image: '/api/placeholder/80/80' },
+    { name: 'Fashion', image: '/api/placeholder/80/80' },
+    { name: 'Babies & Kids', image: '/api/placeholder/80/80' },
+    { name: 'Health & Beauty', image: '/api/placeholder/80/80' },
+];
+
+export const products = [
+    { id: 1, name: 'Refrigerator', price: '$65', image: 'Rectangle.webp', trending: false },
+    { id: 2, name: 'Refrigerator', price: '$65', image: 'Rectangle2.webp', trending: true },
+    { id: 3, name: 'Refrigerator', price: '$65', image: 'Rectangle3.webp', trending: false },
+    { id: 4, name: 'Refrigerator', price: '$65', image: 'Rectangle4.webp', trending: true },
+    { id: 5, name: 'Refrigerator', price: '$65', image: 'Rectangle5.webp', trending: true },
+    { id: 6, name: 'Refrigerator', price: '$65', image: 'Rectangle6.webp', trending: false },
+    { id: 7, name: 'Refrigerator', price: '$65', image: 'Rectangle7.webp', trending: false },
+    { id: 8, name: 'Refrigerator', price: '$65', image: 'Rectangle8.webp', trending: true },
+    { id: 9, name: 'Refrigerator', price: '$65', image: 'Rectangle9.webp', trending: false },
+    { id: 10, name: 'Refrigerator', price: '$65', image: 'Rectangle10.webp', trending: true },
+    { id: 11, name: 'Refrigerator', price: '$65', image: 'Rectangle11.webp', trending: false },
+    { id: 12, name: 'Refrigerator', price: '$65', image: 'Rectangle12.webp', trending: true },
+];
 
 function Home() {
-    const categories = [
-        { name: 'Vehicles', image: '/api/placeholder/80/80' },
-        { name: 'Properties', image: '/api/placeholder/80/80' },
-        { name: 'Gadgets', image: '/api/placeholder/80/80' },
-        { name: 'Electronics', image: '/api/placeholder/80/80' },
-        { name: 'Home Appliance', image: '/api/placeholder/80/80' },
-        { name: 'Fashion', image: '/api/placeholder/80/80' },
-        { name: 'Babies & Kids', image: '/api/placeholder/80/80' },
-        { name: 'Health & Beauty', image: '/api/placeholder/80/80' },
-    ];
 
-    const products = [
-        { id: 1, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 2, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 3, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 4, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 5, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 6, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 7, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 8, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 9, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 10, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-        { id: 11, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: false },
-        { id: 12, name: 'Refrigerator', price: '$65', image: '/api/placeholder/280/200', trending: true },
-    ];
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
             {/* Hero Section */}
             <section className="pt-[50] bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 sm:py-60 md:py-20">
+                <div className="w-[100%] mx-auto">
                     {/* Mobile Layout */}
-                    <div className="sm:hidden flex flex-col items-center text-center min-h-[80vh] justify-center">
-                        <h1 className="text-4xl font-bold mb-6 leading-tight">
-                            Discover Your Perfect Product Today
-                        </h1>
-                        <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
-                            Discover the latest styles with our featured products and exclusive promotions.
-                        </p>
-                        <PrimaryButton text={"Shop Now"} />
+                    <div className="sm:hidden cover flex flex-col items-center text-center min-h-[95vh] justify-center relative bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: 'url(/Rectangle.webp)' }}>
+                        {/* Dark overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+                        {/* Content */}
+                        <div className="relative z-10 flex flex-col items-center text-center">
+                            <h1 className="text-4xl font-bold mb-6 leading-tight text-white">
+                                Discover Your Perfect Product Today
+                            </h1>
+                            <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
+                                Discover the latest styles with our featured products and exclusive promotions.
+                            </p>
+                            <PrimaryButton text={"Shop Now"} />
+                        </div>
                     </div>
 
                     {/* Desktop/Tablet Layout */}
-                    <div className="hidden sm:flex flex-col lg:flex-row items-center min-h-[100vh] gap-8 lg:gap-12">
-                        <div className="flex-1 text-center lg:text-left">
-                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                    <div className="hidden sm:flex flex-col lg:flex-row items-center bg-[url('/Rectangle.webp')] bg-cover bg-center bg-no-repeat min-h-[100vh] gap-8 lg:gap-12 relative">
+                        {/* Dark overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+                        {/* Content */}
+                        <div className="flex-1 px-20 text-center lg:text-left relative z-10 flex flex-col justify-center">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-white">
                                 Discover Your Perfect<br className="hidden sm:block" />
                                 <span className="sm:hidden"> </span>Product Today
                             </h1>
@@ -68,44 +83,23 @@ function Home() {
             </section>
 
             {/* Categories Section */}
-            <section className="py-12 sm:py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
-                <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                    <div className="text-center mb-8 sm:mb-12">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Categories</h2>
-                        <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto text-sm sm:text-base leading-relaxed px-4 sm:px-0">
-                            Explore our wide range of products, carefully curated to suit your lifestyle. Whether you're looking for fashion, electronics, the latest tech,
-                            or home decor, we've got you covered. Discover your favorite products today!
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6">
-                        {categories.map((category, index) => (
-                            <div key={index} className="text-center group cursor-pointer">
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-2 sm:mb-3 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
-                                </div>
-                                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium leading-tight px-1">{category.name}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <Categories categories={defaultCategories} underline={false} />
 
             {/* Promotions Section */}
-            <section className="py-12 sm:py-16 bg-white dark:bg-gray-800 transition-colors duration-200">
+            <section className="lg:py-10 sm:pb-12 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Promotions Ad Test</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 sm:text-left">Promotions Ad</h2>
                     <ProductCard1 products={products} />
 
                 </div>
             </section>
             <div className='py-10 flex items-center justify-center'>
-                <p className='text-gray-900 pt-5 text-center dark:text-white'>Got something to sell or offer? Creating an ad is quick and easy. Just upload clear photos, add a short <br />description, set your price, and you're good to go.</p>
+                <p className='px-3 text-gray-900 pt-5 text-center dark:text-white'>Got something to sell or offer? Creating an ad is quick and easy. Just upload clear photos, add a short <br />description, set your price, and you're good to go.</p>
             </div>
             {/* Post Ad Section */}
             <section className='bg-white dark:bg-gray-900 max-w-7xl mx-auto pb-10 px-4'>
                 {/* Main Post Ad Box */}
-                <HeroSection border={true} text={"Quickly post your ad and connect with buyers or sellers through our guest feature"} btnTxt={"Post Ad"} />
+                <HeroSection image={"/Rectangle2.webp"} border={true} text={"Quickly post your ad and connect with buyers or sellers through our guest feature"} btnTxt={"Post Ad"} />
 
                 {/* Bottom Cards */}
                 <div className="flex flex-col lg:flex-row justify-between gap-3 lg:gap-5 pt-5">
@@ -179,7 +173,7 @@ function Home() {
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <div className="flex justify-between">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Explore All Products</h2>
-                        <Link to={"#"}>
+                        <Link to={"/all-products"}>
                             <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
                         </Link>
                     </div>
@@ -188,7 +182,7 @@ function Home() {
             </section>
             {/* Hero */}
             <section className='max-w-7xl mx-auto my-10 py-10 px-4'>
-                <HeroSection text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
+                <HeroSection image={"/Rectangle5.webp"} text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
                 <ProductCard1 products={products} />
             </section>
             <ReviewsSection />

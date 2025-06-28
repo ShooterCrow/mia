@@ -100,7 +100,7 @@ const ReviewsSection = () => {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920&h=1080&fit=crop')`
+          backgroundImage: `url('Rectangle6.webp')`
         }}
       />
       <div className="absolute inset-0 bg-black bg-opacity-75" />
@@ -121,7 +121,8 @@ const ReviewsSection = () => {
         {/* Desktop Grid View (Hidden on mobile/tablet) */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {reviews.map((review, index) => (
-            <div key={review.id} className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20">
+            // border border-white border-opacity-20 bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl
+            <div key={review.id} className="p-8 ">
               <div className="flex items-center mb-3">
                 <div className="w-12 h-12 rounded-full overflow-hidden mr-4 bg-gray-600 flex items-center justify-center">
                   <img
@@ -157,7 +158,8 @@ const ReviewsSection = () => {
             {reviews.map((review, index) => (
               <div
                 key={review.id}
-                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-white border-opacity-20 flex-shrink-0 w-80 sm:w-96 snap-center">
+                // bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl border border-white border-opacity-20
+                className="p-6 sm:p-8 flex-shrink-0 w-80 sm:w-96 snap-center"> 
                 <div className="flex items-center mb-6">
                   <div className="w-12 h-12 rounded-full overflow-hidden mr-4 bg-gray-600 flex items-center justify-center">
                     <img

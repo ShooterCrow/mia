@@ -18,7 +18,7 @@ import {
 import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 const Header = () => {
     const { isDarkMode, toggleDarkMode, resetToSystem, hasUserPreference } = useTheme();
@@ -27,6 +27,8 @@ const Header = () => {
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
+    const location = useLocation()
+    const locationSignIn = location.pathname.includes("/login")
 
     const languageToCountry = {
         en: 'US',
@@ -129,10 +131,14 @@ const Header = () => {
                                 </nav>
                                 <div>
                                     <select className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]">
-                                        <option>Categories</option>
-                                        <option>Products</option>
-                                        <option>About</option>
-                                        <option>Contact</option>
+                                        <option>All Categories</option>
+                                        <option>Home & Kitchen</option>
+                                        <option>Cloth & Fashion</option>
+                                        <option>Accessories</option>
+                                        <option>Electronics</option>
+                                        <option>Gadgets</option>
+                                        <option>Supermarket</option>
+                                        <option>Health & Beauty</option>
                                     </select>
                                 </div>
                             </div>
@@ -245,9 +251,9 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button */}
-                                <Link to={"/login"}>
+                                <Link to={locationSignIn ? "/signup" : "/login"}>
                                     <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                                        <span className="text-xs sm:text-sm">Sign In</span>
+                                        <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
                                     </div>
                                 </Link>
                             </div>
