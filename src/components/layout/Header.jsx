@@ -131,8 +131,8 @@ const Header = () => {
                                 </nav>
                                 <div>
                                     <select className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]">
-                                        <option>All Categories</option>
-                                        <option>Home & Kitchen</option>
+                                        <option>Categories</option>
+                                        <option>Vehicles</option>
                                         <option>Cloth & Fashion</option>
                                         <option>Accessories</option>
                                         <option>Electronics</option>
