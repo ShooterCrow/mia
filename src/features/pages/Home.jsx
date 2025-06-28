@@ -88,7 +88,7 @@ function Home() {
             <PromotionCards />
 
             {/* Categories Section */}
-            <Categories categories={defaultCategories} underline={false} />
+            <Categories title={"Categories"} desc={"Explore our wide range of products, carefully curated to suit your lifestyle. Whether you're looking for fashion essentials, the latest tech gadgets, home and kitchen must-haves, or beauty products, we’ve got you covered"} categories={defaultCategories} underline={false} />
 
             {/* Promo Sales */}
             <PromoCards />

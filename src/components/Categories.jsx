@@ -6,7 +6,8 @@ const Categories = ({
     onCategorySelect = () => { },
     selectedCategory = null,
     className = "",
-    title
+    title,
+    desc
 }) => {
     const [selected, setSelected] = useState(selectedCategory || 0);
 
@@ -30,15 +31,21 @@ const Categories = ({
     const categoriesToUse = categories.length > 0 ? categories : defaultCategories;
 
     return (
-        <section className={`py-5 max-w-7xl mx-auto bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
+        <section className={`py-5 bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
             <div className="w-[100%] mx-auto">
                 {title &&
-                    <div className="text-center mb-8 sm:mb-12">
+                    <div className="text-center">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">{title}</h2>
                     </div>
                 }
+                {
+                    desc &&
+                    <div className="max-w-7xl mx-auto text-center mb-8 sm:mb-12">
+                        <h2 className="text sm:text text-gray-900 dark:text-white mb-3 sm:mb-4">{desc}</h2>
+                    </div>
+                }
                 {/* Horizontal scrollable container */}
-                <div className="overflow-x-auto pb-4 px-20">
+                <div className="overflow-x-auto mx-auto pb-4 px-20">
                     <div className="flex gap-5 sm:gap-6 w-[100%] px-4 sm:px-0 justify-center">
                         {categoriesToUse.map((category, index) => (
                             <div
