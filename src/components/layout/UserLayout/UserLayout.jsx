@@ -39,7 +39,6 @@ const UserLayout = () => {
     const mainBottomLinks = [
         { icon: Home, label: 'Home', path: '/dashboard' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
-        { icon: Search, label: 'Search', path: '/search' },
         { icon: ShoppingCart, label: 'Cart', path: '/cart' },
         { icon: Heart, label: 'Wishlist', path: '/wishlist' },
         { icon: Menu, label: 'More', action: 'toggle' }
