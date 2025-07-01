@@ -38,6 +38,7 @@ const UserLayout = () => {
     // Main bottom bar links (always visible on mobile)
     const mainBottomLinks = [
         { icon: Home, label: 'Home', path: '/dashboard' },
+        { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: Search, label: 'Search', path: '/search' },
         { icon: ShoppingCart, label: 'Cart', path: '/cart' },
         { icon: Heart, label: 'Wishlist', path: '/wishlist' },
@@ -47,14 +48,12 @@ const UserLayout = () => {
     // All sidebar links (for desktop/tablet)
     const sidebarLinks = [
         { icon: Home, label: 'Home', path: '/dashboard' },
-        { icon: Search, label: 'Search', path: '/dashboard/search' },
         { icon: ShoppingCart, label: 'Cart', path: '/dashboard/cart' },
         { icon: Heart, label: 'Wishlist', path: '/dashboard/wishlist' },
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: MapPin, label: 'Addresses', path: '/dashboard/addresses' },
         { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
-        { icon: Gift, label: 'Rewards', path: '/dashboard/rewards' },
         { icon: Clock, label: 'History', path: '/dashboard/history' },
         { icon: HelpCircle, label: 'Help', path: '/dashboard/help' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
@@ -63,10 +62,8 @@ const UserLayout = () => {
     // Additional links (shown when bottom bar expanded on mobile)
     const expandedLinks = [
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
-        { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: MapPin, label: 'Addresses', path: '/dashboard/addresses' },
         { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
-        { icon: Gift, label: 'Rewards', path: '/dashboard/rewards' },
         { icon: Clock, label: 'History', path: '/dashboard/history' },
         { icon: HelpCircle, label: 'Help', path: '/dashboard/help' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
