@@ -1,15 +1,15 @@
 import React from 'react';
 import { Search, User, ShoppingCart, Menu, Heart, MapPin, ArrowRightIcon } from 'lucide-react';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
+import PrimaryButton from '../components/buttons/PrimaryButton';
 import { Link } from 'react-router';
-import ProductCard1 from '../../components/cards/ProductCard1';
-import ReviewsSection from '../../components/ReviewsSection';
-import FAQSection from '../../components/FAQSection';
-import HeroSection from '../../components/HeroSection';
-import Categories from '../../components/Categories';
+import ProductCard1 from '../components/cards/ProductCard1';
+import ReviewsSection from '../components/ReviewsSection';
+import FAQSection from '../components/FAQSection';
+import HeroSection from '../components/HeroSection';
+import Categories from '../components/Categories';
 import { defaultCategories } from './AllProducts';
-import PromoCards from '../../components/cards/PromoCards';
-import PromotionCards from '../../components/cards/PromotionsCards';
+import PromoCards from '../components/cards/PromoCards';
+import PromotionCards from '../components/cards/PromotionsCards';
 
 export const categories = [
     { name: 'Vehicles', image: '/api/placeholder/80/80' },

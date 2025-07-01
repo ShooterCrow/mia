@@ -9,7 +9,7 @@ const Layout = () => {
     return (
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
             <Header />
-            <main>
+            <main className='lg:mt-[30px]'>
                 <Outlet />
             </main>
             <Footer />

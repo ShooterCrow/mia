@@ -1,6 +1,6 @@
 import React from 'react'
-import Categories from '../../components/Categories'
-import ProductCard1 from '../../components/cards/ProductCard1'
+import Categories from '../components/Categories'
+import ProductCard1 from '../components/cards/ProductCard1'
 import { products } from './Home'
 
 export const defaultCategories = [

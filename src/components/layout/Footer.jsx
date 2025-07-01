@@ -12,7 +12,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-black text-white overflow-hidden mt-20">
+    <footer className="relative bg-black text-white overflow-hidden pt-5">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
