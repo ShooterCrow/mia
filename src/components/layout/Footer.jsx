@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Mail, Twitter, Facebook, Instagram, ArrowRight } from 'lucide-react';
+import { useLocation } from 'react-router';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const location = useLocation()
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -12,7 +14,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-black text-white overflow-hidden pt-5">
+    <footer className={`${location.pathname.includes("dashboard") && "hidden"} relative bg-black text-white overflow-hidden pt-5`} >
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"

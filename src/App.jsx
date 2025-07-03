@@ -22,14 +22,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
-          <Route
-            path="dashboard"
-            element={
-              <UserLayoutProvider>
-                <UserLayout />
-              </UserLayoutProvider>
-            }
-          >
+          <Route path="dashboard" element={<UserLayoutProvider><UserLayout /></UserLayoutProvider>}>
             <Route path="profile" element={<UserProfile />} />
           </Route>
         </Route>
