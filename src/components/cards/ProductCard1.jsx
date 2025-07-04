@@ -23,7 +23,7 @@ const ProductCard1 = ({ products, showTwoOnMobile = false }) => {
                     </div>
                     <div className="p-3 sm:p-4">
                         <div className='flex justify-between items-center'>
-                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1">{product.name}</h3>
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">{product.name}</h3>
                             <p className="text-xl sm:text-2xl font-bold text-teal-600 dark:text-teal-400 mb-2">{product.price}</p>
                         </div>
                         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 leading-relaxed line-clamp-3">
