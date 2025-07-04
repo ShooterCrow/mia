@@ -257,7 +257,29 @@ const CategoryPage = () => {
                     className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
                   />
                   <span className="ml-2 text-sm text-gray-700">
+                    Show all
+                  </span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={showVerifiedOnly}
+                    onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">
                     Verified only
+                  </span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={showVerifiedOnly}
+                    onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">
+                    Unverified sellers
                   </span>
                 </label>
               </div>
@@ -265,6 +287,17 @@ const CategoryPage = () => {
               {/* Discount */}
               <div className="mb-6">
                 <h3 className="font-semibold text-gray-800 mb-3">Discount</h3>
+                 <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={showDiscountOnly}
+                    onChange={(e) => setShowDiscountOnly(e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">
+                    Show all
+                  </span>
+                </label>
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -273,17 +306,34 @@ const CategoryPage = () => {
                     className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
                   />
                   <span className="ml-2 text-sm text-gray-700">
-                    Discount only
+                    With discount
+                  </span>
+                </label>
+                 <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={showDiscountOnly}
+                    onChange={(e) => setShowDiscountOnly(e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="ml-2 text-sm text-gray-700">
+                    Without discount
                   </span>
                 </label>
               </div>
 
-              <div className="flex justify-end pt-4">
+              <div className="flex justify-between pt-4">
+                <button
+                  onClick={clearFilters}
+                  className=" font-medium text-sm hover:text-red-700 transition-colors"
+                >
+                  Clear
+                </button>
                 <button
                   onClick={clearFilters}
                   className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
                 >
-                  Clear
+                  Save
                 </button>
               </div>
             </div>
