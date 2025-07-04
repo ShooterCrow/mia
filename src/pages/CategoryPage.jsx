@@ -246,46 +246,82 @@ const CategoryPage = () => {
       </div>
 
       {/* Verified Sellers */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Verified Sellers
-        </h3>
-        <label className="flex items-center space-x-2 cursor-pointer">
+      <div className="mb-6 border-b border-gray-200 pb-4">
+        <h3 className="font-semibold text-gray-800 mb-3">Verified Sellers</h3>
+        <label className="flex items-center">
           <input
             type="checkbox"
             checked={showVerifiedOnly}
             onChange={(e) => setShowVerifiedOnly(e.target.checked)}
-            className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            Verified only
-          </span>
+          <span className="ml-2 text-sm text-gray-700">Show all</span>
+        </label>
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={showVerifiedOnly}
+            onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+          />
+          <span className="ml-2 text-sm text-gray-700">Verified only</span>
+        </label>
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={showVerifiedOnly}
+            onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+          />
+          <span className="ml-2 text-sm text-gray-700">Unverified sellers</span>
         </label>
       </div>
 
       {/* Discount */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Discount</h3>
-        <label className="flex items-center space-x-2 cursor-pointer">
+      <div className="mb-6">
+        <h3 className="font-semibold text-gray-800 mb-3">Discount</h3>
+        <label className="flex items-center">
           <input
             type="checkbox"
             checked={showDiscountOnly}
             onChange={(e) => setShowDiscountOnly(e.target.checked)}
-            className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            Discount only
-          </span>
+          <span className="ml-2 text-sm text-gray-700">Show all</span>
+        </label>
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={showDiscountOnly}
+            onChange={(e) => setShowDiscountOnly(e.target.checked)}
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+          />
+          <span className="ml-2 text-sm text-gray-700">With discount</span>
+        </label>
+        <label className="flex items-center">
+          <input
+            type="checkbox"
+            checked={showDiscountOnly}
+            onChange={(e) => setShowDiscountOnly(e.target.checked)}
+            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+          />
+          <span className="ml-2 text-sm text-gray-700">Without discount</span>
         </label>
       </div>
 
       {/* Clear Filters Button */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between pt-4">
         <button
           onClick={clearFilters}
-          className="w-full px-4 py-2 text-red-600 dark:text-red-400 font-medium text-sm hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+          className="font-medium text-sm hover:text-red-700 transition-colors"
         >
-          Clear All Filters
+          Clear
+        </button>
+        <button
+          onClick={clearFilters}
+          className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
+        >
+          Save
         </button>
       </div>
     </div>
@@ -344,17 +380,6 @@ const CategoryPage = () => {
               </div>
             </div>
           )}
-
-          {/* Tablet Horizontal Scroll */}
-          <div className="lg:hidden md:block hidden">
-            <div className="overflow-x-auto pb-4">
-              <div className="flex space-x-4 min-w-max">
-                <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 w-80 flex-shrink-0">
-                  <FilterContent />
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Products Grid */}
           <div className="lg:w-3/4 w-full">
