@@ -140,7 +140,9 @@ const Header = () => {
                                         }}
                                         defaultValue="Categories"
                                     >
-                                        <option value="Categories">Categories</option>
+                                        <Link to={"/categories"}>
+                                            <option value="Categories">Categories</option>
+                                        </Link>
                                         <option value="Vehicles">Vehicles</option>
                                         <option value="Cloth & Fashion">Cloth & Fashion</option>
                                         <option value="Accessories">Accessories</option>
