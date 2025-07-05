@@ -185,7 +185,7 @@ function Home() {
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <div className="flex justify-between">
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 text-center sm:text-left">Explore All Products</h2>
-                        <Link to={"/all-products"}>
+                        <Link to={"/products"}>
                             <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
                         </Link>
                     </div>

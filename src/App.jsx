@@ -7,9 +7,10 @@ import Login from "./features/auth/Login";
 import EmailVerification from "./features/auth/EmailVerification";
 import AllProducts from "./pages/AllProducts";
 import UserProfile from "./features/user/UserProfile";
-import CategoryPage from "./pages/CategoryPage"; // Import the CategoryPage
+import CategoryPage from "./pages/CategoryPage";
 import { UserLayoutProvider } from "./components/layout/UserLayout/UserLayoutContext";
 import UserLayout from "./components/layout/UserLayout/UserLayout";
+import ProductDetails from "./pages/detailPages/ProductDetails";
 
 function App() {
   return (
@@ -17,12 +18,19 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="all-products" element={<AllProducts />} />
-          <Route path="category" element={<CategoryPage />} /> {/* Add CategoryPage route */}
+          <Route path="products" >
+            <Route index element={<AllProducts />} />
+            <Route path=":id" element={<ProductDetails />} />
+          </Route>
+          <Route path="categories/:category" element={<CategoryPage />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
-          <Route path="dashboard" element={<UserLayoutProvider><UserLayout /></UserLayoutProvider>}>
+          <Route path="dashboard" element={
+            <UserLayoutProvider>
+              <UserLayout />
+            </UserLayoutProvider>
+          }>
             <Route path="profile" element={<UserProfile />} />
           </Route>
         </Route>

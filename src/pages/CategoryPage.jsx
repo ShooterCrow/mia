@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { ChevronDown, Filter, X } from 'lucide-react';
 import ProductCard1 from "../components/cards/ProductCard1";
 import { sampleCategoryData } from "../constant/sampleCategoryData";
 
 const CategoryPage = () => {
+  const { categoryName } = useParams();
   const [slug, setSlug] = useState("properties");
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
@@ -21,16 +23,76 @@ const CategoryPage = () => {
     { value: "vehicles", label: "Vehicles" },
     { value: "gadgets", label: "Gadgets" },
     { value: "electronics", label: "Electronics" },
-    { value: "homeFurniture", label: "Home Furniture & Appliances" },
-    { value: "healthBeauty", label: "Health & Beauty" },
-    { value: "fashion", label: "Fashion" },
-    { value: "sportsArts", label: "Sports, Arts & Outdoors" },
-    { value: "babiesKids", label: "Babies & Kids" },
-    { value: "animalsPets", label: "Animals & Pets" },
-    { value: "agricultureFood", label: "Agriculture & Food" },
-    { value: "equipmentTools", label: "Equipment & Tools" },
-    { value: "repairConstruction", label: "Repair & Construction" },
+    { value: "home-furniture", label: "Home Furniture & Appliances" },
+    { value: "health-and-beauty", label: "Health & Beauty" },
+    { value: "cloth-and-fashion", label: "Cloth & Fashion" },
+    { value: "accessories", label: "Accessories" },
+    { value: "supermarket", label: "Supermarket" },
+    { value: "sports-arts", label: "Sports, Arts & Outdoors" },
+    { value: "babies-kids", label: "Babies & Kids" },
+    { value: "animals-pets", label: "Animals & Pets" },
+    { value: "agriculture-food", label: "Agriculture & Food" },
+    { value: "equipment-tools", label: "Equipment & Tools" },
+    { value: "repair-construction", label: "Repair & Construction" },
   ];
+
+  // Function to convert URL slug to category value
+  const urlSlugToCategoryValue = (urlSlug) => {
+    if (!urlSlug) return "properties";
+    
+    // Handle special cases for URL-friendly names
+    const categoryMap = {
+      "cloth-and-fashion": "fashion",
+      "health-and-beauty": "healthBeauty",
+      "home-furniture": "homeFurniture",
+      "sports-arts": "sportsArts",
+      "babies-kids": "babiesKids",
+      "animals-pets": "animalsPets",
+      "agriculture-food": "agricultureFood",
+      "equipment-tools": "equipmentTools",
+      "repair-construction": "repairConstruction",
+    };
+
+    // Check if it's a special case
+    if (categoryMap[urlSlug]) {
+      return categoryMap[urlSlug];
+    }
+
+    // For regular cases, just return the slug as is
+    return urlSlug;
+  };
+
+  // Function to convert category value to URL slug
+  const categoryValueToUrlSlug = (categoryValue) => {
+    const reverseMap = {
+      "fashion": "cloth-and-fashion",
+      "healthBeauty": "health-and-beauty",
+      "homeFurniture": "home-furniture",
+      "sportsArts": "sports-arts",
+      "babiesKids": "babies-kids",
+      "animalsPets": "animals-pets",
+      "agricultureFood": "agriculture-food",
+      "equipmentTools": "equipment-tools",
+      "repairConstruction": "repair-construction",
+    };
+
+    return reverseMap[categoryValue] || categoryValue;
+  };
+
+  // Update slug when URL parameter changes
+  useEffect(() => {
+    if (categoryName) {
+      const mappedSlug = urlSlugToCategoryValue(categoryName);
+      setSlug(mappedSlug);
+      
+      // Clear filters when category changes
+      setSelectedSubcategories([]);
+      setPriceRange({ min: "", max: "" });
+      setLocation("All country");
+      setShowVerifiedOnly(false);
+      setShowDiscountOnly(false);
+    }
+  }, [categoryName]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -97,6 +159,16 @@ const CategoryPage = () => {
     setIsMobileFilterOpen(false);
   };
 
+  const handleCategoryChange = (newCategoryValue) => {
+    setSlug(newCategoryValue);
+    // Update URL to reflect the category change
+    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
+    window.history.pushState({}, '', `/category/${newUrlSlug}`);
+    
+    // Clear filters when category changes
+    clearFilters();
+  };
+
   const handleRetry = () => {
     setError(null);
     setLoading(true);
@@ -127,7 +199,7 @@ const CategoryPage = () => {
         <div className="relative">
           <select
             value={slug}
-            onChange={(e) => setSlug(e.target.value)}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 bg-red-600 text-white font-bold appearance-none dark:bg-red-700"
             aria-label="Select category"
           >
@@ -291,9 +363,35 @@ const CategoryPage = () => {
     </div>
   );
 
+  // Show loading state while determining category from URL
+  if (categoryName && !categories.find(cat => categoryValueToUrlSlug(cat.value) === categoryName)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Category Not Found
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            The category "{categoryName}" does not exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen font-sans">
       <div className="px-4 sm:px-6 lg:px-8 py-8">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+            {categories.find(cat => cat.value === slug)?.label || currentCategory.name}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            {filteredProducts.length} products found
+          </p>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Mobile Filter Toggle Button */}
           <div className="lg:hidden">
@@ -344,17 +442,6 @@ const CategoryPage = () => {
               </div>
             </div>
           )}
-
-          {/* Tablet Horizontal Scroll */}
-          <div className="lg:hidden md:block hidden">
-            <div className="overflow-x-auto pb-4">
-              <div className="flex space-x-4 min-w-max">
-                <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 w-80 flex-shrink-0">
-                  <FilterContent />
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Products Grid */}
           <div className="lg:w-3/4 w-full">

@@ -18,9 +18,10 @@ import {
 import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate();
     const { isDarkMode, toggleDarkMode, resetToSystem, hasUserPreference } = useTheme();
     const [showThemeMenu, setShowThemeMenu] = useState(false);
     const [showMobileThemeMenu, setShowMobileThemeMenu] = useState(false); // Separate state for mobile
@@ -130,15 +131,23 @@ const Header = () => {
                                     <Link to={"/"} className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</Link>
                                 </nav>
                                 <div>
-                                    <select className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]">
-                                        <option>Categories</option>
-                                        <option>Vehicles</option>
-                                        <option>Cloth & Fashion</option>
-                                        <option>Accessories</option>
-                                        <option>Electronics</option>
-                                        <option>Gadgets</option>
-                                        <option>Supermarket</option>
-                                        <option>Health & Beauty</option>
+                                    <select
+                                        className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]"
+                                        onChange={(e) => {
+                                            if (e.target.value && e.target.value !== 'Categories') {
+                                                navigate(`/categories/${e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`);
+                                            }
+                                        }}
+                                        defaultValue="Categories"
+                                    >
+                                        <option value="Categories">Categories</option>
+                                        <option value="Vehicles">Vehicles</option>
+                                        <option value="Cloth & Fashion">Cloth & Fashion</option>
+                                        <option value="Accessories">Accessories</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Gadgets">Gadgets</option>
+                                        <option value="Supermarket">Supermarket</option>
+                                        <option value="Health & Beauty">Health & Beauty</option>
                                     </select>
                                 </div>
                             </div>
