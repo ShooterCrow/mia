@@ -314,6 +314,13 @@ const Header = () => {
                                         <span>Help & Support</span>
                                     </button>
 
+                                    <Link to={"/login"}>
+                                        <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
+                                            <Phone className="w-4 h-4" />
+                                            <span>Sign In</span>
+                                        </div>
+                                    </Link>
+
                                     <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
                                         <Phone className="w-4 h-4" />
                                         <span>+234 813 975 3870</span>
