@@ -37,7 +37,7 @@ const UserLayout = () => {
 
     // Main bottom bar links (always visible on mobile)
     const mainBottomLinks = [
-        { icon: Home, label: 'Profile', path: '/dashboard/profile' },
+        { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: ShoppingCart, label: 'Cart', path: '/cart' },
         { icon: Heart, label: 'Wishlist', path: '/wishlist' },
@@ -46,7 +46,7 @@ const UserLayout = () => {
 
     // All sidebar links (for desktop/tablet)
     const sidebarLinks = [
-        { icon: Home, label: 'Home', path: '/dashboard' },
+        { icon: User, label: 'Home', path: '/dashboard/profile' },
         { icon: ShoppingCart, label: 'Cart', path: '/dashboard/cart' },
         { icon: Heart, label: 'Wishlist', path: '/dashboard/wishlist' },
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
