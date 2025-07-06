@@ -42,7 +42,7 @@ const Categories = ({
                 {
                     desc &&
                     <div className="max-w-7xl mx-auto text-center mb-8 sm:mb-12">
-                        <h2 className="text sm:text text-gray-900 dark:text-white mb-3 sm:mb-4">{desc}</h2>
+                        <h2 className="text sm:text text-gray-900 dark:text-white mb-3 sm:mb-4 px-6">{desc}</h2>
                     </div>
                 }
                 {/* Horizontal scrollable container */}

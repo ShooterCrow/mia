@@ -107,7 +107,7 @@ const PromoCards = () => {
 
     return (
         <section
-            className="lg:max-w-7xl mx-auto mb-2 md:p-6 relative"
+            className="lg:max-w-7xl mx-auto mb-2 py-6 px-6 relative sm"
 
         >
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 sm:text-left">Promo Sales</h2>
