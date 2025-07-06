@@ -173,7 +173,7 @@ const Header = () => {
                             {/* Right Section */}
                             <div className="flex items-center gap-2 sm:gap-3 lg:gap-5">
                                 {/* Account Menu */}
-                                <Link to={"/dashboard"}>
+                                <Link to={"/dashboard/profile"}>
                                     <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
                                         <User className="w-4 h-4" />
                                         <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
