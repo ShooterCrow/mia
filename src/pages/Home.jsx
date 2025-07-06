@@ -176,7 +176,7 @@ function Home() {
             </section>
 
             {/* Advert Image */}
-            <section className='mx-auto py-3 max-w-7xl'>
+            <section className='mx-auto py-3 max-w-7xl px-4'>
                 <img className='mx-auto w-[100%] max-w-7xl' src='/Advert.png' />
             </section>
 
