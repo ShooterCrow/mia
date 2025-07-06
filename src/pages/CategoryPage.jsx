@@ -5,7 +5,8 @@ import ProductCard1 from "../components/cards/ProductCard1";
 import { sampleCategoryData } from "../constant/sampleCategoryData";
 
 const CategoryPage = () => {
-  const { categoryName } = useParams();
+  const { category: categoryName } = useParams();
+  console.log(categoryName)
   const [slug, setSlug] = useState("properties");
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
@@ -15,8 +16,9 @@ const CategoryPage = () => {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [verifiedFilter, setVerifiedFilter] = useState('all'); // New state
-  const [discountFilter, setDiscountFilter] = useState('all'); 
+  const [verifiedFilter, setVerifiedFilter] = useState('all');
+  const [discountFilter, setDiscountFilter] = useState('all');
+  const [allProducts, setAllProducts] = useState([]); // New state for all products
 
   const categories = [
     { value: "properties", label: "Properties" },
@@ -38,7 +40,7 @@ const CategoryPage = () => {
 
   // Function to convert URL slug to category value
   const urlSlugToCategoryValue = (urlSlug) => {
-    if (!urlSlug) return "properties";
+    if (!urlSlug) return null; // Return null for no category filter
     
     // Handle special cases for URL-friendly names
     const categoryMap = {
@@ -79,19 +81,44 @@ const CategoryPage = () => {
     return reverseMap[categoryValue] || categoryValue;
   };
 
+  // Load all products from all categories
+  useEffect(() => {
+    const loadAllProducts = () => {
+      let products = [];
+      Object.keys(sampleCategoryData).forEach(categoryKey => {
+        const categoryData = sampleCategoryData[categoryKey];
+        if (categoryData && categoryData.products) {
+          // Add category information to each product
+          const categoryProducts = categoryData.products.map(product => ({
+            ...product,
+            category: categoryKey,
+            categoryName: categoryData.name
+          }));
+          products = [...products, ...categoryProducts];
+        }
+      });
+      setAllProducts(products);
+    };
+
+    loadAllProducts();
+  }, []);
+
   // Update slug when URL parameter changes
   useEffect(() => {
     if (categoryName) {
       const mappedSlug = urlSlugToCategoryValue(categoryName);
       setSlug(mappedSlug);
-      
-      // Clear filters when category changes
-      setSelectedSubcategories([]);
-      setPriceRange({ min: "", max: "" });
-      setLocation("All country");
-       setVerifiedFilter('all');
-      setDiscountFilter('all');
+    } else {
+      // No category in URL, show all categories
+      setSlug(null);
     }
+    
+    // Clear other filters when category changes
+    setSelectedSubcategories([]);
+    setPriceRange({ min: "", max: "" });
+    setLocation("All country");
+    setVerifiedFilter('all');
+    setDiscountFilter('all');
   }, [categoryName]);
 
   useEffect(() => {
@@ -113,45 +140,56 @@ const CategoryPage = () => {
     fetchCountries();
   }, []);
 
-  const currentCategory = sampleCategoryData[slug] || {
-    name: slug.replace("-", " ").toUpperCase(),
-    subcategories: [],
-    products: [],
-  };
+  // Get current category data or create aggregate data for all categories
+  const currentCategory = slug ? 
+    sampleCategoryData[slug] || {
+      name: slug.replace("-", " ").toUpperCase(),
+      subcategories: [],
+      products: [],
+    } : {
+      name: "All Categories",
+      subcategories: [],
+      products: allProducts,
+    };
 
- const filteredProducts = currentCategory.products.filter((product) => {
-  const matchesSubcategory =
-    selectedSubcategories.length === 0 ||
-    selectedSubcategories.includes(product.subcategory);
-  
-  // Updated logic for verified sellers
-  const matchesVerified =
-    verifiedFilter === 'all' ||
-    (verifiedFilter === 'verified' && product.isVerified) ||
-    (verifiedFilter === 'unverified' && !product.isVerified);
-  
-  // Updated logic for discount
-  const matchesDiscount =
-    discountFilter === 'all' ||
-    (discountFilter === 'withDiscount' && product.price < 1000) ||
-    (discountFilter === 'withoutDiscount' && product.price >= 1000);
-  
-  const minPrice = parseFloat(priceRange.min);
-  const maxPrice = parseFloat(priceRange.max);
-  const matchesPrice =
-    (!isNaN(minPrice) ? product.price >= minPrice : true) &&
-    (!isNaN(maxPrice) ? product.price <= maxPrice : true);
-  const matchesLocation =
-    location === 'All country' || product.location.includes(location);
+  // Get available subcategories for the current category
+  const availableSubcategories = slug ? 
+    currentCategory.subcategories : 
+    [...new Set(allProducts.map(product => product.subcategory).filter(Boolean))];
 
-  return (
-    matchesSubcategory &&
-    matchesVerified &&
-    matchesDiscount &&
-    matchesPrice &&
-    matchesLocation
-  );
-});
+  // Enhanced filtering logic
+  const filteredProducts = currentCategory.products.filter((product) => {
+    const matchesSubcategory =
+      selectedSubcategories.length === 0 ||
+      selectedSubcategories.includes(product.subcategory);
+    
+    const matchesVerified =
+      verifiedFilter === 'all' ||
+      (verifiedFilter === 'verified' && product.isVerified) ||
+      (verifiedFilter === 'unverified' && !product.isVerified);
+    
+    const matchesDiscount =
+      discountFilter === 'all' ||
+      (discountFilter === 'withDiscount' && product.price < 1000) ||
+      (discountFilter === 'withoutDiscount' && product.price >= 1000);
+    
+    const minPrice = parseFloat(priceRange.min);
+    const maxPrice = parseFloat(priceRange.max);
+    const matchesPrice =
+      (!isNaN(minPrice) ? product.price >= minPrice : true) &&
+      (!isNaN(maxPrice) ? product.price <= maxPrice : true);
+    
+    const matchesLocation =
+      location === 'All country' || product.location.includes(location);
+
+    return (
+      matchesSubcategory &&
+      matchesVerified &&
+      matchesDiscount &&
+      matchesPrice &&
+      matchesLocation
+    );
+  });
 
   const handleSubcategoryChange = (subcategory) => {
     setSelectedSubcategories((prev) =>
@@ -162,19 +200,23 @@ const CategoryPage = () => {
   };
 
   const clearFilters = () => {
-  setSelectedSubcategories([]);
-  setPriceRange({ min: '', max: '' });
-  setLocation('All country');
-  setVerifiedFilter('all');
-  setDiscountFilter('all');
-  setIsMobileFilterOpen(false);
-};
+    setSelectedSubcategories([]);
+    setPriceRange({ min: '', max: '' });
+    setLocation('All country');
+    setVerifiedFilter('all');
+    setDiscountFilter('all');
+    setIsMobileFilterOpen(false);
+  };
 
   const handleCategoryChange = (newCategoryValue) => {
     setSlug(newCategoryValue);
     // Update URL to reflect the category change
-    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
-    window.history.pushState({}, '', `/category/${newUrlSlug}`);
+    if (newCategoryValue) {
+      const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
+      window.history.pushState({}, '', `/categories/${newUrlSlug}`);
+    } else {
+      window.history.pushState({}, '', '/categories');
+    }
     
     // Clear filters when category changes
     clearFilters();
@@ -201,230 +243,229 @@ const CategoryPage = () => {
   };
 
   const FilterContent = () => {
- 
-  const [verifiedFilter, setVerifiedFilter] = useState('all');
-  const [discountFilter, setDiscountFilter] = useState('all'); 
-
-  return (
-    <div className="space-y-6">
-      {/* Category Select */}
-      <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Category
-        </label>
-        <div className="relative">
-          <select
-            value={slug}
-            onChange={(e) => handleCategoryChange(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 bg-red-600 text-white font-bold appearance-none dark:bg-red-700"
-            aria-label="Select category"
-          >
-            {categories.map((category) => (
-              <option
-                key={category.value}
-                value={category.value}
-                className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-              >
-                {category.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none" size={16} />
-        </div>
-      </div>
-
-      {/* Subcategories */}
-      {currentCategory.subcategories.length > 0 && (
+    return (
+      <div className="space-y-6">
+        {/* Category Select */}
         <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {currentCategory.name}
-          </h3>
-          <div className="space-y-2 max-h-48 overflow-y-auto">
-            {(showMoreSubcategories
-              ? currentCategory.subcategories
-              : currentCategory.subcategories.slice(0, 5)
-            ).map((subcategory) => (
-              <label key={subcategory} className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={selectedSubcategories.includes(subcategory)}
-                  onChange={() => handleSubcategoryChange(subcategory)}
-                  className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
-                />
-                <span className="text-sm text-gray-700 dark:text-gray-300 leading-tight">
-                  {subcategory}
-                </span>
-              </label>
-            ))}
-          </div>
-          {currentCategory.subcategories.length > 5 && (
-            <button
-              onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
-              className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Category
+          </label>
+          <div className="relative">
+            <select
+              value={slug || ''}
+              onChange={(e) => handleCategoryChange(e.target.value || null)}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 bg-red-600 text-white font-bold appearance-none dark:bg-red-700"
+              aria-label="Select category"
             >
-              {showMoreSubcategories ? "Show less" : "Show more"}
-            </button>
+              <option value="" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+                All Categories
+              </option>
+              {categories.map((category) => (
+                <option
+                  key={category.value}
+                  value={category.value}
+                  className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                >
+                  {category.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none" size={16} />
+          </div>
+        </div>
+
+        {/* Subcategories */}
+        {availableSubcategories.length > 0 && (
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {slug ? currentCategory.name : 'Subcategories'}
+            </h3>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {(showMoreSubcategories
+                ? availableSubcategories
+                : availableSubcategories.slice(0, 5)
+              ).map((subcategory) => (
+                <label key={subcategory} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedSubcategories.includes(subcategory)}
+                    onChange={() => handleSubcategoryChange(subcategory)}
+                    className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-300 leading-tight">
+                    {subcategory}
+                  </span>
+                </label>
+              ))}
+            </div>
+            {availableSubcategories.length > 5 && (
+              <button
+                onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
+                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
+              >
+                {showMoreSubcategories ? "Show less" : "Show more"}
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Location */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Location</h3>
+          {loading ? (
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Loading countries...</p>
+          ) : error ? (
+            <div className="space-y-2">
+              <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>
+              <button
+                onClick={handleRetry}
+                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300"
+              >
+                Retry
+              </button>
+            </div>
+          ) : (
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+              aria-label="Select location"
+            >
+              <option value="All country">All country</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
           )}
         </div>
-      )}
 
-      {/* Location */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Location</h3>
-        {loading ? (
-          <p className="text-gray-500 dark:text-gray-400 text-sm">Loading countries...</p>
-        ) : error ? (
-          <div className="space-y-2">
-            <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>
-            <button
-              onClick={handleRetry}
-              className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300"
-            >
-              Retry
-            </button>
+        {/* Price Range */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</h3>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              placeholder="Min"
+              value={priceRange.min}
+              onChange={(e) =>
+                setPriceRange((prev) => ({
+                  ...prev,
+                  min: e.target.value,
+                }))
+              }
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+              aria-label="Minimum price"
+            />
+            <input
+              type="number"
+              placeholder="Max"
+              value={priceRange.max}
+              onChange={(e) =>
+                setPriceRange((prev) => ({
+                  ...prev,
+                  max: e.target.value,
+                }))
+              }
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+              aria-label="Maximum price"
+            />
           </div>
-        ) : (
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-            aria-label="Select location"
-          >
-            <option value="All country">All country</option>
-            {countries.map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
+        </div>
 
-      {/* Price Range */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</h3>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            placeholder="Min"
-            value={priceRange.min}
-            onChange={(e) =>
-              setPriceRange((prev) => ({
-                ...prev,
-                min: e.target.value,
-              }))
-            }
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-            aria-label="Minimum price"
-          />
-          <input
-            type="number"
-            placeholder="Max"
-            value={priceRange.max}
-            onChange={(e) =>
-              setPriceRange((prev) => ({
-                ...prev,
-                max: e.target.value,
-              }))
-            }
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-            aria-label="Maximum price"
-          />
+        {/* Verified Sellers */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Verified Sellers</h3>
+          <div className="space-y-2">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="verifiedFilter"
+                checked={verifiedFilter === 'all'}
+                onChange={() => setVerifiedFilter('all')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="verifiedFilter"
+                checked={verifiedFilter === 'verified'}
+                onChange={() => setVerifiedFilter('verified')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Verified only</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="verifiedFilter"
+                checked={verifiedFilter === 'unverified'}
+                onChange={() => setVerifiedFilter('unverified')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Unverified sellers</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Discount */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Discount</h3>
+          <div className="space-y-2">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="discountFilter"
+                checked={discountFilter === 'all'}
+                onChange={() => setDiscountFilter('all')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="discountFilter"
+                checked={discountFilter === 'withDiscount'}
+                onChange={() => setDiscountFilter('withDiscount')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">With discount</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                name="discountFilter"
+                checked={discountFilter === 'withoutDiscount'}
+                onChange={() => setDiscountFilter('withoutDiscount')}
+                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Without discount</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Clear Filters Button */}
+        <div className="flex justify-between pt-4">
+          <button
+            onClick={clearFilters}
+            className="font-medium text-sm text-gray-600 dark:text-gray-400 hover:text-red-700 transition-colors"
+          >
+            Clear
+          </button>
+          <button
+            onClick={() => setIsMobileFilterOpen(false)}
+            className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
+          >
+            Save
+          </button>
         </div>
       </div>
-
-      {/* Verified Sellers */}
-      <div className="mb-6 border-b border-gray-200 pb-4">
-        <h3 className="font-semibold text-gray-800 mb-3">Verified Sellers</h3>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'all'}
-            onChange={() => setVerifiedFilter('all')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Show all</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'verified'}
-            onChange={() => setVerifiedFilter('verified')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Verified only</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'unverified'}
-            onChange={() => setVerifiedFilter('unverified')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Unverified sellers</span>
-        </label>
-      </div>
-
-      {/* Discount */}
-      <div className="mb-6">
-        <h3 className="font-semibold text-gray-800 mb-3">Discount</h3>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'all'}
-            onChange={() => setDiscountFilter('all')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Show all</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'withDiscount'}
-            onChange={() => setDiscountFilter('withDiscount')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">With discount</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'withoutDiscount'}
-            onChange={() => setDiscountFilter('withoutDiscount')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Without discount</span>
-        </label>
-      </div>
-
-      {/* Clear Filters Button */}
-      <div className="flex justify-between pt-4">
-        <button
-          onClick={() => {
-            clearFilters();
-            setVerifiedFilter('all');
-            setDiscountFilter('all');
-          }}
-          className="font-medium text-sm hover:text-red-700 transition-colors"
-        >
-          Clear
-        </button>
-        <button
-          onClick={() => setIsMobileFilterOpen(false)}
-          className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
   // Show loading state while determining category from URL
   if (categoryName && !categories.find(cat => categoryValueToUrlSlug(cat.value) === categoryName)) {
@@ -446,8 +487,11 @@ const CategoryPage = () => {
     <div className="min-h-screen font-sans">
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="mb-1">
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+        <div className="flex items-center gap-3 mb-2">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {slug ? currentCategory.name : 'All Categories'}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
             {filteredProducts.length} products found
           </p>
         </div>
