@@ -54,7 +54,7 @@ function Home() {
                         {/* Content */}
                         <div className="relative z-10 flex flex-col items-center text-center">
                             <h1 className="text-4xl font-bold mb-6 leading-tight text-white">
-                                Discover Your Perfect Product <br /> Today
+                                Discover Your Perfect <br /> Product Today
                             </h1>
                             <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
                                 Discover the latest styles with our featured <br /> products and exclusive promotions.
