@@ -173,7 +173,7 @@ const Header = () => {
                             {/* Right Section */}
                             <div className="flex items-center gap-2 sm:gap-3 lg:gap-5">
                                 {/* Account Menu */}
-                                <Link to={"/login"}>
+                                <Link to={"/dashboard"}>
                                     <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
                                         <User className="w-4 h-4" />
                                         <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
@@ -291,7 +291,7 @@ const Header = () => {
                         <div className="px-4 py-4 space-y-5">
                             {/* Mobile Navigation Links */}
                             <nav className="flex items-center gap-6">
-                                <a href="#" className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</a>
+                                <Link to={"/"} className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</Link>
                             </nav>
                             <Dropdown />
 
@@ -302,7 +302,7 @@ const Header = () => {
                                 </h3>
 
                                 <div className="space-y-1">
-                                    <Link to={"/login"}>
+                                    <Link to={"/dashboard"}>
                                         <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
                                             <User className="w-4 h-4" />
                                             <span>My Account</span>
