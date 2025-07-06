@@ -54,10 +54,10 @@ function Home() {
                         {/* Content */}
                         <div className="relative z-10 flex flex-col items-center text-center">
                             <h1 className="text-4xl font-bold mb-6 leading-tight text-white">
-                                Discover Your Perfect Product Today
+                                Discover Your Perfect Product <br /> Today
                             </h1>
                             <p className="text-base mb-8 text-gray-300 px-4 leading-relaxed">
-                                Discover the latest styles with our featured products and exclusive promotions.
+                                Discover the latest styles with our featured <br /> products and exclusive promotions.
                             </p>
                             <PrimaryButton text={"Shop Now"} />
                         </div>
@@ -193,7 +193,7 @@ function Home() {
                 </div>
             </section>
             {/* Hero */}
-            <section className='max-w-7xl mx-auto my-10 py-10 px-4'>
+            <section className='max-w-7xl mx-auto py-5 px-4'>
                 <HeroSection image={"/Rectangle5.webp"} text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
                 <ProductCard1 products={products} />
             </section>

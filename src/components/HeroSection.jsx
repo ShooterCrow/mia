@@ -9,7 +9,7 @@ const HeroSection = ({text, btnTxt, border, image}) => {
         words.slice(13).join(" "),
     ];
     return (
-        <div className={`mt-5 max-w-7xl mx-auto relative gap-4 ${border && "rounded-lg"} flex flex-col h-[50vh] md:h-[80vh] justify-center items-center overflow-hidden bg-gradient-to-br from-red-400 to-red-600 dark:from-red-500 dark:to-red-700`}>
+        <div className={`mt-5 mb-5 max-w-7xl mx-auto relative gap-4 ${border && "rounded-lg"} flex flex-col h-[50vh] md:h-[80vh] justify-center items-center overflow-hidden bg-gradient-to-br from-red-400 to-red-600 dark:from-red-500 dark:to-red-700`}>
             {/* Background Image */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out"
