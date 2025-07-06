@@ -446,10 +446,7 @@ const CategoryPage = () => {
     <div className="min-h-screen font-sans">
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-            {categories.find(cat => cat.value === slug)?.label || currentCategory.name}
-          </h1>
+        <div className="mb-1">
           <p className="text-gray-600 dark:text-gray-400 mt-2">
             {filteredProducts.length} products found
           </p>

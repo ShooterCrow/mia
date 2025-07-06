@@ -134,15 +134,18 @@ const Header = () => {
                                     <select
                                         className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]"
                                         onChange={(e) => {
-                                            if (e.target.value && e.target.value !== 'Categories') {
-                                                navigate(`/categories/${e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`);
+                                            const value = e.target.value;
+                                            if (value) {
+                                                if (value === 'Categories') {
+                                                    navigate('/categories');
+                                                } else {
+                                                    navigate(`/categories/${value.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`);
+                                                }
                                             }
                                         }}
                                         defaultValue="Categories"
                                     >
-                                        <Link to={"/categories"}>
-                                            <option value="Categories">Categories</option>
-                                        </Link>
+                                        <option value="Categories">Categories</option>
                                         <option value="Vehicles">Vehicles</option>
                                         <option value="Cloth & Fashion">Cloth & Fashion</option>
                                         <option value="Accessories">Accessories</option>
@@ -152,6 +155,7 @@ const Header = () => {
                                         <option value="Health & Beauty">Health & Beauty</option>
                                     </select>
                                 </div>
+
                             </div>
 
                             {/* Search Bar */}

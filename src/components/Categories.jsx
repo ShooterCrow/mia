@@ -31,7 +31,7 @@ const Categories = ({
     const categoriesToUse = categories.length > 0 ? categories : defaultCategories;
 
     return (
-        <section className={`py-5 bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
+        <section className={`py-5 bg-white dark:bg-gray-900 transition-colors duration-200 ${className} max-w-7xl sm:px-4 mx-auto`}>
             <div className="w-[100%] mx-auto">
                 {title &&
                     <div className="text-center">
@@ -45,8 +45,8 @@ const Categories = ({
                     </div>
                 }
                 {/* Horizontal scrollable container */}
-                <div className="overflow-x-auto mx-auto pb-4 px-20">
-                    <div className="flex gap-5 sm:gap-6 w-[100%] px-4 sm:px-0 justify-center">
+                <div className="overflow-x-auto mx-auto pb-4">
+                    <div className="flex gap-5 sm:gap-6 max-w-7xl px-4 sm:px-6 lg:px-5 justify-start min-w-max">
                         {categoriesToUse.map((category, index) => (
                             <div
                                 key={index}
@@ -64,12 +64,10 @@ const Categories = ({
                                         />
                                     </div>
                                 </div>
-
                                 {/* Category name */}
                                 <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium leading-tight px-1 whitespace-nowrap">
                                     {category.name}
                                 </p>
-
                                 {/* Selection indicator line - RED for selected */}
                                 {
                                     underline &&
