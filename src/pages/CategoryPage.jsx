@@ -11,12 +11,12 @@ const CategoryPage = () => {
   const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
   const [location, setLocation] = useState("All country");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
-  const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
-  const [showDiscountOnly, setShowDiscountOnly] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [verifiedFilter, setVerifiedFilter] = useState('all'); // New state
+  const [discountFilter, setDiscountFilter] = useState('all'); 
 
   const categories = [
     { value: "properties", label: "Properties" },
@@ -89,8 +89,8 @@ const CategoryPage = () => {
       setSelectedSubcategories([]);
       setPriceRange({ min: "", max: "" });
       setLocation("All country");
-      setShowVerifiedOnly(false);
-      setShowDiscountOnly(false);
+       setVerifiedFilter('all');
+      setDiscountFilter('all');
     }
   }, [categoryName]);
 
@@ -119,28 +119,39 @@ const CategoryPage = () => {
     products: [],
   };
 
-  const filteredProducts = currentCategory.products.filter((product) => {
-    const matchesSubcategory =
-      selectedSubcategories.length === 0 ||
-      selectedSubcategories.includes(product.subcategory);
-    const matchesVerified = !showVerifiedOnly || product.isVerified;
-    const matchesDiscount = !showDiscountOnly || product.price < 1000;
-    const minPrice = parseFloat(priceRange.min);
-    const maxPrice = parseFloat(priceRange.max);
-    const matchesPrice =
-      (!isNaN(minPrice) ? product.price >= minPrice : true) &&
-      (!isNaN(maxPrice) ? product.price <= maxPrice : true);
-    const matchesLocation =
-      location === "All country" || product.location.includes(location);
+ const filteredProducts = currentCategory.products.filter((product) => {
+  const matchesSubcategory =
+    selectedSubcategories.length === 0 ||
+    selectedSubcategories.includes(product.subcategory);
+  
+  // Updated logic for verified sellers
+  const matchesVerified =
+    verifiedFilter === 'all' ||
+    (verifiedFilter === 'verified' && product.isVerified) ||
+    (verifiedFilter === 'unverified' && !product.isVerified);
+  
+  // Updated logic for discount
+  const matchesDiscount =
+    discountFilter === 'all' ||
+    (discountFilter === 'withDiscount' && product.price < 1000) ||
+    (discountFilter === 'withoutDiscount' && product.price >= 1000);
+  
+  const minPrice = parseFloat(priceRange.min);
+  const maxPrice = parseFloat(priceRange.max);
+  const matchesPrice =
+    (!isNaN(minPrice) ? product.price >= minPrice : true) &&
+    (!isNaN(maxPrice) ? product.price <= maxPrice : true);
+  const matchesLocation =
+    location === 'All country' || product.location.includes(location);
 
-    return (
-      matchesSubcategory &&
-      matchesVerified &&
-      matchesDiscount &&
-      matchesPrice &&
-      matchesLocation
-    );
-  });
+  return (
+    matchesSubcategory &&
+    matchesVerified &&
+    matchesDiscount &&
+    matchesPrice &&
+    matchesLocation
+  );
+});
 
   const handleSubcategoryChange = (subcategory) => {
     setSelectedSubcategories((prev) =>
@@ -151,13 +162,13 @@ const CategoryPage = () => {
   };
 
   const clearFilters = () => {
-    setSelectedSubcategories([]);
-    setPriceRange({ min: "", max: "" });
-    setLocation("All country");
-    setShowVerifiedOnly(false);
-    setShowDiscountOnly(false);
-    setIsMobileFilterOpen(false);
-  };
+  setSelectedSubcategories([]);
+  setPriceRange({ min: '', max: '' });
+  setLocation('All country');
+  setVerifiedFilter('all');
+  setDiscountFilter('all');
+  setIsMobileFilterOpen(false);
+};
 
   const handleCategoryChange = (newCategoryValue) => {
     setSlug(newCategoryValue);
@@ -189,7 +200,12 @@ const CategoryPage = () => {
       });
   };
 
-  const FilterContent = () => (
+  const FilterContent = () => {
+ 
+  const [verifiedFilter, setVerifiedFilter] = useState('all');
+  const [discountFilter, setDiscountFilter] = useState('all'); 
+
+  return (
     <div className="space-y-6">
       {/* Category Select */}
       <div className="space-y-3">
@@ -322,27 +338,30 @@ const CategoryPage = () => {
         <h3 className="font-semibold text-gray-800 mb-3">Verified Sellers</h3>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showVerifiedOnly}
-            onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+            type="radio"
+            name="verifiedFilter"
+            checked={verifiedFilter === 'all'}
+            onChange={() => setVerifiedFilter('all')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">Show all</span>
         </label>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showVerifiedOnly}
-            onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+            type="radio"
+            name="verifiedFilter"
+            checked={verifiedFilter === 'verified'}
+            onChange={() => setVerifiedFilter('verified')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">Verified only</span>
         </label>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showVerifiedOnly}
-            onChange={(e) => setShowVerifiedOnly(e.target.checked)}
+            type="radio"
+            name="verifiedFilter"
+            checked={verifiedFilter === 'unverified'}
+            onChange={() => setVerifiedFilter('unverified')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">Unverified sellers</span>
@@ -354,27 +373,30 @@ const CategoryPage = () => {
         <h3 className="font-semibold text-gray-800 mb-3">Discount</h3>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showDiscountOnly}
-            onChange={(e) => setShowDiscountOnly(e.target.checked)}
+            type="radio"
+            name="discountFilter"
+            checked={discountFilter === 'all'}
+            onChange={() => setDiscountFilter('all')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">Show all</span>
         </label>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showDiscountOnly}
-            onChange={(e) => setShowDiscountOnly(e.target.checked)}
+            type="radio"
+            name="discountFilter"
+            checked={discountFilter === 'withDiscount'}
+            onChange={() => setDiscountFilter('withDiscount')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">With discount</span>
         </label>
         <label className="flex items-center">
           <input
-            type="checkbox"
-            checked={showDiscountOnly}
-            onChange={(e) => setShowDiscountOnly(e.target.checked)}
+            type="radio"
+            name="discountFilter"
+            checked={discountFilter === 'withoutDiscount'}
+            onChange={() => setDiscountFilter('withoutDiscount')}
             className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
           />
           <span className="ml-2 text-sm text-gray-700">Without discount</span>
@@ -384,13 +406,17 @@ const CategoryPage = () => {
       {/* Clear Filters Button */}
       <div className="flex justify-between pt-4">
         <button
-          onClick={clearFilters}
+          onClick={() => {
+            clearFilters();
+            setVerifiedFilter('all');
+            setDiscountFilter('all');
+          }}
           className="font-medium text-sm hover:text-red-700 transition-colors"
         >
           Clear
         </button>
         <button
-          onClick={clearFilters}
+          onClick={() => setIsMobileFilterOpen(false)}
           className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
         >
           Save
@@ -398,6 +424,7 @@ const CategoryPage = () => {
       </div>
     </div>
   );
+};
 
   // Show loading state while determining category from URL
   if (categoryName && !categories.find(cat => categoryValueToUrlSlug(cat.value) === categoryName)) {
