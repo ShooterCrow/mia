@@ -37,7 +37,7 @@ const UserLayout = () => {
 
     // Main bottom bar links (always visible on mobile)
     const mainBottomLinks = [
-        { icon: Home, label: 'Home', path: '/dashboard' },
+        { icon: Home, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: ShoppingCart, label: 'Cart', path: '/cart' },
         { icon: Heart, label: 'Wishlist', path: '/wishlist' },
