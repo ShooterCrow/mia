@@ -4,9 +4,272 @@ import { ChevronDown, Filter, X } from 'lucide-react';
 import ProductCard1 from "../components/cards/ProductCard1";
 import { sampleCategoryData } from "../constant/sampleCategoryData";
 
+// Define FilterContent outside CategoryPage to ensure stability
+const FilterContent = ({
+  slug,
+  setSlug,
+  categories,
+  currentCategory,
+  selectedSubcategories,
+  setSelectedSubcategories,
+  showMoreSubcategories,
+  setShowMoreSubcategories,
+  location,
+  setLocation,
+  priceRange,
+  setPriceRange,
+  loading,
+  error,
+  countries,
+  handleRetry,
+  handleCategoryChange,
+  handleSubcategoryChange,
+  verifiedFilter,
+  setVerifiedFilter,
+  discountFilter,
+  setDiscountFilter,
+  clearFilters,
+  setIsMobileFilterOpen,
+}) => {
+  return (
+    <div className="space-y-6">
+      {/* Category Select */}
+      <div className="space-y-3">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Category
+        </label>
+        <div className="relative">
+          <select
+            value={slug}
+            onChange={(e) => handleCategoryChange(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 bg-red-600 text-white font-bold appearance-none dark:bg-red-700"
+            aria-label="Select category"
+          >
+            {categories.map((category) => (
+              <option
+                key={category.value}
+                value={category.value}
+                className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              >
+                {category.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none"
+            size={16}
+          />
+        </div>
+      </div>
+
+      {/* Subcategories */}
+      {currentCategory.subcategories.length > 0 && (
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {currentCategory.name}
+          </h3>
+          <div className="space-y-2 max-h-48 overflow-y-auto">
+            {(showMoreSubcategories
+              ? currentCategory.subcategories
+              : currentCategory.subcategories.slice(0, 5)
+            ).map((subcategory) => (
+              <label
+                key={subcategory}
+                className="flex items-center space-x-2 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedSubcategories.includes(subcategory)}
+                  onChange={() => handleSubcategoryChange(subcategory)}
+                  className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
+                />
+                <span className="text-sm text-gray-700 dark:text-gray-300 leading-tight">
+                  {subcategory}
+                </span>
+              </label>
+            ))}
+            {currentCategory.subcategories.length > 5 && (
+              <button
+                onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
+                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
+              >
+                {showMoreSubcategories ? "Show less" : "Show more"}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Location */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Location</h3>
+        {loading ? (
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Loading countries...</p>
+        ) : error ? (
+          <div className="space-y-2">
+            <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>
+            <button
+              onClick={handleRetry}
+              className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+            aria-label="Select location"
+          >
+            <option value="All country">All country</option>
+            {countries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      {/* Price Range */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</h3>
+        <div className="flex gap-2">
+          <input
+            type="number"
+            placeholder="Min"
+            value={priceRange.min}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+                setPriceRange((prev) => ({
+                  ...prev,
+                  min: value,
+                }));
+              }
+            }}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+            aria-label="Minimum price"
+            min="0"
+            step="0.01"
+          />
+          <input
+            type="number"
+            placeholder="Max"
+            value={priceRange.max}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+                setPriceRange((prev) => ({
+                  ...prev,
+                  max: value,
+                }));
+              }
+            }}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
+            aria-label="Maximum price"
+            min="0"
+            step="0.01"
+          />
+        </div>
+      </div>
+
+      {/* Verified Sellers */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Verified Sellers</h3>
+        <div className="space-y-2">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'all'}
+              onChange={() => setVerifiedFilter('all')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'verified'}
+              onChange={() => setVerifiedFilter('verified')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Verified only</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'unverified'}
+              onChange={() => setVerifiedFilter('unverified')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Unverified sellers</span>
+          </label>
+        </div>
+      </div>
+
+      {/* Discount */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Discount</h3>
+        <div className="space-y-2">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'all'}
+              onChange={() => setDiscountFilter('all')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'withDiscount'}
+              onChange={() => setDiscountFilter('withDiscount')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">With discount</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'withoutDiscount'}
+              onChange={() => setDiscountFilter('withoutDiscount')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Without discount</span>
+          </label>
+        </div>
+      </div>
+
+      {/* Clear Filters Button */}
+      <div className="flex justify-between pt-4">
+        <button
+          onClick={clearFilters}
+          className="font-medium text-sm text-gray-600 dark:text-gray-400 hover:text-red-700 transition-colors"
+        >
+          Clear
+        </button>
+        <button
+          onClick={() => setIsMobileFilterOpen(false)}
+          className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const CategoryPage = () => {
   const { category: categoryName } = useParams();
-  console.log(categoryName)
   const [slug, setSlug] = useState("properties");
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
@@ -18,7 +281,6 @@ const CategoryPage = () => {
   const [error, setError] = useState(null);
   const [verifiedFilter, setVerifiedFilter] = useState('all');
   const [discountFilter, setDiscountFilter] = useState('all');
-  const [allProducts, setAllProducts] = useState([]); // New state for all products
 
   const categories = [
     { value: "properties", label: "Properties" },
@@ -38,11 +300,9 @@ const CategoryPage = () => {
     { value: "repair-construction", label: "Repair & Construction" },
   ];
 
-  // Function to convert URL slug to category value
   const urlSlugToCategoryValue = (urlSlug) => {
-    if (!urlSlug) return null; // Return null for no category filter
+    if (!urlSlug) return "properties";
     
-    // Handle special cases for URL-friendly names
     const categoryMap = {
       "cloth-and-fashion": "fashion",
       "health-and-beauty": "healthBeauty",
@@ -55,16 +315,9 @@ const CategoryPage = () => {
       "repair-construction": "repairConstruction",
     };
 
-    // Check if it's a special case
-    if (categoryMap[urlSlug]) {
-      return categoryMap[urlSlug];
-    }
-
-    // For regular cases, just return the slug as is
-    return urlSlug;
+    return categoryMap[categoryName] || urlSlug;
   };
 
-  // Function to convert category value to URL slug
   const categoryValueToUrlSlug = (categoryValue) => {
     const reverseMap = {
       "fashion": "cloth-and-fashion",
@@ -81,44 +334,17 @@ const CategoryPage = () => {
     return reverseMap[categoryValue] || categoryValue;
   };
 
-  // Load all products from all categories
-  useEffect(() => {
-    const loadAllProducts = () => {
-      let products = [];
-      Object.keys(sampleCategoryData).forEach(categoryKey => {
-        const categoryData = sampleCategoryData[categoryKey];
-        if (categoryData && categoryData.products) {
-          // Add category information to each product
-          const categoryProducts = categoryData.products.map(product => ({
-            ...product,
-            category: categoryKey,
-            categoryName: categoryData.name
-          }));
-          products = [...products, ...categoryProducts];
-        }
-      });
-      setAllProducts(products);
-    };
-
-    loadAllProducts();
-  }, []);
-
-  // Update slug when URL parameter changes
   useEffect(() => {
     if (categoryName) {
       const mappedSlug = urlSlugToCategoryValue(categoryName);
       setSlug(mappedSlug);
-    } else {
-      // No category in URL, show all categories
-      setSlug(null);
+      
+      setSelectedSubcategories([]);
+      setPriceRange({ min: "", max: "" });
+      setLocation("All country");
+      setVerifiedFilter('all');
+      setDiscountFilter('all');
     }
-    
-    // Clear other filters when category changes
-    setSelectedSubcategories([]);
-    setPriceRange({ min: "", max: "" });
-    setLocation("All country");
-    setVerifiedFilter('all');
-    setDiscountFilter('all');
   }, [categoryName]);
 
   useEffect(() => {
@@ -140,24 +366,12 @@ const CategoryPage = () => {
     fetchCountries();
   }, []);
 
-  // Get current category data or create aggregate data for all categories
-  const currentCategory = slug ? 
-    sampleCategoryData[slug] || {
-      name: slug.replace("-", " ").toUpperCase(),
-      subcategories: [],
-      products: [],
-    } : {
-      name: "All Categories",
-      subcategories: [],
-      products: allProducts,
-    };
+  const currentCategory = sampleCategoryData[slug] || {
+    name: slug.replace("-", " ").toUpperCase(),
+    subcategories: [],
+    products: [],
+  };
 
-  // Get available subcategories for the current category
-  const availableSubcategories = slug ? 
-    currentCategory.subcategories : 
-    [...new Set(allProducts.map(product => product.subcategory).filter(Boolean))];
-
-  // Enhanced filtering logic
   const filteredProducts = currentCategory.products.filter((product) => {
     const matchesSubcategory =
       selectedSubcategories.length === 0 ||
@@ -203,22 +417,16 @@ const CategoryPage = () => {
     setSelectedSubcategories([]);
     setPriceRange({ min: '', max: '' });
     setLocation('All country');
-    setVerifiedFilter('all');
-    setDiscountFilter('all');
+    setVerifiedFilter('all setDiscountFilter);
+    setDiscount('all');
     setIsMobileFilterOpen(false);
   };
 
   const handleCategoryChange = (newCategoryValue) => {
     setSlug(newCategoryValue);
-    // Update URL to reflect the category change
-    if (newCategoryValue) {
-      const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
-      window.history.pushState({}, '', `/categories/${newUrlSlug}`);
-    } else {
-      window.history.pushState({}, '', '/categories');
-    }
+    const newUrlSlug = categoryValueToCategoryValue);
+    window.history.pushState({}, '', `/category/${newUrlSlug}`);
     
-    // Clear filters when category changes
     clearFilters();
   };
 
@@ -240,254 +448,13 @@ const CategoryPage = () => {
         console.error(err);
         setLoading(false);
       });
-  };
-
-  const FilterContent = () => {
-    return (
-      <div className="space-y-6">
-        {/* Category Select */}
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Category
-          </label>
-          <div className="relative">
-            <select
-              value={slug || ''}
-              onChange={(e) => handleCategoryChange(e.target.value || null)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 bg-red-600 text-white font-bold appearance-none dark:bg-red-700"
-              aria-label="Select category"
-            >
-              <option value="" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-                All Categories
-              </option>
-              {categories.map((category) => (
-                <option
-                  key={category.value}
-                  value={category.value}
-                  className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                >
-                  {category.label}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none" size={16} />
-          </div>
-        </div>
-
-        {/* Subcategories */}
-        {availableSubcategories.length > 0 && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {slug ? currentCategory.name : 'Subcategories'}
-            </h3>
-            <div className="space-y-2 max-h-48 overflow-y-auto">
-              {(showMoreSubcategories
-                ? availableSubcategories
-                : availableSubcategories.slice(0, 5)
-              ).map((subcategory) => (
-                <label key={subcategory} className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={selectedSubcategories.includes(subcategory)}
-                    onChange={() => handleSubcategoryChange(subcategory)}
-                    className="w-4 h-4 text-red-600 border-gray-300 dark:border-gray-600 rounded focus:ring-red-500 dark:bg-gray-700"
-                  />
-                  <span className="text-sm text-gray-700 dark:text-gray-300 leading-tight">
-                    {subcategory}
-                  </span>
-                </label>
-              ))}
-            </div>
-            {availableSubcategories.length > 5 && (
-              <button
-                onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
-                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
-              >
-                {showMoreSubcategories ? "Show less" : "Show more"}
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Location */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Location</h3>
-          {loading ? (
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Loading countries...</p>
-          ) : error ? (
-            <div className="space-y-2">
-              <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>
-              <button
-                onClick={handleRetry}
-                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300"
-              >
-                Retry
-              </button>
-            </div>
-          ) : (
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-              aria-label="Select location"
-            >
-              <option value="All country">All country</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        {/* Price Range */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Price</h3>
-          <div className="flex gap-2">
-            <input
-              type="number"
-              placeholder="Min"
-              value={priceRange.min}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  min: e.target.value,
-                }))
-              }
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-              aria-label="Minimum price"
-            />
-            <input
-              type="number"
-              placeholder="Max"
-              value={priceRange.max}
-              onChange={(e) =>
-                setPriceRange((prev) => ({
-                  ...prev,
-                  max: e.target.value,
-                }))
-              }
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
-              aria-label="Maximum price"
-            />
-          </div>
-        </div>
-
-        {/* Verified Sellers */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Verified Sellers</h3>
-          <div className="space-y-2">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="verifiedFilter"
-                checked={verifiedFilter === 'all'}
-                onChange={() => setVerifiedFilter('all')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="verifiedFilter"
-                checked={verifiedFilter === 'verified'}
-                onChange={() => setVerifiedFilter('verified')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Verified only</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="verifiedFilter"
-                checked={verifiedFilter === 'unverified'}
-                onChange={() => setVerifiedFilter('unverified')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Unverified sellers</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Discount */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Discount</h3>
-          <div className="space-y-2">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="discountFilter"
-                checked={discountFilter === 'all'}
-                onChange={() => setDiscountFilter('all')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="discountFilter"
-                checked={discountFilter === 'withDiscount'}
-                onChange={() => setDiscountFilter('withDiscount')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">With discount</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="discountFilter"
-                checked={discountFilter === 'withoutDiscount'}
-                onChange={() => setDiscountFilter('withoutDiscount')}
-                className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-              />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Without discount</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Clear Filters Button */}
-        <div className="flex justify-between pt-4">
-          <button
-            onClick={clearFilters}
-            className="font-medium text-sm text-gray-600 dark:text-gray-400 hover:text-red-700 transition-colors"
-          >
-            Clear
-          </button>
-          <button
-            onClick={() => setIsMobileFilterOpen(false)}
-            className="text-red-600 font-medium text-sm hover:text-red-700 transition-colors"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  // Show loading state while determining category from URL
-  if (categoryName && !categories.find(cat => categoryValueToUrlSlug(cat.value) === categoryName)) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Category Not Found
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            The category "{categoryName}" does not exist.
-          </p>
-        </div>
-      </div>
-    );
-  }
+    });
 
   return (
     <div className="min-h-screen font-sans">
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-4">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {slug ? currentCategory.name : 'All Categories'}
           </h1>
@@ -510,24 +477,44 @@ const CategoryPage = () => {
 
           {/* Desktop Sidebar */}
           <div className="hidden lg:block lg:w-1/4">
-            <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
-              <FilterContent />
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+              <FilterContent
+                slug={slug}
+                setSlug={setSlug}
+                categories={categories}
+                currentCategory={currentCategory}
+                selectedSubcategories={selectedSubcategories}
+                setSelectedSubcategories={setSelectedSubcategories}
+                showMoreSubcategories={showMoreSubcategories}
+                setShowMoreSubcategories={setShowMoreSubcategories}
+                location={location}
+                setLocation={setLocation}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                loading={loading}
+                error={error}
+                countries={countries}
+                handleRetry={handleRetry}
+                handleCategoryChange={handleCategoryChange}
+                handleSubcategoryChange={handleSubcategoryChange}
+                verifiedFilter={verifiedFilter}
+                setVerifiedFilter={setVerifiedFilter}
+                discountFilter={discountFilter}
+                setDiscountFilter={setDiscountFilter}
+                clearFilters={clearFilters}
+                setIsMobileFilterOpen={setIsMobileFilterOpen}
+              />
             </div>
-          </div>
 
           {/* Mobile Sidebar Overlay */}
           {isMobileFilterOpen && (
             <div className="lg:hidden fixed inset-0 z-50 flex">
-              {/* Backdrop */}
               <div
                 className="fixed inset-0 bg-black bg-opacity-50"
                 onClick={() => setIsMobileFilterOpen(false)}
               />
-              
-              {/* Sidebar */}
-              <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm ml-auto h-full overflow-y-auto">
+              <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm ml-auto h-full shadow-sm">
                 <div className="p-6">
-                  {/* Header */}
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                       Filters
@@ -539,38 +526,61 @@ const CategoryPage = () => {
                       <X size={20} className="text-gray-500 dark:text-gray-400" />
                     </button>
                   </div>
-                  
-                  {/* Filter Content */}
-                  <FilterContent />
+                  <FilterContent
+                    slug={slug}
+                    category={categories}
+                    currentCategory={currentCategory}
+                    selectedSubcategories={selectedSubcategories}
+                    setSelectedCategorycategories={setSelectedSubcategories}
+                    showMoreSubcategory={showMoreSubcategories}
+                    setShowMoreSubcategories={setShowMoreSubcategories}
+                    location={locationName}
+                    setLocation={setLocation}
+                    priceRange={priceRange}
+                    setPriceRange={setPriceRange}
+                    loading={loading}
+                    error={error}
+                    countries={countries}
+                    handleRetry={handleRetry}
+                    handleCategoryChange={CategoryChange}
+                    handleSubcategoryChange={handleSubcategoryChange}
+                    verifiedFilter={verifiedFilter}
+                    setVerifiedFilter={setVerifiedFilter}
+                    discountFilter={discountFilter}
+                    setDiscountFilter={setDiscountFilter}
+                    clearFilters={clearFilters}
+                    setIsMobileFilterOpen={setIsMobileFilterOpen}
+                  />
                 </div>
-              </div>
+              ))}
             </div>
-          )}
 
           {/* Products Grid */}
-          <div className="lg:w-3/4 w-full">
-            {filteredProducts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400 text-lg">
-                  No products found matching your criteria.
-                </p>
-                <button
-                  onClick={clearFilters}
-                  className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Clear Filters
-                </button>
-              </div>
-            ) : (
-              <ProductCard1
-                products={filteredProducts.map((product) => ({
-                  ...product,
-                  price: `${product.price.toFixed(2)}`,
-                }))}
-                showTwoOnMobile={false}
-              />
-            )}
-          </div>
+            <div className="lg:w-3/4 w-full">
+              {filteredProducts.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 dark:text-gray-400 text-lg">
+                    No products found matching your criteria.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              ) : (
+                <ProductCard1
+                  products={filteredProducts.map((product) => ({
+                    ...product,
+                    price: `${product.price.toFixed(2)}`,
+                  }))}
+                  showTwoOnMobile={false}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
