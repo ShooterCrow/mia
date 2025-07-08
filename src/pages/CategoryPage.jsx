@@ -4,207 +4,33 @@ import { ChevronDown, Filter, X } from 'lucide-react';
 import ProductCard1 from "../components/cards/ProductCard1";
 import { sampleCategoryData } from "../constant/sampleCategoryData";
 
-const CategoryPage = () => {
-  const { categoryName } = useParams();
-  const [slug, setSlug] = useState("properties");
-  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
-  const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
-  const [location, setLocation] = useState("All country");
-  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [countries, setCountries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [verifiedFilter, setVerifiedFilter] = useState('all'); // New state
-  const [discountFilter, setDiscountFilter] = useState('all'); 
-
-  const categories = [
-    { value: "properties", label: "Properties" },
-    { value: "vehicles", label: "Vehicles" },
-    { value: "gadgets", label: "Gadgets" },
-    { value: "electronics", label: "Electronics" },
-    { value: "home-furniture", label: "Home Furniture & Appliances" },
-    { value: "health-and-beauty", label: "Health & Beauty" },
-    { value: "cloth-and-fashion", label: "Cloth & Fashion" },
-    { value: "accessories", label: "Accessories" },
-    { value: "supermarket", label: "Supermarket" },
-    { value: "sports-arts", label: "Sports, Arts & Outdoors" },
-    { value: "babies-kids", label: "Babies & Kids" },
-    { value: "animals-pets", label: "Animals & Pets" },
-    { value: "agriculture-food", label: "Agriculture & Food" },
-    { value: "equipment-tools", label: "Equipment & Tools" },
-    { value: "repair-construction", label: "Repair & Construction" },
-  ];
-
-  // Function to convert URL slug to category value
-  const urlSlugToCategoryValue = (urlSlug) => {
-    if (!urlSlug) return "properties";
-    
-    // Handle special cases for URL-friendly names
-    const categoryMap = {
-      "cloth-and-fashion": "fashion",
-      "health-and-beauty": "healthBeauty",
-      "home-furniture": "homeFurniture",
-      "sports-arts": "sportsArts",
-      "babies-kids": "babiesKids",
-      "animals-pets": "animalsPets",
-      "agriculture-food": "agricultureFood",
-      "equipment-tools": "equipmentTools",
-      "repair-construction": "repairConstruction",
-    };
-
-    // Check if it's a special case
-    if (categoryMap[urlSlug]) {
-      return categoryMap[urlSlug];
-    }
-
-    // For regular cases, just return the slug as is
-    return urlSlug;
-  };
-
-  // Function to convert category value to URL slug
-  const categoryValueToUrlSlug = (categoryValue) => {
-    const reverseMap = {
-      "fashion": "cloth-and-fashion",
-      "healthBeauty": "health-and-beauty",
-      "homeFurniture": "home-furniture",
-      "sportsArts": "sports-arts",
-      "babiesKids": "babies-kids",
-      "animalsPets": "animals-pets",
-      "agricultureFood": "agriculture-food",
-      "equipmentTools": "equipment-tools",
-      "repairConstruction": "repair-construction",
-    };
-
-    return reverseMap[categoryValue] || categoryValue;
-  };
-
-  // Update slug when URL parameter changes
-  useEffect(() => {
-    if (categoryName) {
-      const mappedSlug = urlSlugToCategoryValue(categoryName);
-      setSlug(mappedSlug);
-      
-      // Clear filters when category changes
-      setSelectedSubcategories([]);
-      setPriceRange({ min: "", max: "" });
-      setLocation("All country");
-       setVerifiedFilter('all');
-      setDiscountFilter('all');
-    }
-  }, [categoryName]);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("https://restcountries.com/v3.1/region/africa");
-        if (!response.ok) throw new Error("Failed to fetch African countries");
-        const data = await response.json();
-        const countryNames = data.map((country) => country.name.common).sort();
-        setCountries(countryNames);
-      } catch (err) {
-        setError("Unable to load countries. Please try again later.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCountries();
-  }, []);
-
-  const currentCategory = sampleCategoryData[slug] || {
-    name: slug.replace("-", " ").toUpperCase(),
-    subcategories: [],
-    products: [],
-  };
-
- const filteredProducts = currentCategory.products.filter((product) => {
-  const matchesSubcategory =
-    selectedSubcategories.length === 0 ||
-    selectedSubcategories.includes(product.subcategory);
-  
-  // Updated logic for verified sellers
-  const matchesVerified =
-    verifiedFilter === 'all' ||
-    (verifiedFilter === 'verified' && product.isVerified) ||
-    (verifiedFilter === 'unverified' && !product.isVerified);
-  
-  // Updated logic for discount
-  const matchesDiscount =
-    discountFilter === 'all' ||
-    (discountFilter === 'withDiscount' && product.price < 1000) ||
-    (discountFilter === 'withoutDiscount' && product.price >= 1000);
-  
-  const minPrice = parseFloat(priceRange.min);
-  const maxPrice = parseFloat(priceRange.max);
-  const matchesPrice =
-    (!isNaN(minPrice) ? product.price >= minPrice : true) &&
-    (!isNaN(maxPrice) ? product.price <= maxPrice : true);
-  const matchesLocation =
-    location === 'All country' || product.location.includes(location);
-
-  return (
-    matchesSubcategory &&
-    matchesVerified &&
-    matchesDiscount &&
-    matchesPrice &&
-    matchesLocation
-  );
-});
-
-  const handleSubcategoryChange = (subcategory) => {
-    setSelectedSubcategories((prev) =>
-      prev.includes(subcategory)
-        ? prev.filter((item) => item !== subcategory)
-        : [...prev, subcategory]
-    );
-  };
-
-  const clearFilters = () => {
-  setSelectedSubcategories([]);
-  setPriceRange({ min: '', max: '' });
-  setLocation('All country');
-  setVerifiedFilter('all');
-  setDiscountFilter('all');
-  setIsMobileFilterOpen(false);
-};
-
-  const handleCategoryChange = (newCategoryValue) => {
-    setSlug(newCategoryValue);
-    // Update URL to reflect the category change
-    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
-    window.history.pushState({}, '', `/category/${newUrlSlug}`);
-    
-    // Clear filters when category changes
-    clearFilters();
-  };
-
-  const handleRetry = () => {
-    setError(null);
-    setLoading(true);
-    fetch("https://restcountries.com/v3.1/region/africa")
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch African countries");
-        return response.json();
-      })
-      .then((data) => {
-        const countryNames = data.map((country) => country.name.common).sort();
-        setCountries(countryNames);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError("Unable to load countries. Please try again later.");
-        console.error(err);
-        setLoading(false);
-      });
-  };
-
-  const FilterContent = () => {
- 
-  const [verifiedFilter, setVerifiedFilter] = useState('all');
-  const [discountFilter, setDiscountFilter] = useState('all'); 
-
+// Define FilterContent outside CategoryPage to ensure stability
+const FilterContent = ({
+  slug,
+  setSlug,
+  categories,
+  currentCategory,
+  selectedSubcategories,
+  setSelectedSubcategories,
+  showMoreSubcategories,
+  setShowMoreSubcategories,
+  location,
+  setLocation,
+  priceRange,
+  setPriceRange,
+  loading,
+  error,
+  countries,
+  handleRetry,
+  handleCategoryChange,
+  handleSubcategoryChange,
+  verifiedFilter,
+  setVerifiedFilter,
+  discountFilter,
+  setDiscountFilter,
+  clearFilters,
+  setIsMobileFilterOpen,
+}) => {
   return (
     <div className="space-y-6">
       {/* Category Select */}
@@ -229,7 +55,10 @@ const CategoryPage = () => {
               </option>
             ))}
           </select>
-          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none" size={16} />
+          <ChevronDown
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white pointer-events-none"
+            size={16}
+          />
         </div>
       </div>
 
@@ -244,7 +73,10 @@ const CategoryPage = () => {
               ? currentCategory.subcategories
               : currentCategory.subcategories.slice(0, 5)
             ).map((subcategory) => (
-              <label key={subcategory} className="flex items-center space-x-2 cursor-pointer">
+              <label
+                key={subcategory}
+                className="flex items-center space-x-2 cursor-pointer"
+              >
                 <input
                   type="checkbox"
                   checked={selectedSubcategories.includes(subcategory)}
@@ -308,27 +140,37 @@ const CategoryPage = () => {
             type="number"
             placeholder="Min"
             value={priceRange.min}
-            onChange={(e) =>
-              setPriceRange((prev) => ({
-                ...prev,
-                min: e.target.value,
-              }))
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+                setPriceRange((prev) => ({
+                  ...prev,
+                  min: value,
+                }));
+              }
+            }}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
             aria-label="Minimum price"
+            min="0"
+            step="0.01"
           />
           <input
             type="number"
             placeholder="Max"
             value={priceRange.max}
-            onChange={(e) =>
-              setPriceRange((prev) => ({
-                ...prev,
-                max: e.target.value,
-              }))
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+                setPriceRange((prev) => ({
+                  ...prev,
+                  max: value,
+                }));
+              }
+            }}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700"
             aria-label="Maximum price"
+            min="0"
+            step="0.01"
           />
         </div>
       </div>
@@ -426,21 +268,186 @@ const CategoryPage = () => {
   );
 };
 
-  // Show loading state while determining category from URL
-  if (categoryName && !categories.find(cat => categoryValueToUrlSlug(cat.value) === categoryName)) {
+const CategoryPage = () => {
+  const { categoryName } = useParams();
+  const [slug, setSlug] = useState("properties");
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+  const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
+  const [location, setLocation] = useState("All country");
+  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [verifiedFilter, setVerifiedFilter] = useState('all');
+  const [discountFilter, setDiscountFilter] = useState('all');
+
+  const categories = [
+    { value: "properties", label: "Properties" },
+    { value: "vehicles", label: "Vehicles" },
+    { value: "gadgets", label: "Gadgets" },
+    { value: "electronics", label: "Electronics" },
+    { value: "home-furniture", label: "Home Furniture & Appliances" },
+    { value: "health-and-beauty", label: "Health & Beauty" },
+    { value: "cloth-and-fashion", label: "Cloth & Fashion" },
+    { value: "accessories", label: "Accessories" },
+    { value: "supermarket", label: "Supermarket" },
+    { value: "sports-arts", label: "Sports, Arts & Outdoors" },
+    { value: "babies-kids", label: "Babies & Kids" },
+    { value: "animals-pets", label: "Animals & Pets" },
+    { value: "agriculture-food", label: "Agriculture & Food" },
+    { value: "equipment-tools", label: "Equipment & Tools" },
+    { value: "repair-construction", label: "Repair & Construction" },
+  ];
+
+  const urlSlugToCategoryValue = (urlSlug) => {
+    if (!urlSlug) return "properties";
+    
+    const categoryMap = {
+      "cloth-and-fashion": "fashion",
+      "health-and-beauty": "healthBeauty",
+      "home-furniture": "homeFurniture",
+      "sports-arts": "sportsArts",
+      "babies-kids": "babiesKids",
+      "animals-pets": "animalsPets",
+      "agriculture-food": "agricultureFood",
+      "equipment-tools": "equipmentTools",
+      "repair-construction": "repairConstruction",
+    };
+
+    return categoryMap[urlSlug] || urlSlug;
+  };
+
+  const categoryValueToUrlSlug = (categoryValue) => {
+    const reverseMap = {
+      "fashion": "cloth-and-fashion",
+      "healthBeauty": "health-and-beauty",
+      "homeFurniture": "home-furniture",
+      "sportsArts": "sports-arts",
+      "babiesKids": "babies-kids",
+      "animalsPets": "animals-pets",
+      "agricultureFood": "agriculture-food",
+      "equipmentTools": "equipment-tools",
+      "repairConstruction": "repair-construction",
+    };
+
+    return reverseMap[categoryValue] || categoryValue;
+  };
+
+  useEffect(() => {
+    if (categoryName) {
+      const mappedSlug = urlSlugToCategoryValue(categoryName);
+      setSlug(mappedSlug);
+      
+      setSelectedSubcategories([]);
+      setPriceRange({ min: "", max: "" });
+      setLocation("All country");
+      setVerifiedFilter('all');
+      setDiscountFilter('all');
+    }
+  }, [categoryName]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("https://restcountries.com/v3.1/region/africa");
+        if (!response.ok) throw new Error("Failed to fetch African countries");
+        const data = await response.json();
+        const countryNames = data.map((country) => country.name.common).sort();
+        setCountries(countryNames);
+      } catch (err) {
+        setError("Unable to load countries. Please try again later.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  const currentCategory = sampleCategoryData[slug] || {
+    name: slug.replace("-", " ").toUpperCase(),
+    subcategories: [],
+    products: [],
+  };
+
+  const filteredProducts = currentCategory.products.filter((product) => {
+    const matchesSubcategory =
+      selectedSubcategories.length === 0 ||
+      selectedSubcategories.includes(product.subcategory);
+    
+    const matchesVerified =
+      verifiedFilter === 'all' ||
+      (verifiedFilter === 'verified' && product.isVerified) ||
+      (verifiedFilter === 'unverified' && !product.isVerified);
+    
+    const matchesDiscount =
+      discountFilter === 'all' ||
+      (discountFilter === 'withDiscount' && product.price < 1000) ||
+      (discountFilter === 'withoutDiscount' && product.price >= 1000);
+    
+    const minPrice = parseFloat(priceRange.min);
+    const maxPrice = parseFloat(priceRange.max);
+    const matchesPrice =
+      (!isNaN(minPrice) ? product.price >= minPrice : true) &&
+      (!isNaN(maxPrice) ? product.price <= maxPrice : true);
+    const matchesLocation =
+      location === 'All country' || product.location.includes(location);
+
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Category Not Found
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            The category "{categoryName}" does not exist.
-          </p>
-        </div>
-      </div>
+      matchesSubcategory &&
+      matchesVerified &&
+      matchesDiscount &&
+      matchesPrice &&
+      matchesLocation
     );
-  }
+  });
+
+  const handleSubcategoryChange = (subcategory) => {
+    setSelectedSubcategories((prev) =>
+      prev.includes(subcategory)
+        ? prev.filter((item) => item !== subcategory)
+        : [...prev, subcategory]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedSubcategories([]);
+    setPriceRange({ min: '', max: '' });
+    setLocation('All country');
+    setVerifiedFilter('all');
+    setDiscountFilter('all');
+    setIsMobileFilterOpen(false);
+  };
+
+  const handleCategoryChange = (newCategoryValue) => {
+    setSlug(newCategoryValue);
+    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
+    window.history.pushState({}, '', `/category/${newUrlSlug}`);
+    
+    clearFilters();
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    setLoading(true);
+    fetch("https://restcountries.com/v3.1/region/africa")
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch African countries");
+        return response.json();
+      })
+      .then((data) => {
+        const countryNames = data.map((country) => country.name.common).sort();
+        setCountries(countryNames);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError("Unable to load countries. Please try again later.");
+        console.error(err);
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="min-h-screen font-sans">
@@ -470,23 +477,44 @@ const CategoryPage = () => {
           {/* Desktop Sidebar */}
           <div className="hidden lg:block lg:w-1/4">
             <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
-              <FilterContent />
+              <FilterContent
+                slug={slug}
+                setSlug={setSlug}
+                categories={categories}
+                currentCategory={currentCategory}
+                selectedSubcategories={selectedSubcategories}
+                setSelectedSubcategories={setSelectedSubcategories}
+                showMoreSubcategories={showMoreSubcategories}
+                setShowMoreSubcategories={setShowMoreSubcategories}
+                location={location}
+                setLocation={setLocation}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                loading={loading}
+                error={error}
+                countries={countries}
+                handleRetry={handleRetry}
+                handleCategoryChange={handleCategoryChange}
+                handleSubcategoryChange={handleSubcategoryChange}
+                verifiedFilter={verifiedFilter}
+                setVerifiedFilter={setVerifiedFilter}
+                discountFilter={discountFilter}
+                setDiscountFilter={setDiscountFilter}
+                clearFilters={clearFilters}
+                setIsMobileFilterOpen={setIsMobileFilterOpen}
+              />
             </div>
           </div>
 
           {/* Mobile Sidebar Overlay */}
           {isMobileFilterOpen && (
             <div className="lg:hidden fixed inset-0 z-50 flex">
-              {/* Backdrop */}
               <div
                 className="fixed inset-0 bg-black bg-opacity-50"
                 onClick={() => setIsMobileFilterOpen(false)}
               />
-              
-              {/* Sidebar */}
               <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm ml-auto h-full overflow-y-auto">
                 <div className="p-6">
-                  {/* Header */}
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                       Filters
@@ -498,9 +526,32 @@ const CategoryPage = () => {
                       <X size={20} className="text-gray-500 dark:text-gray-400" />
                     </button>
                   </div>
-                  
-                  {/* Filter Content */}
-                  <FilterContent />
+                  <FilterContent
+                    slug={slug}
+                    setSlug={setSlug}
+                    categories={categories}
+                    currentCategory={currentCategory}
+                    selectedSubcategories={selectedSubcategories}
+                    setSelectedSubcategories={setSelectedSubcategories}
+                    showMoreSubcategories={showMoreSubcategories}
+                    setShowMoreSubcategories={setShowMoreSubcategories}
+                    location={location}
+                    setLocation={setLocation}
+                    priceRange={priceRange}
+                    setPriceRange={setPriceRange}
+                    loading={loading}
+                    error={error}
+                    countries={countries}
+                    handleRetry={handleRetry}
+                    handleCategoryChange={handleCategoryChange}
+                    handleSubcategoryChange={handleSubcategoryChange}
+                    verifiedFilter={verifiedFilter}
+                    setVerifiedFilter={setVerifiedFilter}
+                    discountFilter={discountFilter}
+                    setDiscountFilter={setDiscountFilter}
+                    clearFilters={clearFilters}
+                    setIsMobileFilterOpen={setIsMobileFilterOpen}
+                  />
                 </div>
               </div>
             </div>
