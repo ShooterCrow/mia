@@ -88,15 +88,15 @@ const FilterContent = ({
                 </span>
               </label>
             ))}
+            {currentCategory.subcategories.length > 5 && (
+              <button
+                onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
+                className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
+              >
+                {showMoreSubcategories ? "Show less" : "Show more"}
+              </button>
+            )}
           </div>
-          {currentCategory.subcategories.length > 5 && (
-            <button
-              onClick={() => setShowMoreSubcategories(!showMoreSubcategories)}
-              className="text-red-600 dark:text-red-400 text-sm hover:text-red-700 dark:hover:text-red-300 transition-colors"
-            >
-              {showMoreSubcategories ? "Show less" : "Show more"}
-            </button>
-          )}
         </div>
       )}
 
@@ -176,84 +176,84 @@ const FilterContent = ({
       </div>
 
       {/* Verified Sellers */}
-      <div className="mb-6 border-b border-gray-200 pb-4">
-        <h3 className="font-semibold text-gray-800 mb-3">Verified Sellers</h3>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'all'}
-            onChange={() => setVerifiedFilter('all')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Show all</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'verified'}
-            onChange={() => setVerifiedFilter('verified')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Verified only</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="verifiedFilter"
-            checked={verifiedFilter === 'unverified'}
-            onChange={() => setVerifiedFilter('unverified')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Unverified sellers</span>
-        </label>
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Verified Sellers</h3>
+        <div className="space-y-2">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'all'}
+              onChange={() => setVerifiedFilter('all')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'verified'}
+              onChange={() => setVerifiedFilter('verified')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Verified only</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="verifiedFilter"
+              checked={verifiedFilter === 'unverified'}
+              onChange={() => setVerifiedFilter('unverified')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Unverified sellers</span>
+          </label>
+        </div>
       </div>
 
       {/* Discount */}
-      <div className="mb-6">
-        <h3 className="font-semibold text-gray-800 mb-3">Discount</h3>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'all'}
-            onChange={() => setDiscountFilter('all')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Show all</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'withDiscount'}
-            onChange={() => setDiscountFilter('withDiscount')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">With discount</span>
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="discountFilter"
-            checked={discountFilter === 'withoutDiscount'}
-            onChange={() => setDiscountFilter('withoutDiscount')}
-            className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-          />
-          <span className="ml-2 text-sm text-gray-700">Without discount</span>
-        </label>
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Discount</h3>
+        <div className="space-y-2">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'all'}
+              onChange={() => setDiscountFilter('all')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Show all</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'withDiscount'}
+              onChange={() => setDiscountFilter('withDiscount')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">With discount</span>
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="discountFilter"
+              checked={discountFilter === 'withoutDiscount'}
+              onChange={() => setDiscountFilter('withoutDiscount')}
+              className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+            />
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Without discount</span>
+          </label>
+        </div>
       </div>
 
       {/* Clear Filters Button */}
       <div className="flex justify-between pt-4">
         <button
-          onClick={() => {
-            clearFilters();
-            setVerifiedFilter('all');
-            setDiscountFilter('all');
-          }}
-          className="font-medium text-sm hover:text-red-700 transition-colors"
+          onClick={clearFilters}
+          className="font-medium text-sm text-gray-600 dark:text-gray-400 hover:text-red-700 transition-colors"
         >
           Clear
         </button>
@@ -269,7 +269,7 @@ const FilterContent = ({
 };
 
 const CategoryPage = () => {
-  const { categoryName } = useParams();
+  const { category: categoryName } = useParams();
   const [slug, setSlug] = useState("properties");
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
   const [showMoreSubcategories, setShowMoreSubcategories] = useState(false);
@@ -315,7 +315,7 @@ const CategoryPage = () => {
       "repair-construction": "repairConstruction",
     };
 
-    return categoryMap[urlSlug] || urlSlug;
+    return categoryMap[categoryName] || urlSlug;
   };
 
   const categoryValueToUrlSlug = (categoryValue) => {
@@ -392,6 +392,7 @@ const CategoryPage = () => {
     const matchesPrice =
       (!isNaN(minPrice) ? product.price >= minPrice : true) &&
       (!isNaN(maxPrice) ? product.price <= maxPrice : true);
+    
     const matchesLocation =
       location === 'All country' || product.location.includes(location);
 
@@ -416,14 +417,14 @@ const CategoryPage = () => {
     setSelectedSubcategories([]);
     setPriceRange({ min: '', max: '' });
     setLocation('All country');
-    setVerifiedFilter('all');
-    setDiscountFilter('all');
+    setVerifiedFilter('all setDiscountFilter);
+    setDiscount('all');
     setIsMobileFilterOpen(false);
   };
 
   const handleCategoryChange = (newCategoryValue) => {
     setSlug(newCategoryValue);
-    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
+    const newUrlSlug = categoryValueToCategoryValue);
     window.history.pushState({}, '', `/category/${newUrlSlug}`);
     
     clearFilters();
@@ -447,17 +448,17 @@ const CategoryPage = () => {
         console.error(err);
         setLoading(false);
       });
-  };
+    });
 
   return (
     <div className="min-h-screen font-sans">
       <div className="px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-            {categories.find(cat => cat.value === slug)?.label || currentCategory.name}
+        <div className="flex items-center gap-3 mb-4">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {slug ? currentCategory.name : 'All Categories'}
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-gray-600 dark:text-gray-400">
             {filteredProducts.length} products found
           </p>
         </div>
@@ -476,7 +477,7 @@ const CategoryPage = () => {
 
           {/* Desktop Sidebar */}
           <div className="hidden lg:block lg:w-1/4">
-            <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-6 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
               <FilterContent
                 slug={slug}
                 setSlug={setSlug}
@@ -504,7 +505,6 @@ const CategoryPage = () => {
                 setIsMobileFilterOpen={setIsMobileFilterOpen}
               />
             </div>
-          </div>
 
           {/* Mobile Sidebar Overlay */}
           {isMobileFilterOpen && (
@@ -513,7 +513,7 @@ const CategoryPage = () => {
                 className="fixed inset-0 bg-black bg-opacity-50"
                 onClick={() => setIsMobileFilterOpen(false)}
               />
-              <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm ml-auto h-full overflow-y-auto">
+              <div className="relative bg-white dark:bg-gray-800 w-full max-w-sm ml-auto h-full shadow-sm">
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -528,14 +528,13 @@ const CategoryPage = () => {
                   </div>
                   <FilterContent
                     slug={slug}
-                    setSlug={setSlug}
-                    categories={categories}
+                    category={categories}
                     currentCategory={currentCategory}
                     selectedSubcategories={selectedSubcategories}
-                    setSelectedSubcategories={setSelectedSubcategories}
-                    showMoreSubcategories={showMoreSubcategories}
+                    setSelectedCategorycategories={setSelectedSubcategories}
+                    showMoreSubcategory={showMoreSubcategories}
                     setShowMoreSubcategories={setShowMoreSubcategories}
-                    location={location}
+                    location={locationName}
                     setLocation={setLocation}
                     priceRange={priceRange}
                     setPriceRange={setPriceRange}
@@ -543,7 +542,7 @@ const CategoryPage = () => {
                     error={error}
                     countries={countries}
                     handleRetry={handleRetry}
-                    handleCategoryChange={handleCategoryChange}
+                    handleCategoryChange={CategoryChange}
                     handleSubcategoryChange={handleSubcategoryChange}
                     verifiedFilter={verifiedFilter}
                     setVerifiedFilter={setVerifiedFilter}
@@ -553,34 +552,35 @@ const CategoryPage = () => {
                     setIsMobileFilterOpen={setIsMobileFilterOpen}
                   />
                 </div>
-              </div>
+              ))}
             </div>
-          )}
 
           {/* Products Grid */}
-          <div className="lg:w-3/4 w-full">
-            {filteredProducts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400 text-lg">
-                  No products found matching your criteria.
-                </p>
-                <button
-                  onClick={clearFilters}
-                  className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Clear Filters
-                </button>
-              </div>
-            ) : (
-              <ProductCard1
-                products={filteredProducts.map((product) => ({
-                  ...product,
-                  price: `${product.price.toFixed(2)}`,
-                }))}
-                showTwoOnMobile={false}
-              />
-            )}
-          </div>
+            <div className="lg:w-3/4 w-full">
+              {filteredProducts.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 dark:text-gray-400 text-lg">
+                    No products found matching your criteria.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={clearFilters}
+                    className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              ) : (
+                <ProductCard1
+                  products={filteredProducts.map((product) => ({
+                    ...product,
+                    price: `${product.price.toFixed(2)}`,
+                  }))}
+                  showTwoOnMobile={false}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router';
 
 const Categories = ({
     categories = [],
@@ -31,7 +32,7 @@ const Categories = ({
     const categoriesToUse = categories.length > 0 ? categories : defaultCategories;
 
     return (
-        <section className={`py-5 bg-white dark:bg-gray-900 transition-colors duration-200 ${className}`}>
+        <section className={`py-5 bg-white dark:bg-gray-900 transition-colors duration-200 ${className} max-w-7xl sm:px-4 mx-auto`}>
             <div className="w-[100%] mx-auto">
                 {title &&
                     <div className="text-center">
@@ -41,44 +42,45 @@ const Categories = ({
                 {
                     desc &&
                     <div className="max-w-7xl mx-auto text-center mb-8 sm:mb-12">
-                        <h2 className="text sm:text text-gray-900 dark:text-white mb-3 sm:mb-4">{desc}</h2>
+                        <h2 className="text sm:text text-gray-900 dark:text-white mb-3 sm:mb-4 px-6">{desc}</h2>
                     </div>
                 }
                 {/* Horizontal scrollable container */}
-                <div className="overflow-x-auto mx-auto pb-4 px-20">
-                    <div className="flex gap-5 sm:gap-6 w-[100%] px-4 sm:px-0 justify-center">
+                <div className="overflow-x-auto mx-auto pb-4">
+                    <div className="flex gap-5 sm:gap-6 max-w-7xl px-4 sm:px-6 lg:px-5 justify-start min-w-max">
                         {categoriesToUse.map((category, index) => (
-                            <div
+                            <Link
                                 key={index}
-                                className="text-center group py-2 lg:px-5 cursor-pointer flex-shrink-0"
-                                onClick={() => handleCategoryClick(index, category)} >
-                                {/* Circle with image and green ring */}
-                                <div className="relative w-20 h-20 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-3">
-                                    {/* Green ring - always visible, changes color on hover */}
-                                    <div className="absolute inset-0 rounded-full ring-2 ring-green-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 group-hover:ring-red-500 transition-all duration-200">
-                                        {/* Image circle */}
-                                        <img
-                                            src={category.image}
-                                            alt={category.name}
-                                            className="w-full h-full rounded-full object-cover"
-                                        />
+                                to={`/categories/${category.name.toLowerCase()}`}>
+                                <div
+                                    className="text-center group py-2 lg:px-5 cursor-pointer flex-shrink-0"
+                                    onClick={() => handleCategoryClick(index, category)} >
+                                    {/* Circle with image and green ring */}
+                                    <div className="relative w-20 h-20 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-3">
+                                        {/* Green ring - always visible, changes color on hover */}
+                                        <div className="absolute inset-0 rounded-full ring-2 ring-green-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900 group-hover:ring-red-500 transition-all duration-200">
+                                            {/* Image circle */}
+                                            <img
+                                                src={category.image}
+                                                alt={category.name}
+                                                className="w-full h-full rounded-full object-cover"
+                                            />
+                                        </div>
                                     </div>
+                                    {/* Category name */}
+                                    <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium leading-tight px-1 whitespace-nowrap">
+                                        {category.name}
+                                    </p>
+                                    {/* Selection indicator line - RED for selected */}
+                                    {
+                                        underline &&
+                                        <div className={`h-0.5 mt-2 mx-auto transition-all duration-200 ${selected === index
+                                            ? 'w-8 bg-red-500'
+                                            : 'w-0 bg-transparent'
+                                            }`}></div>
+                                    }
                                 </div>
-
-                                {/* Category name */}
-                                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 font-medium leading-tight px-1 whitespace-nowrap">
-                                    {category.name}
-                                </p>
-
-                                {/* Selection indicator line - RED for selected */}
-                                {
-                                    underline &&
-                                    <div className={`h-0.5 mt-2 mx-auto transition-all duration-200 ${selected === index
-                                        ? 'w-8 bg-red-500'
-                                        : 'w-0 bg-transparent'
-                                        }`}></div>
-                                }
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

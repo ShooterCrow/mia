@@ -22,7 +22,10 @@ function App() {
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
-          <Route path="categories/:category" element={<CategoryPage />} />
+          <Route path="categories" >
+            <Route index element={<CategoryPage />} />
+            <Route path=":category" element={<CategoryPage />} />
+          </Route>
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />

@@ -134,15 +134,18 @@ const Header = () => {
                                     <select
                                         className="px-2.5 py-1.5 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 text-sm text-gray-800 dark:text-gray-200 min-w-[180px] lg:min-w-[234px]"
                                         onChange={(e) => {
-                                            if (e.target.value && e.target.value !== 'Categories') {
-                                                navigate(`/categories/${e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`);
+                                            const value = e.target.value;
+                                            if (value) {
+                                                if (value === 'Categories') {
+                                                    navigate('/categories');
+                                                } else {
+                                                    navigate(`/categories/${value.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`);
+                                                }
                                             }
                                         }}
                                         defaultValue="Categories"
                                     >
-                                        <Link to={"/categories"}>
-                                            <option value="Categories">Categories</option>
-                                        </Link>
+                                        <option value="Categories">Categories</option>
                                         <option value="Vehicles">Vehicles</option>
                                         <option value="Cloth & Fashion">Cloth & Fashion</option>
                                         <option value="Accessories">Accessories</option>
@@ -152,6 +155,7 @@ const Header = () => {
                                         <option value="Health & Beauty">Health & Beauty</option>
                                     </select>
                                 </div>
+
                             </div>
 
                             {/* Search Bar */}
@@ -169,7 +173,7 @@ const Header = () => {
                             {/* Right Section */}
                             <div className="flex items-center gap-2 sm:gap-3 lg:gap-5">
                                 {/* Account Menu */}
-                                <Link to={"/login"}>
+                                <Link to={"/dashboard/profile"}>
                                     <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
                                         <User className="w-4 h-4" />
                                         <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
@@ -287,7 +291,7 @@ const Header = () => {
                         <div className="px-4 py-4 space-y-5">
                             {/* Mobile Navigation Links */}
                             <nav className="flex items-center gap-6">
-                                <a href="#" className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</a>
+                                <Link to={"/"} className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</Link>
                             </nav>
                             <Dropdown />
 
@@ -298,7 +302,7 @@ const Header = () => {
                                 </h3>
 
                                 <div className="space-y-1">
-                                    <Link to={"/login"}>
+                                    <Link to={"/dashboard/profile"}>
                                         <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
                                             <User className="w-4 h-4" />
                                             <span>My Account</span>
@@ -309,6 +313,13 @@ const Header = () => {
                                         <Headset className="w-4 h-4" />
                                         <span>Help & Support</span>
                                     </button>
+
+                                    <Link to={"/login"}>
+                                        <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
+                                            <Phone className="w-4 h-4" />
+                                            <span>Sign In</span>
+                                        </div>
+                                    </Link>
 
                                     <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
                                         <Phone className="w-4 h-4" />
