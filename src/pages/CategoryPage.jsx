@@ -315,7 +315,7 @@ const CategoryPage = () => {
       "repair-construction": "repairConstruction",
     };
 
-    return categoryMap[categoryName] || urlSlug;
+    return categoryMap[urlSlug] || urlSlug;
   };
 
   const categoryValueToUrlSlug = (categoryValue) => {
@@ -417,14 +417,14 @@ const CategoryPage = () => {
     setSelectedSubcategories([]);
     setPriceRange({ min: '', max: '' });
     setLocation('All country');
-    setVerifiedFilter('all setDiscountFilter);
-    setDiscount('all');
+    setVerifiedFilter('all');
+    setDiscountFilter('all');
     setIsMobileFilterOpen(false);
   };
 
   const handleCategoryChange = (newCategoryValue) => {
     setSlug(newCategoryValue);
-    const newUrlSlug = categoryValueToCategoryValue);
+    const newUrlSlug = categoryValueToUrlSlug(newCategoryValue);
     window.history.pushState({}, '', `/category/${newUrlSlug}`);
     
     clearFilters();
@@ -448,7 +448,7 @@ const CategoryPage = () => {
         console.error(err);
         setLoading(false);
       });
-    });
+  };
 
   return (
     <div className="min-h-screen font-sans">
@@ -505,6 +505,7 @@ const CategoryPage = () => {
                 setIsMobileFilterOpen={setIsMobileFilterOpen}
               />
             </div>
+          </div>
 
           {/* Mobile Sidebar Overlay */}
           {isMobileFilterOpen && (
@@ -528,13 +529,14 @@ const CategoryPage = () => {
                   </div>
                   <FilterContent
                     slug={slug}
-                    category={categories}
+                    setSlug={setSlug}
+                    categories={categories}
                     currentCategory={currentCategory}
                     selectedSubcategories={selectedSubcategories}
-                    setSelectedCategorycategories={setSelectedSubcategories}
-                    showMoreSubcategory={showMoreSubcategories}
+                    setSelectedSubcategories={setSelectedSubcategories}
+                    showMoreSubcategories={showMoreSubcategories}
                     setShowMoreSubcategories={setShowMoreSubcategories}
-                    location={locationName}
+                    location={location}
                     setLocation={setLocation}
                     priceRange={priceRange}
                     setPriceRange={setPriceRange}
@@ -542,7 +544,7 @@ const CategoryPage = () => {
                     error={error}
                     countries={countries}
                     handleRetry={handleRetry}
-                    handleCategoryChange={CategoryChange}
+                    handleCategoryChange={handleCategoryChange}
                     handleSubcategoryChange={handleSubcategoryChange}
                     verifiedFilter={verifiedFilter}
                     setVerifiedFilter={setVerifiedFilter}
@@ -552,35 +554,35 @@ const CategoryPage = () => {
                     setIsMobileFilterOpen={setIsMobileFilterOpen}
                   />
                 </div>
-              ))}
-            </div>
-
-          {/* Products Grid */}
-            <div className="lg:w-3/4 w-full">
-              {filteredProducts.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 dark:text-gray-400 text-lg">
-                    No products found matching your criteria.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={clearFilters}
-                    className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                  >
-                    Clear Filters
-                  </button>
-                </div>
-              ) : (
-                <ProductCard1
-                  products={filteredProducts.map((product) => ({
-                    ...product,
-                    price: `${product.price.toFixed(2)}`,
-                  }))}
-                  showTwoOnMobile={false}
-                />
-              )}
+              </div>
             </div>
           )}
+
+          {/* Products Grid */}
+          <div className="lg:w-3/4 w-full">
+            {filteredProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  No products found matching your criteria.
+                </p>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            ) : (
+              <ProductCard1
+                products={filteredProducts.map((product) => ({
+                  ...product,
+                  price: `${product.price.toFixed(2)}`,
+                }))}
+                showTwoOnMobile={false}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

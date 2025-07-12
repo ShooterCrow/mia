@@ -1,5 +1,5 @@
 import { ThemeProvider } from "./components/ThemeProvider";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, ScrollRestoration } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import SignUp from "./features/auth/SignUp";
@@ -15,6 +15,7 @@ import ProductDetails from "./pages/detailPages/ProductDetails";
 function App() {
   return (
     <ThemeProvider>
+      <ScrollRestoration />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
