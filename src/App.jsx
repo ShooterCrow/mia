@@ -10,7 +10,8 @@ import UserProfile from "./features/user/UserProfile";
 import CategoryPage from "./pages/CategoryPage";
 import { UserLayoutProvider } from "./components/layout/UserLayout/UserLayoutContext";
 import UserLayout from "./components/layout/UserLayout/UserLayout";
-import ProductDetails from "./pages/detailPages/ProductDetails";
+import ProductDetails from "./pages/detailPages/project-details/ProductDetails";
+import Support from "./pages/Support";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
+          <Route path="support" element={<Support />} />
           <Route path="dashboard" element={
             <UserLayoutProvider>
               <UserLayout />

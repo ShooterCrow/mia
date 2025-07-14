@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChevronDown, Filter, X } from 'lucide-react';
-import ProductCard1 from "../components/cards/ProductCard1";
 import { sampleCategoryData } from "../constant/sampleCategoryData";
+import ProductCard1List from '../components/cards/productsCard1/ProductCard1List';
 
 // Define FilterContent outside CategoryPage to ensure stability
 const FilterContent = ({
@@ -574,7 +574,7 @@ const CategoryPage = () => {
                 </button>
               </div>
             ) : (
-              <ProductCard1
+              <ProductCard1List
                 products={filteredProducts.map((product) => ({
                   ...product,
                   price: `${product.price.toFixed(2)}`,

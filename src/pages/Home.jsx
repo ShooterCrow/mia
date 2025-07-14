@@ -2,7 +2,6 @@ import React from 'react';
 import { Search, User, ShoppingCart, Menu, Heart, MapPin, ArrowRightIcon } from 'lucide-react';
 import PrimaryButton from '../components/buttons/PrimaryButton';
 import { Link } from 'react-router';
-import ProductCard1 from '../components/cards/ProductCard1';
 import ReviewsSection from '../components/ReviewsSection';
 import FAQSection from '../components/FAQSection';
 import HeroSection from '../components/HeroSection';
@@ -10,6 +9,7 @@ import Categories from '../components/Categories';
 import { defaultCategories } from './AllProducts';
 import PromoCards from '../components/cards/PromoCards';
 import PromotionCards from '../components/cards/PromotionsCards';
+import ProductCard1List from '../components/cards/productsCard1/ProductCard1List';
 
 export const categories = [
     { name: 'Vehicles', image: '/api/placeholder/80/80' },
@@ -97,7 +97,7 @@ function Home() {
             <section className="lg:py-10 sm:pb-12 bg-white dark:bg-gray-800 transition-colors duration-200">
                 <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white py-4 sm:mb-12 sm:text-left">Promotions Ad</h2>
-                    <ProductCard1 products={products} />
+                    <ProductCard1List products={products} />
 
                 </div>
             </section>
@@ -189,13 +189,13 @@ function Home() {
                             <p className='h-fit py-1 px-2 rounded-lg border dark:text-white dark:border-gray-200 border-gray-500'>See more</p>
                         </Link>
                     </div>
-                    <ProductCard1 products={products} />
+                    <ProductCard1List products={products} />
                 </div>
             </section>
             {/* Hero */}
             <section className='max-w-7xl mx-auto py-5 px-4'>
                 <HeroSection image={"/Rectangle5.webp"} text={"Check out the latest trending products on our site  fresh picks, hot deals, and customer favorites all in one place."} btnTxt={"View Products"} />
-                <ProductCard1 products={products} />
+                <ProductCard1List products={products} />
             </section>
             <ReviewsSection />
             <FAQSection />

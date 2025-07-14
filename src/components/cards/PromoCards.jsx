@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star } from 'lucide-react';
+import HorizontalScroll from '../HorizontalScroll';
 
 const PromoCards = () => {
     const [timers, setTimers] = useState({
@@ -113,7 +114,7 @@ const PromoCards = () => {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8 sm:mb-12 sm:text-left">Promo Sales</h2>
 
             {/* Mobile: Horizontal scroll, Desktop: Grid */}
-            <div className="md:grid md:grid-cols-4 md:gap-4 flex overflow-x-auto gap-4 pb-4 md:pb-0">
+            <HorizontalScroll gridCols="md:grid-cols-4">
                 {products.map((product, index) => (
                     <div
                         style={{
@@ -181,7 +182,7 @@ const PromoCards = () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </HorizontalScroll>
         </section>
     );
 };

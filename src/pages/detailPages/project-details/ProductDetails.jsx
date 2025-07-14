@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Share2, Star, MapPin, Clock, User, MessageCircle } from 'lucide-react';
+import CustomerReviews from './CustomerReviews';
+import Rating from './Rating';
+import ProductCard1 from '../../../components/cards/productsCard1/ProductCard1';
+import HorizontalScroll from '../../../components/HorizontalScroll';
+import PropertyShowcase from './PropertyShowcase';
 
 function ProductDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -15,29 +20,29 @@ function ProductDetails() {
     'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop'
   ];
 
-  const relatedProperties = [
+  const relatedProducts = [
     {
       id: 1,
       image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop',
-      title: 'Single room and Parlour',
+      name: 'Single room and Parlour',
       price: '$25000'
     },
     {
       id: 2,
       image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop',
-      title: 'Single room and Parlour',
+      name: 'Single room and Parlour',
       price: '$28000'
     },
     {
       id: 3,
       image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=300&fit=crop',
-      title: 'Single room and Parlour',
+      name: 'Single room and Parlour',
       price: '$30000'
     },
     {
       id: 4,
       image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop',
-      title: 'Single room and Parlour',
+      name: 'Single room and Parlour',
       price: '$32000'
     }
   ];
@@ -62,7 +67,7 @@ function ProductDetails() {
             </div>
             <div className="flex items-center space-x-4">
               <Share2 className="h-5 w-5 text-gray-600 dark:text-gray-300 cursor-pointer" />
-              <Heart 
+              <Heart
                 className={`h-5 w-5 cursor-pointer ${isLiked ? 'text-red-500 fill-current' : 'text-gray-600 dark:text-gray-300'}`}
                 onClick={() => setIsLiked(!isLiked)}
               />
@@ -78,21 +83,21 @@ function ProductDetails() {
             {/* Main Image Gallery */}
             <div className="relative mb-6">
               <div className="aspect-w-16 aspect-h-10 bg-gray-200 rounded-lg overflow-hidden">
-                <img 
-                  src={images[currentImageIndex]} 
+                <img
+                  src={images[currentImageIndex]}
                   alt="Property main view"
                   className="w-full h-80 sm:h-96 object-cover"
                 />
               </div>
-              
+
               {/* Navigation Arrows */}
-              <button 
+              <button
                 onClick={prevImage}
                 className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md"
               >
                 <ChevronLeft className="h-5 w-5 text-gray-700" />
               </button>
-              <button 
+              <button
                 onClick={nextImage}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 rounded-full p-2 shadow-md"
               >
@@ -108,15 +113,14 @@ function ProductDetails() {
             {/* Thumbnail Gallery */}
             <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-8">
               {images.map((image, index) => (
-                <div 
+                <div
                   key={index}
-                  className={`aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer ${
-                    index === currentImageIndex ? 'ring-2 ring-blue-500' : ''
-                  }`}
+                  className={`aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer ${index === currentImageIndex ? 'ring-2 ring-blue-500' : ''
+                    }`}
                   onClick={() => setCurrentImageIndex(index)}
                 >
-                  <img 
-                    src={image} 
+                  <img
+                    src={image}
                     alt={`Property view ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
@@ -181,7 +185,7 @@ function ProductDetails() {
             {/* Comments Section */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Leave a comment</h2>
-              <textarea 
+              <textarea
                 placeholder="Your comment here..."
                 className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 rows="4"
@@ -189,16 +193,24 @@ function ProductDetails() {
               <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
                 Post comment
               </button>
+
+              {/* Rating */}
+              <Rating />
             </div>
+
+            {/* Customer Reviews */}
+            <CustomerReviews />
+
+
           </div>
 
-          {/* Right Column - Price and Related Properties */}
+          {/* Right Column - Price and Related Products */}
           <div className="lg:col-span-1">
             {/* Price Card */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm mb-6">
               <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">$35000</div>
               <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Listed Price $35k / 1yr</div>
-              
+
               {/* Agent Profile */}
               <div className="flex items-center mb-4">
                 <div className="w-10 h-10 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center mr-3">
@@ -237,15 +249,15 @@ function ProductDetails() {
               </div>
             </div>
 
-            {/* Related Properties */}
+            {/* Related Products */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Related Properties</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Related Products</h2>
               <div className="space-y-4">
-                {relatedProperties.map((property) => (
+                {relatedProducts.map((property) => (
                   <div key={property.id} className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer">
                     <div className="w-20 h-16 bg-gray-200 dark:bg-gray-600 rounded-lg overflow-hidden flex-shrink-0">
-                      <img 
-                        src={property.image} 
+                      <img
+                        src={property.image}
                         alt={property.title}
                         className="w-full h-full object-cover"
                       />
@@ -258,7 +270,24 @@ function ProductDetails() {
                 ))}
               </div>
             </div>
+
+            {/* Showcase */}
+            <PropertyShowcase />
           </div>
+        </div>
+
+        {/* Similar Products */}
+        <div className="bg-white overflow-x-auto max-w-7xl dark:bg-gray-800 rounded-lg p-6 shadow-sm mt-8">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Similar Products</h2>
+          <HorizontalScroll gridCols="md:grid-cols-4">
+            {relatedProducts.map((product) => (
+              <ProductCard1
+                key={product.id}
+                product={product}
+                showTimestamp={false}
+              />
+            ))}
+          </HorizontalScroll>
         </div>
       </div>
     </div>

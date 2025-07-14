@@ -1,7 +1,7 @@
 import React from 'react'
 import Categories from '../components/Categories'
-import ProductCard1 from '../components/cards/ProductCard1'
 import { products } from './Home'
+import ProductCard1List from '../components/cards/productsCard1/ProductCard1List';
 
 export const defaultCategories = [
         { name: "Vehicles", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100&h=100&fit=crop&crop=center" },
@@ -29,7 +29,7 @@ const AllProducts = () => {
                 <Categories categories={defaultCategories} title={"Explore All Products"} />
             </div>
             <div className='max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8'>
-                <ProductCard1 products={products} showTwoOnMobile={true} />
+                <ProductCard1List products={products} showTwoOnMobile={true} />
             </div>
 
         </div>
