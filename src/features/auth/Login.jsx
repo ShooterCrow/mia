@@ -1,36 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LeftSide from "./LeftSide";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useLoginMutation } from "./authApiSlice";
 
 const LogIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [login, { isLoading: emailLoginLoading, isError, error, isSuccess }] = useLoginMutation();
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     agreeToTerms: false
   });
 
+  // Handle successful login
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/dashboard");
+    }
+  }, [isSuccess, navigate]);
+
   const handleGoogleSignIn = async () => {
-    setIsLoading(true);
+    setGoogleLoading(true);
     try {
       // Simulate Firebase Google sign-in
       console.log("Google sign-in initiated");
       // const result = await signInWithPopup(auth, googleProvider);
-      // Navigation would happen here: navigate("/dashboard");
+      // You would then call the login mutation with Google credentials
+      // await login({ googleToken: result.user.accessToken });
       setTimeout(() => {
         console.log("Google sign-in successful");
-        setIsLoading(false);
+        setGoogleLoading(false);
+        // navigate("/dashboard"); // This would happen automatically via useEffect
       }, 2000);
     } catch (error) {
       console.error("Error during Google Sign-In:", error);
-      setIsLoading(false);
+      setGoogleLoading(false);
     }
   };
 
   const handleEmailSignIn = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setIsLoading(false);
+    try {
+      await login({
+        email: formData.email,
+        password: formData.password
+      }).unwrap();
+      // Success handling is done in useEffect
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Error handling can be done here or through the error state
+    }
   };
 
   const handleInputChange = (e) => {
@@ -40,6 +60,8 @@ const LogIn = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
   };
+
+  const isLoading = emailLoginLoading || googleLoading;
 
   return (
     <>
@@ -59,6 +81,15 @@ const LogIn = () => {
                 <p className="text-gray-600 dark:text-gray-300 text-lg">Sign in to your account</p>
               </div>
 
+              {/* Error Message */}
+              {isError && (
+                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                  <p className="text-red-600 dark:text-red-400 text-sm">
+                    {error?.data?.message || error?.message || "Login failed. Please try again."}
+                  </p>
+                </div>
+              )}
+
               {/* Google Sign In Button */}
               <div className="mb-3">
                 <button
@@ -69,7 +100,7 @@ const LogIn = () => {
                   aria-label="Sign in with Google"
                   aria-disabled={isLoading}
                 >
-                  {isLoading ? (
+                  {googleLoading ? (
                     <div className="flex items-center gap-3">
                       <div className="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 border-t-blue-500 rounded-full animate-spin"></div>
                       <span className="text-gray-700 dark:text-gray-200 font-medium">Signing in...</span>
@@ -98,7 +129,7 @@ const LogIn = () => {
               </div>
 
               {/* Email Sign In Form */}
-              <div onSubmit={handleEmailSignIn} className="space-y-6 mb-8">
+              <form onSubmit={handleEmailSignIn} className="space-y-6 mb-8">
                 {/* Email Field */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -110,7 +141,8 @@ const LogIn = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500"
+                    disabled={isLoading}
+                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -126,42 +158,19 @@ const LogIn = () => {
                     value={formData.password}
                     onChange={handleInputChange}
                     required
-                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500"
+                    disabled={isLoading}
+                    className="w-full h-12 px-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 focus:outline-none hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Enter your password"
                   />
                 </div>
 
-                {/* Terms Checkbox */}
-                <div className="flex items-start space-x-3">
-                  <div className="relative flex items-center">
-                    <input
-                      type="checkbox"
-                      name="agreeToTerms"
-                      id="agreeToTerms"
-                      checked={formData.agreeToTerms}
-                      onChange={handleInputChange}
-                      className="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-2 transition-colors cursor-pointer dark:bg-gray-700"
-                    />
-                  </div>
-                  <label htmlFor="agreeToTerms" className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed cursor-pointer">
-                    I agree with Upam{' '}
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
-                      Terms of Service
-                    </a>{' '}
-                    and{' '}
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
-                      Privacy Policy
-                    </a>
-                  </label>
-                </div>
-
                 {/* Sign In Button */}
                 <button
-                  onClick={handleEmailSignIn}
-                  disabled={isLoading || !formData.agreeToTerms}
-                  className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 ${isLoading || !formData.agreeToTerms ? "opacity-50 cursor-not-allowed" : ""
+                  type="submit"
+                  // disabled={isLoading || !formData.agreeToTerms}
+                  className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 ${isLoading ? "opacity-50 cursor-not-allowed" : ""
                     }`} >
-                  {isLoading ? (
+                  {emailLoginLoading ? (
                     <div className="flex items-center justify-center gap-3">
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                       <span>Signing in...</span>
@@ -170,7 +179,7 @@ const LogIn = () => {
                     "Sign In"
                   )}
                 </button>
-              </div>
+              </form>
 
               {/* Sign Up Link */}
               <div className="text-center">

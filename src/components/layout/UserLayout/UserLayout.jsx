@@ -117,13 +117,13 @@ const UserLayout = () => {
                     {/* Sidebar Links */}
                     <nav className="flex-1 overflow-y-auto py-4">
                         <div className="space-y-1 px-3">
-                            {sidebarLinks.map((link) => {
+                            {sidebarLinks.map((link, idx) => {
                                 const Icon = link.icon;
                                 const isActiveLink = isActive(link.path);
                                 
                                 const linkContent = (
                                     <Link
-                                        key={link.path}
+                                        key={idx}
                                         to={link.path}
                                         className={`flex items-center px-3 py-3 rounded-lg transition-colors ${
                                             isActiveLink
@@ -139,7 +139,7 @@ const UserLayout = () => {
                                 );
 
                                 return sidebarExpanded ? linkContent : (
-                                    <Tooltip key={link.path} text={link.label} show={!sidebarExpanded}>
+                                    <Tooltip key={idx} text={link.label} show={!sidebarExpanded}>
                                         {linkContent}
                                     </Tooltip>
                                 );

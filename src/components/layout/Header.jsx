@@ -30,6 +30,7 @@ const Header = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const location = useLocation()
     const locationSignIn = location.pathname.includes("/login")
+    const isLoggedIn = Boolean(localStorage.getItem('token')) || Boolean(localStorage.getItem('user'));
 
     const languageToCountry = {
         en: 'US',
@@ -172,14 +173,6 @@ const Header = () => {
 
                             {/* Right Section */}
                             <div className="flex items-center gap-2 sm:gap-3 lg:gap-5">
-                                {/* Account Menu */}
-                                <Link to={"/dashboard/profile"}>
-                                    <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
-                                        <User className="w-4 h-4" />
-                                        <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
-                                    </div>
-                                </Link>
-
                                 {/* Support Menu */}
                                 <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
                                     <Headset className="w-4 h-4" />
@@ -266,11 +259,19 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button */}
-                                <Link to={locationSignIn ? "/signup" : "/login"}>
-                                    <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                                        <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
-                                    </div>
-                                </Link>
+                                {isLoggedIn ? (
+                                    < Link to={"/dashboard/profile"}>
+                                        <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
+                                            <User className="w-4 h-4" />
+                                            <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
+                                        </div>
+                                    </Link>) : (
+                                    <Link to={locationSignIn ? "/signup" : "/login"}>
+                                        <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
+                                            <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
+                                        </div>
+                                    </Link>)
+                                }
                             </div>
                         </div>
                     </div>
@@ -291,9 +292,15 @@ const Header = () => {
                         <div className="px-4 py-4 space-y-5">
                             {/* Mobile Navigation Links */}
                             <nav className="flex items-center gap-6">
-                                <Link to={"/"} className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">Home</Link>
+                                <Link
+                                    to={"/"}
+                                    onClick={() => setShowMobileMenu(false)}
+                                    className="text-sm text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400"
+                                >
+                                    Home
+                                </Link>
                             </nav>
-                            <Dropdown />
+                            <Dropdown mobile={true} />
 
                             {/* Account & Support Section */}
                             <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
@@ -302,7 +309,10 @@ const Header = () => {
                                 </h3>
 
                                 <div className="space-y-1">
-                                    <Link to={"/dashboard/profile"}>
+                                    <Link
+                                        to={"/dashboard/profile"}
+                                        onClick={() => setShowMobileMenu(false)}
+                                    >
                                         <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
                                             <User className="w-4 h-4" />
                                             <span>My Account</span>
@@ -314,7 +324,10 @@ const Header = () => {
                                         <span>Help & Support</span>
                                     </button>
 
-                                    <Link to={"/login"}>
+                                    <Link
+                                        to={"/login"}
+                                        onClick={() => setShowMobileMenu(false)}
+                                    >
                                         <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
                                             <Phone className="w-4 h-4" />
                                             <span>Sign In</span>
@@ -415,7 +428,6 @@ const Header = () => {
                                                 <button
                                                     onClick={() => {
                                                         resetToSystem();
-                                                        setShowMobileThemeMenu(false);
                                                     }}
                                                     className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 transition-colors duration-200 ${!hasUserPreference
                                                         ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
@@ -436,7 +448,7 @@ const Header = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 

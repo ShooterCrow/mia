@@ -119,7 +119,8 @@ const SignUp = () => {
     email: '',
     businessName: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',    
+    agreeToTerms: false
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -222,6 +223,10 @@ const SignUp = () => {
 
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
+     
+    if (!formData.agreeToTerms) {
+      return;
+    }
 
     if (!validateForm()) {
       return;
@@ -361,7 +366,7 @@ const SignUp = () => {
                 </>
               ) : (
                 /* Email Form */
-                <form onSubmit={handleEmailSignUp} className="space-y-4 lg:space-y-6">
+                <form onSubmit={handleEmailSignUp} className="space-y-4 mb-4 lg:mb-6 px-2 mt-6 lg:space-y-6">
                   {/* Back Button */}
                   <button
                     type="button"
@@ -484,11 +489,35 @@ const SignUp = () => {
                     )}
                   </div>
 
+                  {/* Terms Checkbox */}
+                  <div className="flex items-start space-x-3">
+                    <div className="relative flex items-center">
+                      <input
+                        type="checkbox"
+                        name="agreeToTerms"
+                        id="agreeToTerms"
+                        checked={formData.agreeToTerms}
+                        onChange={handleInputChange}
+                        className="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-2 transition-colors cursor-pointer dark:bg-gray-700"
+                      />
+                    </div>
+                    <label htmlFor="agreeToTerms" className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed cursor-pointer">
+                      I agree with Upam{' '}
+                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
+                        Terms of Service
+                      </a>{' '}
+                      and{' '}
+                      <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
+                        Privacy Policy
+                      </a>
+                    </label>
+                  </div>
+
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    disabled={emailRegisterLoading}
-                    className={`w-full h-12 sm:h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 font-medium text-sm sm:text-base ${emailRegisterLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    disabled={emailRegisterLoading || !formData.agreeToTerms}
+                    className={`w-full h-12 sm:h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 font-medium text-sm sm:text-base ${emailRegisterLoading || !formData.agreeToTerms ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
                   >
                     {emailRegisterLoading ? (
@@ -504,7 +533,7 @@ const SignUp = () => {
               )}
 
               {/* Terms */}
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-4 lg:mb-6 px-2 mt-6">
+              {/* <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-4 lg:mb-6 px-2 mt-6">
                 By creating an account you agree with our{' '}
                 <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                   Terms of Service
@@ -513,7 +542,7 @@ const SignUp = () => {
                 <a href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline font-medium transition-colors">
                   Privacy Policy
                 </a>
-              </p>
+              </p> */}
 
               {/* Sign In Link */}
               <div className="text-center">

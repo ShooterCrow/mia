@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Dropdown = () => {
+const Dropdown = ({mobile}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState('Categories');
 
@@ -21,11 +21,10 @@ const Dropdown = () => {
             {isOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50 max-h-60 overflow-auto">
                     {options.map((option) => (
-                        <Link to={`categories/${option.toLowerCase() !== "categories" ? option.toLowerCase() : ""}`}>
+                        <Link onClick={() => mobile && setShowMobileMenu(false)} to={`categories/${option.toLowerCase() !== "categories" ? option.toLowerCase() : ""}`}>
                             <button
                                 key={option}
-                                className="w-full px-2.5 py-2 text-left text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 truncate"
-                            >
+                                className="w-full px-2.5 py-2 text-left text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 truncate">
                                 {option}
                             </button>
                         </Link>
