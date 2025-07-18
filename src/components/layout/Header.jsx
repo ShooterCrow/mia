@@ -176,7 +176,9 @@ const Header = () => {
                                 {/* Support Menu */}
                                 <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
                                     <Headset className="w-4 h-4" />
-                                    <span className="text-xs lg:text-sm hidden lg:inline">Support</span>
+                                    <Link to={"support"}>
+                                        <span className="text-xs lg:text-sm hidden lg:inline">Support</span>
+                                    </Link>
                                 </div>
 
                                 {/* Language Selector */}
@@ -321,7 +323,9 @@ const Header = () => {
 
                                     <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
                                         <Headset className="w-4 h-4" />
-                                        <span>Help & Support</span>
+                                        <Link to={"support"}>
+                                            <span>Help & Support</span>
+                                        </Link>
                                     </button>
 
                                     <Link
