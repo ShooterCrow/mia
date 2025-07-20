@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Search, 
   Phone, 
@@ -15,11 +15,13 @@ const Messages = () => {
   const [selectedContact, setSelectedContact] = useState(0);
   const [messageInput, setMessageInput] = useState('');
   const [isMobileView, setIsMobileView] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
 
   const contacts = [
     {
       id: 1,
-      name: 'James Nicholas',
+      name: 'Victor',
       lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
       time: '20m ago',
       unread: 3,
@@ -27,103 +29,47 @@ const Messages = () => {
     },
     {
       id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
-    },
-    {
-      id: 2,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
+      name: 'Joseph',
+      lastMessage: 'Hey! How are you doing today?',
+      time: '1h ago',
       unread: 0,
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&auto=format&q=80'
     },
     {
       id: 3,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
+      name: 'John',
+      lastMessage: 'Can we schedule a meeting for tomorrow?',
+      time: '2h ago',
       unread: 1,
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&auto=format&q=80'
     },
     {
       id: 4,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
-      unread: 0,
+      name: 'Hamid',
+      lastMessage: 'Thanks for your help with the project!',
+      time: '3h ago',
+      unread: 20,
       avatar: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=40&h=40&fit=crop&auto=format&q=80'
     },
     {
       id: 5,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
+      name: 'Alade',
+      lastMessage: 'The presentation went really well',
+      time: '5h ago',
       unread: 0,
       avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=40&h=40&fit=crop&auto=format&q=80'
     },
     {
       id: 6,
-      name: 'James Nicholas',
-      lastMessage: 'Those who are alcohol-dependent are 40% more likely to develop mild',
-      time: '20m ago',
+      name: 'Onyekwere',
+      lastMessage: 'Looking forward to our call later',
+      time: '1d ago',
       unread: 0,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&h=40&fit=crop&auto=format&q=80'
     }
   ];
 
-  const messages = [
+  const [messages, setMessages] = useState([
     {
       id: 1,
       sender: 'other',
@@ -175,7 +121,45 @@ const Messages = () => {
       time: '10:42',
       type: 'text'
     }
-  ];
+  ]);
+
+  // Scroll to bottom whenever messages change or component mounts
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleMessageSend = (e) => {
+    e.preventDefault();
+    
+    if (messageInput.trim() === '') return;
+    
+    const newMessage = {
+      id: messages.length + 1,
+      sender: 'me',
+      text: messageInput.trim(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      type: 'text'
+    };
+    
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+    setMessageInput('');
+    setIsTyping(false);
+  };
+
+  const handleInputChange = (e) => {
+    setMessageInput(e.target.value);
+    setIsTyping(e.target.value.trim() !== '');
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleMessageSend(e);
+    }
+  };
 
   const ContactsList = () => (
     <div className={`${isMobileView ? 'hidden' : 'flex'} lg:flex flex-col w-full lg:w-80 border-r border-gray-200 dark:border-gray-700`}>
@@ -241,17 +225,19 @@ const Messages = () => {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setIsMobileView(false)}
-            className="lg:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded "
+            className="lg:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
           >
-            <ArrowLeft  className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           </button>
           <img
             src={contacts[selectedContact]?.avatar}
-            alt="James Nicholas"
+            alt={contacts[selectedContact]?.name}
             className="w-8 h-8 rounded-full object-cover"
           />
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">James Nicholas</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white">
+              {contacts[selectedContact]?.name}
+            </h3>
             <p className="text-sm text-green-500">Online</p>
           </div>
         </div>
@@ -293,11 +279,19 @@ const Messages = () => {
             </div>
           </div>
         ))}
-        <div className="flex justify-end">
-          <div className="text-xs text-gray-500 dark:text-gray-400">
-            Typing...
+        {isTyping && (
+          <div className="flex justify-start">
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+        {/* Invisible element to scroll to */}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Message Input */}
@@ -310,7 +304,8 @@ const Messages = () => {
             <input
               type="text"
               value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
               placeholder="Type a message..."
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
@@ -321,7 +316,7 @@ const Messages = () => {
           <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
             <Mic className="w-5 h-5 text-gray-500" />
           </button>
-          <button className="p-2 bg-teal-500 hover:bg-teal-600 rounded-lg">
+          <button onClick={handleMessageSend} className="p-2 bg-teal-500 hover:bg-teal-600 rounded-lg">
             <Send className="w-5 h-5 text-white" />
           </button>
         </div>
