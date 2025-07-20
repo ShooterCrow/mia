@@ -12,6 +12,8 @@ import { UserLayoutProvider } from "./components/layout/UserLayout/UserLayoutCon
 import UserLayout from "./components/layout/UserLayout/UserLayout";
 import ProductDetails from "./pages/detailPages/project-details/ProductDetails";
 import Support from "./pages/Support";
+import Orders from "./features/orders/Orders";
+import Messages from "./features/messages/Messages";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
             </UserLayoutProvider>
           }>
             <Route path="profile" element={<UserProfile />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="messages" element={<Messages />} />
           </Route>
         </Route>
       </Routes>

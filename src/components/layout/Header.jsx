@@ -321,12 +321,12 @@ const Header = () => {
                                         </button>
                                     </Link>
 
-                                    <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
-                                        <Headset className="w-4 h-4" />
-                                        <Link to={"support"}>
+                                    <Link onClick={() => setShowMobileMenu(false)} to={"support"}>
+                                        <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                                            <Headset className="w-4 h-4" />
                                             <span>Help & Support</span>
-                                        </Link>
-                                    </button>
+                                        </button>
+                                    </Link>
 
                                     <Link
                                         to={"/login"}

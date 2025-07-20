@@ -17,7 +17,8 @@ import {
     X,
     ChevronLeft,
     ChevronRight,
-    LogOut
+    LogOut,
+    MessageCircle
 } from 'lucide-react';
 import { useUserLayout } from './UserLayoutContext';
 
@@ -39,32 +40,26 @@ const UserLayout = () => {
     const mainBottomLinks = [
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
+        { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
         { icon: ShoppingCart, label: 'Cart', path: '/cart' },
-        { icon: Heart, label: 'Wishlist', path: '/wishlist' },
         { icon: Menu, label: 'More', action: 'toggle' }
     ];
 
     // All sidebar links (for desktop/tablet)
     const sidebarLinks = [
-        { icon: User, label: 'Home', path: '/dashboard/profile' },
-        { icon: ShoppingCart, label: 'Cart', path: '/dashboard/cart' },
-        { icon: Heart, label: 'Wishlist', path: '/dashboard/wishlist' },
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
-        { icon: MapPin, label: 'Addresses', path: '/dashboard/addresses' },
+        { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
+        { icon: ShoppingCart, label: 'Cart', path: '/dashboard/cart' },
         { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
         { icon: Clock, label: 'History', path: '/dashboard/history' },
-        { icon: HelpCircle, label: 'Help', path: '/dashboard/help' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
     ];
 
     // Additional links (shown when bottom bar expanded on mobile)
     const expandedLinks = [
-        { icon: User, label: 'Profile', path: '/dashboard/profile' },
-        { icon: MapPin, label: 'Addresses', path: '/dashboard/addresses' },
         { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
         { icon: Clock, label: 'History', path: '/dashboard/history' },
-        { icon: HelpCircle, label: 'Help', path: '/dashboard/help' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
     ];
 
