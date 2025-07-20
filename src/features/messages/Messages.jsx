@@ -126,7 +126,7 @@ const Messages = () => {
   // Scroll to bottom whenever messages change or component mounts
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [messages, messageInput]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
