@@ -129,7 +129,7 @@ const Messages = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView();
   };
 
   const handleMessageSend = (e) => {
@@ -152,6 +152,8 @@ const Messages = () => {
 
   const handleInputChange = (e) => {
     setMessageInput(e.target.value);
+    scrollToBottom();
+
     setIsTyping(e.target.value.trim() !== '');
   };
 
