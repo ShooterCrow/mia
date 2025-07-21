@@ -14,6 +14,7 @@ import ProductDetails from "./pages/detailPages/project-details/ProductDetails";
 import Support from "./pages/Support";
 import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
+import ProductUpload from "./pages/ProductUpload";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="profile" element={<UserProfile />} />
             <Route path="orders" element={<Orders />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="product-upload" element={<ProductUpload />} />
           </Route>
         </Route>
       </Routes>

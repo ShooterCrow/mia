@@ -126,7 +126,7 @@ const Messages = () => {
   // Scroll to bottom whenever messages change or component mounts
   useEffect(() => {
     scrollToBottom();
-  }, [messages, messageInput]);
+  }, [messages, messageInput, selectedContact]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
@@ -152,8 +152,6 @@ const Messages = () => {
 
   const handleInputChange = (e) => {
     setMessageInput(e.target.value);
-    scrollToBottom();
-
     setIsTyping(e.target.value.trim() !== '');
   };
 

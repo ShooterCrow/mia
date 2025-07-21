@@ -41,7 +41,7 @@ const UserLayout = () => {
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
-        { icon: ShoppingCart, label: 'Cart', path: '/cart' },
+        { icon: ShoppingCart, label: 'Product Upload', path: '/product-upload' },
         { icon: Menu, label: 'More', action: 'toggle' }
     ];
 
@@ -50,7 +50,7 @@ const UserLayout = () => {
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
-        { icon: ShoppingCart, label: 'Cart', path: '/dashboard/cart' },
+        { icon: ShoppingCart, label: 'Product Upload', path: '/dashboard/product-upload' },
         { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
         { icon: Clock, label: 'History', path: '/dashboard/history' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
@@ -84,7 +84,7 @@ const UserLayout = () => {
     );
 
     return (
-        <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex bg-gray-50 dark:bg-gray-900">
             {/* Desktop/Tablet Sidebar */}
             {!isMobile && (
                 <div className={`${
