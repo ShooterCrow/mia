@@ -14,6 +14,8 @@ import ProductDetails from "./pages/detailPages/project-details/ProductDetails";
 import Support from "./pages/Support";
 import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
+import TrendingProducts from "./pages/TrendingProducts";
+import DiscountPage from "./pages/DiscountPage";
 import ProductUpload from "./pages/ProductUpload";
 import Seller from "./features/user/Seller";
 
@@ -25,11 +27,11 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="seller" element={<Seller />} />
-          <Route path="products" >
+          <Route path="products">
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
-          <Route path="categories" >
+          <Route path="categories">
             <Route index element={<CategoryPage />} />
             <Route path=":category" element={<CategoryPage />} />
           </Route>
@@ -37,11 +39,16 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
           <Route path="support" element={<Support />} />
-          <Route path="dashboard" element={
-            <UserLayoutProvider>
-              <UserLayout />
-            </UserLayoutProvider>
-          }>
+          <Route path="trending-products" element={<TrendingProducts />} />
+          <Route path="discount-page" element={<DiscountPage />} />
+          <Route
+            path="dashboard"
+            element={
+              <UserLayoutProvider>
+                <UserLayout />
+              </UserLayoutProvider>
+            }
+          >
             <Route path="profile" element={<UserProfile />} />
             <Route path="orders" element={<Orders />} />
             <Route path="messages" element={<Messages />} />
