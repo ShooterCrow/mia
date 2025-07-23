@@ -16,6 +16,8 @@ import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
 import TrendingProducts from "./pages/TrendingProducts";
 import DiscountPage from "./pages/DiscountPage";
+import ProductUpload from "./pages/ProductUpload";
+import Seller from "./features/user/Seller";
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="seller" element={<Seller />} />
           <Route path="products">
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
@@ -38,7 +41,6 @@ function App() {
           <Route path="support" element={<Support />} />
           <Route path="trending-products" element={<TrendingProducts />} />
           <Route path="discount-page" element={<DiscountPage />} />
-
           <Route
             path="dashboard"
             element={
@@ -50,6 +52,7 @@ function App() {
             <Route path="profile" element={<UserProfile />} />
             <Route path="orders" element={<Orders />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="product-upload" element={<ProductUpload />} />
           </Route>
         </Route>
       </Routes>
