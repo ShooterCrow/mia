@@ -41,7 +41,7 @@ const UserLayout = () => {
         { icon: User, label: 'Profile', path: '/dashboard/profile' },
         { icon: Package, label: 'Orders', path: '/dashboard/orders' },
         { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
-        { icon: ShoppingCart, label: 'Product Upload', path: '/product-upload' },
+        { icon: ShoppingCart, label: 'Product Upload', path: '/dashboard/product-upload' },
         { icon: Menu, label: 'More', action: 'toggle' }
     ];
 

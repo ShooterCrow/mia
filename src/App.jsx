@@ -15,6 +15,7 @@ import Support from "./pages/Support";
 import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
 import ProductUpload from "./pages/ProductUpload";
+import Seller from "./features/user/Seller";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="seller" element={<Seller />} />
           <Route path="products" >
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
