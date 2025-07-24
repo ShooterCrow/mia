@@ -65,7 +65,7 @@ const UserDropdown = ({ onMobileClose }) => {
     }, []);
 
     const menuItems = [
-        { icon: Settings, label: 'Account setting', path: '/dashboard/profile' },
+        { icon: Settings, label: 'Account setting', path: '/dashboard' },
         { icon: Store, label: 'Become a seller', path: '/dashboard/seller' },
         { icon: Package, label: 'My orders', path: '/dashboard/orders' },
         { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
