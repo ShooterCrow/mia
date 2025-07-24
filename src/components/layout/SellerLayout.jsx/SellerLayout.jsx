@@ -18,7 +18,10 @@ import {
     ChevronLeft,
     ChevronRight,
     LogOut,
-    MessageCircle
+    MessageCircle,
+    WatchIcon,
+    Phone,
+    CircleQuestionMark
 } from 'lucide-react';
 import { useSellerLayout } from './SellerLayoutContext';
 
@@ -38,28 +41,32 @@ const SellerLayout = () => {
 
     // Main bottom bar links (always visible on mobile)
     const mainBottomLinks = [
-        { icon: User, label: 'Profile', path: '/seller-dashboard/profile' },
-        { icon: Package, label: 'Orders', path: '/seller-dashboard/orders' },
+        { icon: User, label: 'Dashboard', path: '/seller-dashboard/profile' },
+        { icon: Package, label: 'My Products', path: '/seller-dashboard/orders' },
+        { icon: ShoppingCart, label: 'Orders', path: '/seller-dashboard/product-upload' },
         { icon: MessageCircle, label: 'Messages', path: '/seller-dashboard/messages' },
-        { icon: ShoppingCart, label: 'Product Upload', path: '/seller-dashboard/product-upload' },
         { icon: Menu, label: 'More', action: 'toggle' }
     ];
 
     // All sidebar links (for desktop/tablet)
     const sidebarLinks = [
-        { icon: User, label: 'Profile', path: '/seller-dashboard/profile' },
-        { icon: Package, label: 'Orders', path: '/seller-dashboard/orders' },
+        { icon: User, label: 'Dashboard', path: '/seller-dashboard/profile' },
+        { icon: Package, label: 'My Products', path: '/seller-dashboard/orders' },
+        { icon: ShoppingCart, label: 'Orders', path: '/seller-dashboard/product-upload' },
         { icon: MessageCircle, label: 'Messages', path: '/seller-dashboard/messages' },
-        { icon: ShoppingCart, label: 'Product Upload', path: '/seller-dashboard/product-upload' },
-        { icon: CreditCard, label: 'Payment', path: '/seller-dashboard/payment-methods' },
-        { icon: Clock, label: 'History', path: '/seller-dashboard/history' },
+        { icon: CreditCard, label: 'Promotions', path: '/seller-dashboard/payment-methods' },
+        { icon: Clock, label: 'Analytics', path: '/seller-dashboard/history' },
+        { icon: WatchIcon, label: 'Dispute', path: '/seller-dashboard/' },
+        { icon: CircleQuestionMark, label: 'Support', path: '/seller-dashboard/' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/seller-dashboard/logout' },
     ];
-
+    
     // Additional links (shown when bottom bar expanded on mobile)
     const expandedLinks = [
-        { icon: CreditCard, label: 'Payment', path: '/seller-dashboard/payment-methods' },
-        { icon: Clock, label: 'History', path: '/seller-dashboard/history' },
+        { icon: CreditCard, label: 'Promotions', path: '/seller-dashboard/payment-methods' },
+        { icon: Clock, label: 'Analytics', path: '/seller-dashboard/history' },
+        { icon: WatchIcon, label: 'Dispute', path: '/seller-dashboard' },
+        { icon: CircleQuestionMark, label: 'Support', path: '/seller-dashboard/' },
         { icon: LogOut, color:"red", label: 'Logout', path: '/seller-dashboard/logout' },
     ];
 
