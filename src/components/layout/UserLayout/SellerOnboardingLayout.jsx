@@ -1,7 +1,7 @@
-// components/onboarding/OnboardingLayout.jsx
+// components/onboarding/SellerOnboardingLayoutayout.jsx
 import { ArrowLeft } from 'lucide-react';
 
-export default function OnboardingLayout({ 
+export default function SellerOnboardingLayout({ 
   title, 
   description, 
   icon: Icon, 
@@ -13,7 +13,7 @@ export default function OnboardingLayout({
 }) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="max-w-2xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -28,7 +28,7 @@ export default function OnboardingLayout({
         </div>
 
         {/* Form Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+        <div className="bg-white dark:bg-gray-800 rounded-xl lg:p-8 sm:p-3 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
           {children}
 
           {/* Navigation Buttons */}

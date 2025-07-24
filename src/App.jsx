@@ -15,7 +15,11 @@ import Support from "./pages/Support";
 import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
 import ProductUpload from "./pages/ProductUpload";
-import Seller from "./features/user/Seller";
+import SellerOnboarding from "./features/becomeASeller/SellerOnboarding";
+import SellerDashboard from "./features/seller/SellerDash1";
+import { SellerLayoutProvider } from "./components/layout/SellerLayout.jsx/SellerLayoutContext";
+import SellerLayout from "./components/layout/SellerLayout.jsx/SellerLayout";
+import SellerOnboardingLanding from "./features/becomeASeller/SellerOnboarding";
 
 function App() {
   return (
@@ -24,7 +28,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="seller" element={<Seller />} />
           <Route path="products" >
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
@@ -37,12 +40,19 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
           <Route path="support" element={<Support />} />
-          <Route path="dashboard" element={
-            <UserLayoutProvider>
-              <UserLayout />
-            </UserLayoutProvider>
-          }>
+          <Route path="dashboard">
             <Route path="profile" element={<UserProfile />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="seller" element={<SellerOnboarding />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="product-upload" element={<ProductUpload />} />
+          </Route>
+          <Route path="seller-dashboard" element={
+            <SellerLayoutProvider>
+              <SellerLayout />
+            </SellerLayoutProvider>
+          }>
+            <Route path="profile" element={<SellerDashboard />} />
             <Route path="orders" element={<Orders />} />
             <Route path="messages" element={<Messages />} />
             <Route path="product-upload" element={<ProductUpload />} />

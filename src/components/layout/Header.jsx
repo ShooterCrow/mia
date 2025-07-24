@@ -19,6 +19,7 @@ import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import UserDropdown from './UserLayout/UserDropdown';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -261,6 +262,8 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button */}
+
+                                <UserDropdown />
                                 {isLoggedIn ? (
                                     < Link to={"/dashboard/profile"}>
                                         <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
@@ -337,6 +340,7 @@ const Header = () => {
                                             <span>Sign In</span>
                                         </div>
                                     </Link>
+                                    <UserDropdown />
 
                                     <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
                                         <Phone className="w-4 h-4" />
