@@ -79,8 +79,7 @@ const TrendingProducts = () => {
             }}
           >
             {/* Gradient overlay for readability */}
-            <div className="" />
-
+             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent" />
             {/* Content */}
             <div
               className={`relative z-10 flex h-full flex-col justify-center p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 ${product.textColor}`}
