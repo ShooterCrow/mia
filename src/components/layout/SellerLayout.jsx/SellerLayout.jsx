@@ -38,29 +38,29 @@ const SellerLayout = () => {
 
     // Main bottom bar links (always visible on mobile)
     const mainBottomLinks = [
-        { icon: User, label: 'Profile', path: '/dashboard/profile' },
-        { icon: Package, label: 'Orders', path: '/dashboard/orders' },
-        { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
-        { icon: ShoppingCart, label: 'Product Upload', path: '/dashboard/product-upload' },
+        { icon: User, label: 'Profile', path: '/seller-dashboard/profile' },
+        { icon: Package, label: 'Orders', path: '/seller-dashboard/orders' },
+        { icon: MessageCircle, label: 'Messages', path: '/seller-dashboard/messages' },
+        { icon: ShoppingCart, label: 'Product Upload', path: '/seller-dashboard/product-upload' },
         { icon: Menu, label: 'More', action: 'toggle' }
     ];
 
     // All sidebar links (for desktop/tablet)
     const sidebarLinks = [
-        { icon: User, label: 'Profile', path: '/dashboard/profile' },
-        { icon: Package, label: 'Orders', path: '/dashboard/orders' },
-        { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
-        { icon: ShoppingCart, label: 'Product Upload', path: '/dashboard/product-upload' },
-        { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
-        { icon: Clock, label: 'History', path: '/dashboard/history' },
-        { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
+        { icon: User, label: 'Profile', path: '/seller-dashboard/profile' },
+        { icon: Package, label: 'Orders', path: '/seller-dashboard/orders' },
+        { icon: MessageCircle, label: 'Messages', path: '/seller-dashboard/messages' },
+        { icon: ShoppingCart, label: 'Product Upload', path: '/seller-dashboard/product-upload' },
+        { icon: CreditCard, label: 'Payment', path: '/seller-dashboard/payment-methods' },
+        { icon: Clock, label: 'History', path: '/seller-dashboard/history' },
+        { icon: LogOut, color:"red", label: 'Logout', path: '/seller-dashboard/logout' },
     ];
 
     // Additional links (shown when bottom bar expanded on mobile)
     const expandedLinks = [
-        { icon: CreditCard, label: 'Payment', path: '/dashboard/payment-methods' },
-        { icon: Clock, label: 'History', path: '/dashboard/history' },
-        { icon: LogOut, color:"red", label: 'Logout', path: '/dashboard/logout' },
+        { icon: CreditCard, label: 'Payment', path: '/seller-dashboard/payment-methods' },
+        { icon: Clock, label: 'History', path: '/seller-dashboard/history' },
+        { icon: LogOut, color:"red", label: 'Logout', path: '/seller-dashboard/logout' },
     ];
 
     const handleLinkClick = (link) => {
