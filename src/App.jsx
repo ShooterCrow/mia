@@ -14,6 +14,8 @@ import ProductDetails from "./pages/detailPages/project-details/ProductDetails";
 import Support from "./pages/Support";
 import Orders from "./features/orders/Orders";
 import Messages from "./features/messages/Messages";
+import TrendingProducts from "./pages/TrendingProducts";
+import DiscountPage from "./pages/DiscountPage";
 import ProductUpload from "./pages/ProductUpload";
 import SellerOnboarding from "./features/becomeASeller/SellerOnboarding";
 import SellerDashboard from "./features/seller/SellerDash1";
@@ -32,7 +34,7 @@ function App() {
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
-          <Route path="categories" >
+          <Route path="categories">
             <Route index element={<CategoryPage />} />
             <Route path=":category" element={<CategoryPage />} />
           </Route>
@@ -40,8 +42,11 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="verify-email" element={<EmailVerification />} />
           <Route path="support" element={<Support />} />
-          <Route path="dashboard">
-            <Route path="profile" element={<UserProfile />} />
+          <Route path="trending-products" element={<TrendingProducts />} />
+          <Route path="discount-page" element={<DiscountPage />} />
+          <Route path="dashboard" >
+            {/* //path="profile" */}
+            <Route index element={<UserProfile />} /> 
             <Route path="orders" element={<Orders />} />
             <Route path="seller" element={<SellerOnboarding />} />
             <Route path="messages" element={<Messages />} />
