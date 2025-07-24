@@ -28,7 +28,7 @@ export default function SellerOnboardingLayout({
         </div>
 
         {/* Form Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl lg:p-8 sm:p-3 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
           {children}
 
           {/* Navigation Buttons */}
