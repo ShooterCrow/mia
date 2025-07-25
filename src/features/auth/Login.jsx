@@ -16,6 +16,7 @@ const LogIn = () => {
   // Handle successful login
   useEffect(() => {
     if (isSuccess) {
+      console.log(emailLoginLoading, isError, error, isSuccess);
       navigate("/dashboard");
     }
   }, [isSuccess, navigate]);
