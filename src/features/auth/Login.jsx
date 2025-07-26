@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import LeftSide from "./LeftSide";
 import { Link, useNavigate } from "react-router";
 import { useLoginMutation } from "./authApiSlice";
+import { useAuth } from "../../hooks/useAuth";
+import { auth, googleProvider } from "./firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -9,33 +12,36 @@ const LogIn = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
-    agreeToTerms: false
+    password: ''
   });
+  const { isAuthenticated } = useAuth()
+  console.log(isAuthenticated, "isAuthenticated in Login component");
 
   // Handle successful login
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || isAuthenticated) {
       console.log(emailLoginLoading, isError, error, isSuccess);
       navigate("/dashboard");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, isAuthenticated, navigate]);
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     try {
-      // Simulate Firebase Google sign-in
-      console.log("Google sign-in initiated");
-      // const result = await signInWithPopup(auth, googleProvider);
-      // You would then call the login mutation with Google credentials
-      // await login({ googleToken: result.user.accessToken });
-      setTimeout(() => {
+      const result = await signInWithPopup(auth, googleProvider);
+      const token = await result.user.getIdToken();
+
+      // Send this token to your backend for validation or login
+      const loginResult = await login({ googleToken: token });
+
+      if (loginResult.success) {
         console.log("Google sign-in successful");
-        setGoogleLoading(false);
-        // navigate("/dashboard"); // This would happen automatically via useEffect
-      }, 2000);
+      } else {
+        console.error("Backend login failed:", loginResult.message);
+      }
     } catch (error) {
-      console.error("Error during Google Sign-In:", error);
+      console.error("Error during Google Sign-In:", error.message);
+    } finally {
       setGoogleLoading(false);
     }
   };

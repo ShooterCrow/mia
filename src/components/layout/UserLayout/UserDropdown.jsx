@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, ChevronDown, Settings, Store, Package, MessageCircle, HelpCircle, Plus } from 'lucide-react';
+import { User, ChevronDown, Settings, Store, Package, MessageCircle, HelpCircle, Plus, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Mobile Dropdown Component specifically for user menu
@@ -32,9 +32,9 @@ const MobileUserDropdown = ({ menuItems, onClose }) => {
                                         setIsOpen(false);
                                         if (onClose) onClose();
                                     }}
-                                    className="w-full px-2.5 py-2 text-left text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
+                                    className={`w-full px-2.5 py-2 text-left text-sm ${item.color ? "text-" + item.color + "-500" : "text-gray-800"} dark:${item.color ? "text-" + item.color + "-200" : "text-gray-200"} hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center`}
                                 >
-                                    <IconComponent className="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" />
+                                    <IconComponent className={`w-4 h-4 mr-2 ${item.color ? "text-" + item.color + "-500" : "text-gray-500"} `} />
                                     {item.label}
                                 </button>
                             </Link>
@@ -71,6 +71,7 @@ const UserDropdown = ({ onMobileClose }) => {
         { icon: MessageCircle, label: 'Messages', path: '/dashboard/messages' },
         { icon: HelpCircle, label: 'Support & Help', path: '/dashboard/support' },
         { icon: Plus, label: 'Guest product listing', path: '/dashboard/my-products' },
+        { icon: LogOut, label: 'Logout', onclick: '/dashboard/my-products', color: "red" },
     ];
 
     const toggleDropdown = () => {
@@ -83,7 +84,7 @@ const UserDropdown = ({ onMobileClose }) => {
             <div className="relative text-left hidden lg:inline-block" ref={dropdownRef}>
                 <button
                     onClick={toggleDropdown}
-                    className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors"
+                    className="flex items-center space-x-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors"
                 >
                     <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
                         <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
@@ -100,10 +101,9 @@ const UserDropdown = ({ onMobileClose }) => {
                                 return (
                                     <Link to={item.path} key={index}>
                                         <button
-                                            className="w-full flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                                            onClick={() => setIsOpen(false)}
+                                            className={`w-full px-2.5 py-2 text-left text-sm ${item.color ? "text-" + item.color + "-500" : "text-gray-800"} dark:${item.color ? "text-" + item.color + "-200" : "text-gray-200"} hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center`}
                                         >
-                                            <IconComponent className="w-4 h-4 mr-3 text-gray-500 dark:text-gray-400" />
+                                            <IconComponent className={`w-4 h-4 mr-2 ${item.color ? "text-" + item.color + "-500" : "text-gray-500"} `} />
                                             {item.label}
                                         </button>
                                     </Link>
@@ -116,8 +116,8 @@ const UserDropdown = ({ onMobileClose }) => {
 
             {/* Mobile Dropdown */}
             <div className="lg:hidden">
-                <MobileUserDropdown 
-                    menuItems={menuItems} 
+                <MobileUserDropdown
+                    menuItems={menuItems}
                     onClose={onMobileClose}
                 />
             </div>

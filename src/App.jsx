@@ -22,6 +22,7 @@ import SellerDashboard from "./features/seller/SellerDash1";
 import { SellerLayoutProvider } from "./components/layout/SellerLayout.jsx/SellerLayoutContext";
 import SellerLayout from "./components/layout/SellerLayout.jsx/SellerLayout";
 import SellerOnboardingLanding from "./features/becomeASeller/SellerOnboarding";
+import { ProtectedRoutes } from "./features/auth/ProtectedRoutes";
 
 function App() {
   return (
@@ -44,23 +45,25 @@ function App() {
           <Route path="support" element={<Support />} />
           <Route path="trending-products" element={<TrendingProducts />} />
           <Route path="discount-page" element={<DiscountPage />} />
-          <Route path="dashboard" >
-            {/* //path="profile" */}
-            <Route index element={<UserProfile />} /> 
-            <Route path="orders" element={<Orders />} />
-            <Route path="seller" element={<SellerOnboarding />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="product-upload" element={<ProductUpload />} />
-          </Route>
-          <Route path="seller-dashboard" element={
-            <SellerLayoutProvider>
-              <SellerLayout />
-            </SellerLayoutProvider>
-          }>
-            <Route path="profile" element={<SellerDashboard />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="product-upload" element={<ProductUpload />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="dashboard" >
+              {/* //path="profile" */}
+              <Route index element={<UserProfile />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="seller" element={<SellerOnboarding />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="product-upload" element={<ProductUpload />} />
+            </Route>
+            <Route path="seller-dashboard" element={
+              <SellerLayoutProvider>
+                <SellerLayout />
+              </SellerLayoutProvider>
+            }>
+              <Route path="profile" element={<SellerDashboard />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="product-upload" element={<ProductUpload />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
