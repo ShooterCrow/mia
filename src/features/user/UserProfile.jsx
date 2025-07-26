@@ -1,15 +1,15 @@
 import { User, Bell, Shield } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetUserByIdQuery } from "./userApiSlice";
 import { useAuth } from "../../hooks/useAuth";
 
 function UserProfile() {
   const { userId } = useAuth()
   const [activeTab, setActiveTab] = useState('profile');
-  const {data} = useGetUserByIdQuery(userId, {
+  const { data } = useGetUserByIdQuery(userId, {
     skip: !userId,
-    refetchOnFocus: true, 
-    refetchOnMountOrArgChange: true, 
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
     retry: 3
   });
   console.log(data, "User data fetched from API");
@@ -24,6 +24,22 @@ function UserProfile() {
     occupation: data?.occupation || "",
     gender: data?.gender || "Male"
   });
+
+  useEffect(() => {
+    if (data) {
+      setProfileData({
+        firstName: data.full_name || "",
+        lastName: data.last_name || "",
+        telephone: data.phone_number || "+234",
+        email: data.email || "",
+        city: data.city || "",
+        username: data.username || "",
+        country: data.country || "",
+        occupation: data.occupation || "",
+        gender: data.gender || "Male"
+      });
+    }
+  }, [data]);
 
   const handleInputChange = (field, value) => {
     setProfileData(prev => ({
@@ -188,7 +204,7 @@ function UserProfile() {
                 onClick={handleDeleteAccount}
                 className="flex-1 px-6 py-2 border border-red-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors"
               >
-                Delete Account 
+                Delete Account
               </button>
               <button
                 onClick={handleSaveChanges}
