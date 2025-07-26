@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { User, ChevronDown, Settings, Store, Package, MessageCircle, HelpCircle, Plus, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useGetUserByIdQuery } from '../../../features/user/userApiSlice';
+import { useAuth } from '../../../hooks/useAuth';
 
 // Mobile Dropdown Component specifically for user menu
-const MobileUserDropdown = ({ menuItems, onClose }) => {
+const MobileUserDropdown = ({ menuItems, onClose, username, full_name }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -16,7 +18,7 @@ const MobileUserDropdown = ({ menuItems, onClose }) => {
                     <div className="w-6 h-6 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center mr-2">
                         <User className="w-3 h-3 text-gray-600 dark:text-gray-400" />
                     </div>
-                    <span className="truncate">John Doe</span>
+                    <span className="truncate">{username || full_name}</span>
                 </div>
                 <ChevronDown className={`w-4 h-4 transition-transform flex-shrink-0 ml-2 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -49,6 +51,13 @@ const MobileUserDropdown = ({ menuItems, onClose }) => {
 const UserDropdown = ({ onMobileClose }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const {userId} = useAuth();
+    const { data } = useGetUserByIdQuery(userId, {
+        skip: !userId,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        retry: 3
+    });
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -89,7 +98,7 @@ const UserDropdown = ({ onMobileClose }) => {
                     <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
                         <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                     </div>
-                    <span className="hidden sm:block">John Doe</span>
+                    <span className="hidden sm:block">{data?.username || data?.full_name}</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
 
@@ -119,6 +128,8 @@ const UserDropdown = ({ onMobileClose }) => {
                 <MobileUserDropdown
                     menuItems={menuItems}
                     onClose={onMobileClose}
+                    username={data?.username}
+                    full_name={data?.full_name}
                 />
             </div>
         </>
