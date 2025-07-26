@@ -33,6 +33,7 @@ const LogIn = () => {
 
       // Send this token to your backend for validation or login
       const loginResult = await login({ googleToken: token });
+      console.log(token, "Google token received", loginResult, "Login result from backend");
 
       if (loginResult.success) {
         console.log("Google sign-in successful");
