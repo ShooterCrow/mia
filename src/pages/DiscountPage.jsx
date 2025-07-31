@@ -38,7 +38,7 @@ const DiscountPage = () => {
 
   /* ----------  Reusable Product Card ---------- */
   const ProductCard = ({ discount }) => (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-2xl border-2 ">
       <div className="p-8">
         <div className="flex justify-between items-start">
           {/* LEFT: Text block */}
@@ -69,9 +69,7 @@ const DiscountPage = () => {
 
             {/* Rating */}
             <div className="flex items-center gap-2 mb-6">
-              <div className="flex text-yellow-400">
-                {"★".repeat(5)}
-              </div>
+              <div className="flex text-yellow-400">{"★".repeat(5)}</div>
               <span className="text-gray-600 text-sm">(30k)</span>
             </div>
 
@@ -82,14 +80,16 @@ const DiscountPage = () => {
                   <div className="w-[54px] h-[24px] opacity-100 font-medium text-[25px] leading-[120%] tracking-normal  font-dm-sans">
                     {timeLeft[label.toLowerCase()]}
                   </div>
-                  <div className="w-[54px] h-[14px] opacity-100 font-normal text-[13px] leading-[139%] tracking-[2%]  font-dm-sans">{label}</div>
+                  <div className="w-[54px] h-[14px] opacity-100 font-normal text-[13px] leading-[139%] tracking-[2%]  font-dm-sans">
+                    {label}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* RIGHT: Image + discount badge */}
-          <div className="relative ml-6">
+          <div className=" ml-6">
             {/* Discount badge */}
             <div className="">
               <div className="">
@@ -116,8 +116,6 @@ const DiscountPage = () => {
                 ))}
               </div>
             </div>
-
-           
           </div>
         </div>
       </div>
