@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Dropdown = ({mobile}) => {
+const Dropdown = ({mobile, options = ['Categories', 'Vehicles', 'Gadgets', 'Contact']}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState('Categories');
-
-    const options = ['Categories', 'Vehicles', 'Gadgets', 'Contact'];
 
     return (
         <div className="relative w-full">

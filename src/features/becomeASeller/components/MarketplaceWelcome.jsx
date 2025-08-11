@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MarketplaceWelcome = () => {
   return (
@@ -7,7 +8,7 @@ const MarketplaceWelcome = () => {
       {/* Background Images */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Left Image */}
-        <div 
+        <div
           className="absolute left-0 top-0 w-1/3 h-full bg-contain bg-no-repeat bg-left-top opacity-80"
           style={{
             backgroundImage: "url('leftimage.png')",
@@ -15,9 +16,9 @@ const MarketplaceWelcome = () => {
             backgroundPosition: 'left top'
           }}
         />
-        
+
         {/* Right Image */}
-        <div 
+        <div
           className="absolute right-0 top-0 w-1/3 h-full bg-contain bg-no-repeat bg-right-top opacity-80"
           style={{
             backgroundImage: "url('rightimage.png')",
@@ -29,7 +30,7 @@ const MarketplaceWelcome = () => {
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-6">
-        
+
         {/* Success Icon */}
         <div className="mb-8">
           <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
@@ -53,7 +54,7 @@ const MarketplaceWelcome = () => {
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6 text-center">
             What Happens Next?
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Profile Step */}
             <div className="text-center">
@@ -98,7 +99,7 @@ const MarketplaceWelcome = () => {
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6 text-center">
             Welcome Bonuses
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* First Sale Bonus */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
@@ -131,10 +132,12 @@ const MarketplaceWelcome = () => {
 
         {/* CTA Button */}
         <div className="text-center mb-8">
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center transition-colors">
-            Go to your seller Dashboard
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </button>
+          <Link to={"/seller-dashboard/profile"}>
+            <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg inline-flex items-center transition-colors">
+              Go to your seller Dashboard
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </button>
+          </Link>
         </div>
 
         {/* Help Text */}

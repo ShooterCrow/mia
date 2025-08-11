@@ -19,6 +19,8 @@ import { useTheme } from '../ThemeProvider';
 import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import UserDropdown from './UserLayout/UserDropdown';
+import { useAuth } from '../../hooks/useAuth';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ const Header = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const location = useLocation()
     const locationSignIn = location.pathname.includes("/login")
-    const isLoggedIn = Boolean(localStorage.getItem('token')) || Boolean(localStorage.getItem('user'));
+    const { isAuthenticated } = useAuth()
 
     const languageToCountry = {
         en: 'US',
@@ -260,14 +262,16 @@ const Header = () => {
                                     )}
                                 </div>
 
-                                {/* Sign In Button */}
-                                {isLoggedIn ? (
-                                    < Link to={"/dashboard/profile"}>
-                                        <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
-                                            <User className="w-4 h-4" />
-                                            <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
-                                        </div>
-                                    </Link>) : (
+                                {/* Sign In Button and User Dropdown */}
+                                {/* < Link to={"/dashboard/profile"}>
+                                    <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
+                                        <User className="w-4 h-4" />
+                                        <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
+                                    </div>
+                                </Link> */}
+                                {isAuthenticated ? (
+                                    <UserDropdown />
+                                ) : (
                                     <Link to={locationSignIn ? "/signup" : "/login"}>
                                         <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
                                             <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
@@ -309,33 +313,24 @@ const Header = () => {
                                 <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Account & Support
                                 </h3>
-
                                 <div className="space-y-1">
-                                    <Link
-                                        to={"/dashboard/profile"}
-                                        onClick={() => setShowMobileMenu(false)}
-                                    >
-                                        <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
-                                            <User className="w-4 h-4" />
-                                            <span>My Account</span>
-                                        </button>
-                                    </Link>
-
+                                    {isAuthenticated ? (
+                                        <UserDropdown />
+                                    ) : (
+                                        <Link
+                                            to={"/login"}
+                                            onClick={() => setShowMobileMenu(false)} >
+                                            <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
+                                                <Phone className="w-4 h-4" />
+                                                <span>Sign In</span>
+                                            </div>
+                                        </Link>
+                                    )}
                                     <Link onClick={() => setShowMobileMenu(false)} to={"support"}>
                                         <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
                                             <Headset className="w-4 h-4" />
                                             <span>Help & Support</span>
                                         </button>
-                                    </Link>
-
-                                    <Link
-                                        to={"/login"}
-                                        onClick={() => setShowMobileMenu(false)}
-                                    >
-                                        <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
-                                            <Phone className="w-4 h-4" />
-                                            <span>Sign In</span>
-                                        </div>
                                     </Link>
 
                                     <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">

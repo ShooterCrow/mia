@@ -117,7 +117,6 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    businessName: '',
     password: '',
     confirmPassword: '',    
     agreeToTerms: false
@@ -201,10 +200,6 @@ const SignUp = () => {
       errors.email = 'Please enter a valid email address';
     }
 
-    if (!formData.businessName.trim()) {
-      errors.businessName = 'Business name is required';
-    }
-
     if (!formData.password) {
       errors.password = 'Password is required';
     } else if (formData.password.length < 6) {
@@ -236,7 +231,6 @@ const SignUp = () => {
       const result = await register({
         fullName: formData.fullName,
         email: formData.email,
-        businessName: formData.businessName,
         password: formData.password
       }).unwrap();
 
@@ -253,9 +247,7 @@ const SignUp = () => {
       setFormData({
         fullName: '',
         email: '',
-        businessName: '',
         password: '',
-        confirmPassword: ''
       });
 
       // Optionally navigate to login or verification page
@@ -420,28 +412,6 @@ const SignUp = () => {
                     />
                     {formErrors.email && (
                       <p className="mt-1 text-sm text-red-500">{formErrors.email}</p>
-                    )}
-                  </div>
-
-                  {/* Business Name Field */}
-                  <div>
-                    <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Business Name
-                    </label>
-                    <input
-                      type="text"
-                      id="businessName"
-                      name="businessName"
-                      value={formData.businessName}
-                      onChange={handleInputChange}
-                      className={`w-full h-12 px-4 py-3 border-2 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 transition-all duration-200 ${formErrors.businessName
-                        ? 'border-red-500 focus:border-red-500'
-                        : 'border-gray-200 dark:border-gray-600 focus:border-blue-500'
-                        }`}
-                      placeholder="Enter your business name"
-                    />
-                    {formErrors.businessName && (
-                      <p className="mt-1 text-sm text-red-500">{formErrors.businessName}</p>
                     )}
                   </div>
 
