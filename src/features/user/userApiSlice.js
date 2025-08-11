@@ -14,6 +14,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
             query: (id) => `/users/${id}`,
             providesTags: (result, error, id) => [{ type: 'Users', id }],
         }),
+        // Add the missing getUserProfile endpoint
+        getUserProfile: builder.query({
+            query: () => '/users/profile', // or '/auth/profile' depending on your API
+            providesTags: ['UserProfile'],
+        }),
         createUser: builder.mutation({
             query: (user) => ({
                 url: '/users',
@@ -44,6 +49,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetUsersQuery,
     useGetUserByIdQuery,
+    useGetUserProfileQuery, // Add this export
     useCreateUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,

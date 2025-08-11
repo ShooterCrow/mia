@@ -24,11 +24,22 @@ import SellerLayout from "./components/layout/SellerLayout.jsx/SellerLayout";
 import SellerOnboardingLanding from "./features/becomeASeller/SellerOnboarding";
 import { ProtectedRoutes } from "./features/auth/ProtectedRoutes";
 
+// Admin imports
+import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
+import { AdminLayoutProvider } from "./components/layout/AdminLayout/AdminLayoutContext";
+import AdminDashboard from "./features/admin/pages/AdminDashboard";
+import AdminUsers from "./features/admin/pages/AdminUsers";
+import AdminProducts from "./features/admin/pages/AdminProducts";
+import AdminOrders from "./features/admin/pages/AdminOrders";
+import AdminAnalytics from "./features/admin/pages/AdminAnalytics";
+import ProtectedAdminRoute from "./components/auth/ProtectedAdminRoute";
+
 function App() {
   return (
     <ThemeProvider>
       <ScrollRestoration />
       <Routes>
+        {/* Main Application Routes */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="products" >
@@ -45,6 +56,8 @@ function App() {
           <Route path="support" element={<Support />} />
           <Route path="trending-products" element={<TrendingProducts />} />
           <Route path="discount-page" element={<DiscountPage />} />
+          
+          {/* User Dashboard */}
           <Route element={<ProtectedRoutes />}>
             <Route path="dashboard" >
               {/* //path="profile" */}
@@ -65,6 +78,24 @@ function App() {
               <Route path="product-upload" element={<ProductUpload />} />
             </Route>
           </Route>
+        </Route>
+
+        {/* Admin Dashboard Routes - Separate from main layout */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedAdminRoute>
+              <AdminLayoutProvider>
+                <AdminLayout />
+              </AdminLayoutProvider>
+            </ProtectedAdminRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
         </Route>
       </Routes>
     </ThemeProvider>
