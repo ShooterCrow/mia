@@ -5,7 +5,7 @@ import {
 } from "../features/auth/authSlice";
 import { useGetUserProfileQuery } from "../features/user/userApiSlice";
 
-const useAuth = () => {
+export const useAuth = () => {
   const user = useSelector(selectCurrentUser);
 
   const {
@@ -34,4 +34,5 @@ const useAuth = () => {
   };
 };
 
+// You can also keep the default export for backward compatibility
 export default useAuth;
