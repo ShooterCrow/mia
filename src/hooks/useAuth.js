@@ -49,7 +49,7 @@ export const useAuth = () => {
   // Login function
   const login = async (email, password) => {
     try {
-      const result = await loginMutation({ email, password }).unwrap();
+      const result = await loginMutation({ email, password }).unwrap;
       
       if (result.status === 'success') {
         // Get complete user data
@@ -89,7 +89,7 @@ export const useAuth = () => {
         full_name: fullName,
         email,
         password,
-      }).unwrap();
+      }).unwrap;
       
       return {
         success: true,
@@ -108,7 +108,7 @@ export const useAuth = () => {
   // Verify email function
   const verifyEmail = async (token) => {
     try {
-      const result = await verifyMutation({ token }).unwrap();
+      const result = await verifyMutation({ token }).unwrap;
       return {
         success: true,
         message: result.message,
@@ -127,7 +127,7 @@ export const useAuth = () => {
       const result = await updateUserMutation({
         id: userId,
         ...userData,
-      }).unwrap();
+      }).unwrap;
       
       // Update user data in Redux state
       const updatedUser = { ...user, ...userData };
@@ -149,7 +149,7 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       // Call logout API to clear token on server
-      await logoutMutation().unwrap();
+      await logoutMutation().unwrap;
     } catch (error) {
       // Even if API call fails, we still want to logout locally
       console.log('Logout API call failed, but clearing local credentials');
@@ -205,3 +205,6 @@ export const useAuth = () => {
     businessName: user?.business_name || '',
   };
 };
+
+// You can also keep the default export for backward compatibility
+export default useAuth;
