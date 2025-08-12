@@ -174,7 +174,7 @@ const LogIn = () => {
 
                 {/* Sign In Button */}
                 <button
-                  type="submit"
+                  // type="submit"
                   // disabled={isLoading || !formData.agreeToTerms}
                   className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 ${isLoading ? "opacity-50 cursor-not-allowed" : ""
                     }`} >

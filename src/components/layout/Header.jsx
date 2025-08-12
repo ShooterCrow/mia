@@ -307,41 +307,8 @@ const Header = () => {
                                 </Link>
                             </nav>
                             <Dropdown mobile={true} />
-
-                            {/* Account & Support Section */}
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
-                                <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                    Account & Support
-                                </h3>
-                                <div className="space-y-1">
-                                    {isAuthenticated ? (
-                                        <UserDropdown />
-                                    ) : (
-                                        <Link
-                                            to={"/login"}
-                                            onClick={() => setShowMobileMenu(false)} >
-                                            <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
-                                                <Phone className="w-4 h-4" />
-                                                <span>Sign In</span>
-                                            </div>
-                                        </Link>
-                                    )}
-                                    <Link onClick={() => setShowMobileMenu(false)} to={"support"}>
-                                        <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
-                                            <Headset className="w-4 h-4" />
-                                            <span>Help & Support</span>
-                                        </button>
-                                    </Link>
-
-                                    <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
-                                        <Phone className="w-4 h-4" />
-                                        <span>+234 813 975 3870</span>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Settings Section with Theme Control */}
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-2">
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                                 <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                     Settings
                                 </h3>
@@ -440,6 +407,38 @@ const Header = () => {
                                                 </button>
                                             </div>
                                         )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Account & Support Section */}
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-0">
+                                <h3 className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    Account & Support
+                                </h3>
+                                <div className="space-y-1">
+                                    {isAuthenticated ? (
+                                        <UserDropdown />
+                                    ) : (
+                                        <Link
+                                            to={"/login"}
+                                            onClick={() => setShowMobileMenu(false)} >
+                                            <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-700 dark:text-gray-300">
+                                                <Phone className="w-4 h-4" />
+                                                <span>Sign In</span>
+                                            </div>
+                                        </Link>
+                                    )}
+                                    <Link onClick={() => setShowMobileMenu(false)} to={"support"}>
+                                        <button className="flex items-center gap-3 w-full px-3 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                                            <Headset className="w-4 h-4" />
+                                            <span>Help & Support</span>
+                                        </button>
+                                    </Link>
+
+                                    <div className="flex items-center gap-3 px-3 py-3 text-sm text-gray-600 dark:text-gray-400">
+                                        <Phone className="w-4 h-4" />
+                                        <span>+234 813 975 3870</span>
                                     </div>
                                 </div>
                             </div>
