@@ -17,7 +17,12 @@ import Messages from "./features/messages/Messages";
 import TrendingProducts from "./pages/TrendingProducts";
 import DiscountPage from "./pages/DiscountPage";
 import ProductUpload from "./pages/ProductUpload";
-import Seller from "./features/user/Seller";
+import SellerOnboarding from "./features/becomeASeller/SellerOnboarding";
+import SellerDashboard from "./features/seller/SellerDash1";
+import { SellerLayoutProvider } from "./components/layout/SellerLayout.jsx/SellerLayoutContext";
+import SellerLayout from "./components/layout/SellerLayout.jsx/SellerLayout";
+import SellerOnboardingLanding from "./features/becomeASeller/SellerOnboarding";
+import { ProtectedRoutes } from "./features/auth/ProtectedRoutes";
 
 // Admin imports
 import AdminLayout from "./components/layout/AdminLayout/AdminLayout";
@@ -37,8 +42,7 @@ function App() {
         {/* Main Application Routes */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="seller" element={<Seller />} />
-          <Route path="products">
+          <Route path="products" >
             <Route index element={<AllProducts />} />
             <Route path=":id" element={<ProductDetails />} />
           </Route>
@@ -54,18 +58,25 @@ function App() {
           <Route path="discount-page" element={<DiscountPage />} />
           
           {/* User Dashboard */}
-          <Route
-            path="dashboard"
-            element={
-              <UserLayoutProvider>
-                <UserLayout />
-              </UserLayoutProvider>
-            }
-          >
-            <Route path="profile" element={<UserProfile />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="product-upload" element={<ProductUpload />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="dashboard" >
+              {/* //path="profile" */}
+              <Route index element={<UserProfile />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="seller" element={<SellerOnboarding />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="product-upload" element={<ProductUpload />} />
+            </Route>
+            <Route path="seller-dashboard" element={
+              <SellerLayoutProvider>
+                <SellerLayout />
+              </SellerLayoutProvider>
+            }>
+              <Route path="profile" element={<SellerDashboard />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="product-upload" element={<ProductUpload />} />
+            </Route>
           </Route>
         </Route>
 

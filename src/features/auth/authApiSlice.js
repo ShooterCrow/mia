@@ -11,7 +11,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
+                    const data = await queryFulfilled;
                     dispatch(setCredentials(data));
                 } catch (err) {
                     console.error('Login failed:', err);
@@ -25,14 +25,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: {
                     full_name: userInfo.fullName || userInfo.full_name,
                     email: userInfo.email,
-                    business_name: userInfo.businessName || userInfo.business_name,
                     password: userInfo.password
                 }
             })
         }),
         verify: builder.mutation({
             query: token => ({
-                url: '/verify',
+                url: `/verify/${token}`,
                 method: 'POST',
                 body: { token }
             }),

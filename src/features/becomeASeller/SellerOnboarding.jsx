@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { TrendingUp, Shield, Clock, Zap, Headphones, User, Briefcase } from 'lucide-react';
-import OnboardingLayout from './OnboardingLayout';
-import PersonalInfoForm from './PersonalForm';
-import BusinessDetailsForm from './BusinessDetailsForm';
-import ProductCategories from './ProductCategories';
-import MarketplaceWelcome from './MarketplaceWelcome';
+import { TrendingUp, Shield, Clock, Zap, Headphones, User, Briefcase, IdCard } from 'lucide-react';
+import SellerOnboardingLayout from '../../components/layout/UserLayout/SellerOnboardingLayout';
+import PersonalInfoForm from './components/PersonalForm';
+import BusinessDetailsForm from './components/BusinessDetailsForm';
+import ProductCategories from './components/ProductCategories';
+import MarketplaceWelcome from './components/MarketplaceWelcome';
+import IdVerification from './components/IdVerification';
 
-export default function SellerOnboardingLanding() {
+export default function SellerOnboarding() {
     const [currentStep, setCurrentStep] = useState('landing');
     const [formData, setFormData] = useState({
         // Personal Info
@@ -31,12 +32,8 @@ export default function SellerOnboardingLanding() {
         setCurrentStep('personal-info');
     };
 
-    const handleBack = () => {
-        if (currentStep === 'business-details') {
-            setCurrentStep('personal-info');
-        } else if (currentStep === 'personal-info') {
-            setCurrentStep('landing');
-        }
+    const handleBack = (step) => {
+        setCurrentStep(step);
     };
 
     const handleContinue = (step) => {
@@ -45,7 +42,7 @@ export default function SellerOnboardingLanding() {
 
     if (currentStep === 'personal-info') {
         return (
-            <OnboardingLayout
+            <SellerOnboardingLayout
                 title="Personal Information"
                 description="Tell us about yourself so we can personalize your seller experience"
                 icon={User}
@@ -56,45 +53,59 @@ export default function SellerOnboardingLanding() {
                     formData={formData}
                     onInputChange={handleInputChange}
                 />
-            </OnboardingLayout>
+            </SellerOnboardingLayout>
         );
     }
 
     if (currentStep === 'business-details') {
         return (
-            <OnboardingLayout
+            <SellerOnboardingLayout
                 title="Business Details"
                 description="Help us understand your business so we can provide the best selling experience"
                 icon={Briefcase}
-                onBack={handleBack}
+                onBack={() => handleBack("personal-info")}
                 onContinue={() => handleContinue("product-categories")}
             >
                 <BusinessDetailsForm
                     formData={formData}
                     onInputChange={handleInputChange}
                 />
-            </OnboardingLayout>
+            </SellerOnboardingLayout>
         );
     }
 
     if (currentStep === 'product-categories') {
         return (
-            <OnboardingLayout
+            <SellerOnboardingLayout
                 title="Product Categories"
                 description="Select the categories that best match what you plan to sell (up to 5)"
                 icon={Briefcase}
-                onBack={handleBack}
+                onBack={() => handleBack("business-details")}
                 onContinue={() => handleContinue("id-verification")}
             >
                 <ProductCategories />
-            </OnboardingLayout>
+            </SellerOnboardingLayout>
         );
     }
 
-    
     if (currentStep === 'id-verification') {
         return (
-                <MarketplaceWelcome />
+            <SellerOnboardingLayout
+                title="Id Verification"
+                description="Verify your identity to build trust with customers and unlock all seller features"
+                icon={IdCard}
+                onBack={() => handleBack("product-categories")}
+                onContinue={() => handleContinue("welcome")}
+            >
+                <IdVerification />
+            </SellerOnboardingLayout>
+        );
+    }
+
+
+    if (currentStep === 'welcome') {
+        return (
+            <MarketplaceWelcome />
         );
     }
 
@@ -229,7 +240,7 @@ export default function SellerOnboardingLanding() {
                 <div className="text-center">
                     <button
                         onClick={handleStartJourney}
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-transform"
+                        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg text-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-transform"
                     >
                         Start your seller journey →
                     </button>

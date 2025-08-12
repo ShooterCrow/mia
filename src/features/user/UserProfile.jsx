@@ -1,19 +1,45 @@
 import { User, Bell, Shield } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetUserByIdQuery } from "./userApiSlice";
+import { useAuth } from "../../hooks/useAuth";
 
 function UserProfile() {
+  const { userId } = useAuth()
   const [activeTab, setActiveTab] = useState('profile');
-  const [profileData, setProfileData] = useState({
-    firstName: "",
-    lastName: "",
-    telephone: "+234",
-    email: "",
-    city: "",
-    username: "",
-    country: "",
-    occupation: "",
-    gender: "Male"
+  const { data } = useGetUserByIdQuery(userId, {
+    skip: !userId,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+    retry: 3
   });
+  console.log(data, "User data fetched from API");
+  const [profileData, setProfileData] = useState({
+    firstName: data?.full_name || "",
+    lastName: data?.last_name || "",
+    telephone: data?.phone_number || "+234",
+    email: data?.email || "",
+    city: data?.city || "",
+    username: data?.username || "",
+    country: data?.country || "",
+    occupation: data?.occupation || "",
+    gender: data?.gender || "Male"
+  });
+
+  useEffect(() => {
+    if (data) {
+      setProfileData({
+        firstName: data.full_name || "",
+        lastName: data.last_name || "",
+        telephone: data.phone_number || "+234",
+        email: data.email || "",
+        city: data.city || "",
+        username: data.username || "",
+        country: data.country || "",
+        occupation: data.occupation || "",
+        gender: data.gender || "Male"
+      });
+    }
+  }, [data]);
 
   const handleInputChange = (field, value) => {
     setProfileData(prev => ({
@@ -162,7 +188,7 @@ function UserProfile() {
                   <input
                     type="radio"
                     name="gender"
-                    value="Female"
+                    value={data?.gender || "Female"}
                     checked={profileData.gender === 'Female'}
                     onChange={(e) => handleInputChange('gender', e.target.value)}
                     className="w-4 h-4 text-red-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:ring-red-500 focus:ring-2"
@@ -175,16 +201,16 @@ function UserProfile() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-8">
               <button
-                onClick={handleSaveChanges}
-                className="flex-1 px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors"
-              >
-                Save changes
-              </button>
-              <button
                 onClick={handleDeleteAccount}
-                className="flex-1 px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                className="flex-1 px-6 py-2 border border-red-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors"
               >
                 Delete Account
+              </button>
+              <button
+                onClick={handleSaveChanges}
+                className="flex-1 px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+              >
+                Save changes
               </button>
             </div>
           </div>
@@ -201,7 +227,7 @@ function UserProfile() {
               <p className="text-gray-500 dark:text-gray-400 mb-6">
                 Manage your notification preferences
               </p>
-              
+
               <div className="space-y-4 max-w-md mx-auto">
                 <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="text-left">
@@ -210,7 +236,7 @@ function UserProfile() {
                   </div>
                   <input type="checkbox" className="w-4 h-4 text-red-600 rounded focus:ring-red-500" />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="text-left">
                     <p className="font-medium text-gray-900 dark:text-white">Push Notifications</p>
@@ -218,7 +244,7 @@ function UserProfile() {
                   </div>
                   <input type="checkbox" className="w-4 h-4 text-red-600 rounded focus:ring-red-500" />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="text-left">
                     <p className="font-medium text-gray-900 dark:text-white">SMS Notifications</p>
@@ -242,7 +268,7 @@ function UserProfile() {
               <p className="text-gray-500 dark:text-gray-400 mb-6">
                 Manage your account security
               </p>
-              
+
               <div className="space-y-4 max-w-md mx-auto">
                 <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-left">
                   <h4 className="font-medium text-gray-900 dark:text-white mb-2">Change Password</h4>
@@ -253,7 +279,7 @@ function UserProfile() {
                     Update Password
                   </button>
                 </div>
-                
+
                 <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-left">
                   <h4 className="font-medium text-gray-900 dark:text-white mb-2">Two-Factor Authentication</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
@@ -263,7 +289,7 @@ function UserProfile() {
                     Enable 2FA
                   </button>
                 </div>
-                
+
                 <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-left">
                   <h4 className="font-medium text-gray-900 dark:text-white mb-2">Login Sessions</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
@@ -294,7 +320,7 @@ function UserProfile() {
             </div>
           </div>
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
-            Maxwell Gordon
+            {data?.full_name}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             National representative of foreign Affairs South African
@@ -303,33 +329,30 @@ function UserProfile() {
 
         {/* Navigation Tabs */}
         <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 px-6">
-          <button 
+          <button
             onClick={() => setActiveTab('profile')}
-            className={`px-6 py-3 text-sm font-medium focus:outline-none ${
-              activeTab === 'profile' 
-                ? 'text-red-600 border-b-2 border-red-600' 
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
+            className={`px-6 py-3 text-sm font-medium focus:outline-none ${activeTab === 'profile'
+              ? 'text-red-600 border-b-2 border-red-600'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
           >
             Profile
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('notification')}
-            className={`px-6 py-3 text-sm font-medium focus:outline-none ${
-              activeTab === 'notification' 
-                ? 'text-red-600 border-b-2 border-red-600' 
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
+            className={`px-6 py-3 text-sm font-medium focus:outline-none ${activeTab === 'notification'
+              ? 'text-red-600 border-b-2 border-red-600'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
           >
             Notification
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('security')}
-            className={`px-6 py-3 text-sm font-medium focus:outline-none ${
-              activeTab === 'security' 
-                ? 'text-red-600 border-b-2 border-red-600' 
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
+            className={`px-6 py-3 text-sm font-medium focus:outline-none ${activeTab === 'security'
+              ? 'text-red-600 border-b-2 border-red-600'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
           >
             Security
           </button>

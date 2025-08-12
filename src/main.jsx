@@ -17,7 +17,7 @@ import {
 const router = createBrowserRouter([
   {
     path: '/*',
-    element: <App />, // App should include nested <ScrollRestoration />, <Routes />, etc.
+    element: <App />, 
   }
 ])
 

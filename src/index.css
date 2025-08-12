@@ -145,11 +145,6 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* === SMOOTH SCROLLING === */
-html {
-  scroll-behavior: smooth;
-}
-
 /* === HIDE SCROLLBARS BUT KEEP FUNCTIONALITY === */
 .hide-scrollbar {
   -ms-overflow-style: none;
