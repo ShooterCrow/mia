@@ -4,7 +4,7 @@ const AdminLayoutContext = createContext();
 
 export const AdminLayoutProvider = ({ children }) => {
     const [bottomBarExpanded, setBottomBarExpanded] = useState(false);
-    const [sidebarExpanded, setSidebarExpanded] = useState(false);
+    const [sidebarExpanded, setSidebarExpanded] = useState(true); // Changed to true for better desktop experience
     const [isMobile, setIsMobile] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
 
@@ -28,7 +28,8 @@ export const AdminLayoutProvider = ({ children }) => {
             // Set default sidebar state based on screen size
             if (tablet) {
                 setSidebarExpanded(false); // Collapsed on tablet
-            } else if (desktop) {
+            } else if (desktop && !prevIsMobile.current) {
+                // Only auto-expand on desktop if not coming from mobile
                 setSidebarExpanded(true); // Expanded on desktop
             }
 
