@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Home,
   Users,
@@ -12,18 +12,19 @@ import {
   BarChart3,
   DollarSign,
   Scale,
+  Search,
+  UserCircle,
 } from "lucide-react";
-import AdminDashboard from "../../../features/admin/pages/AdminDashboard"; 
+import { NavLink, Outlet } from "react-router-dom";
+import { useAdminLayout } from "./AdminLayoutContext";
+import NotificationButton from "../../../features/admin/modals/NotificationModal";
 
 const AdminLayout = () => {
-  const [activeItem, setActiveItem] = useState("Dashboard");
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const { sidebarExpanded, toggleSidebar } = useAdminLayout();
 
-  const isActive = (item) => activeItem === item;
-
-  // Sidebar links for desktop/tablet
+  // Sidebar links
   const sidebarLinks = [
-    { icon: Home, label: "Dashboard", path: "/admin", isActive: true },
+    { icon: Home, label: "Dashboard", path: "/admin" },
     { icon: Users, label: "User management", path: "/admin/users" },
     { icon: Package, label: "Product management", path: "/admin/products" },
     { icon: Gift, label: "Seller management", path: "/admin/sellers" },
@@ -34,27 +35,19 @@ const AdminLayout = () => {
     { icon: Scale, label: "Dispute Resolution", path: "/admin/disputes" },
   ];
 
-  // Bottom section links
   const bottomLinks = [
+    { icon: UserCircle, label: "Profile", path: "/admin/profile" },
     { icon: Settings, label: "Settings", path: "/admin/settings" },
     { icon: LogOut, label: "Log out", path: "/admin/logout" },
   ];
 
-  const handleItemClick = (label) => {
-    setActiveItem(label);
-  };
-
-  const toggleSidebar = () => {
-    setSidebarExpanded(!sidebarExpanded);
-  };
-
   return (
-    <div className="flex bg-gray-50 min-h-screen">
-      {/* Desktop/Tablet Sidebar */}
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
       <div
-        className={`${
+        className={`fixed top-0 left-0 h-screen ${
           sidebarExpanded ? "w-80" : "w-16"
-        } bg-[#009883] to-teal-600 shadow-xl transition-all duration-300 flex flex-col z-30 relative`}
+        } bg-[#009883] to-teal-600 shadow-xl transition-all duration-300 flex flex-col z-10`}
       >
         {/* Sidebar Header */}
         <div className="p-6 border-b border-teal-400/30">
@@ -68,17 +61,18 @@ const AdminLayout = () => {
           <div className="space-y-2 px-4">
             {sidebarLinks.map((link, idx) => {
               const Icon = link.icon;
-              const isActiveLink = link.isActive || isActive(link.label);
-
               return (
-                <button
+                <NavLink
                   key={idx}
-                  onClick={() => handleItemClick(link.label)}
-                  className={`w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
-                    isActiveLink
-                      ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
-                      : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
-                  } ${!sidebarExpanded ? "justify-center" : ""}`}
+                  to={link.path}
+                  end={link.path === "/admin"}
+                  className={({ isActive }) =>
+                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
+                      isActive
+                        ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
+                        : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
+                    } ${!sidebarExpanded ? "justify-center" : ""}`
+                  }
                 >
                   <Icon
                     className={`flex-shrink-0 ${
@@ -90,7 +84,7 @@ const AdminLayout = () => {
                       {link.label}
                     </span>
                   )}
-                </button>
+                </NavLink>
               );
             })}
           </div>
@@ -101,17 +95,17 @@ const AdminLayout = () => {
           <div className="space-y-2">
             {bottomLinks.map((link, idx) => {
               const Icon = link.icon;
-              const isActiveLink = isActive(link.label);
-
               return (
-                <button
+                <NavLink
                   key={idx}
-                  onClick={() => handleItemClick(link.label)}
-                  className={`w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
-                    isActiveLink
-                      ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
-                      : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
-                  } ${!sidebarExpanded ? "justify-center" : ""}`}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
+                      isActive
+                        ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
+                        : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
+                    } ${!sidebarExpanded ? "justify-center" : ""}`
+                  }
                 >
                   <Icon
                     className={`flex-shrink-0 ${
@@ -123,7 +117,7 @@ const AdminLayout = () => {
                       {link.label}
                     </span>
                   )}
-                </button>
+                </NavLink>
               );
             })}
           </div>
@@ -146,37 +140,46 @@ const AdminLayout = () => {
       </div>
 
       {/* Main Content Container */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Show dashboard content when Dashboard is active */}
-        {activeItem === "Dashboard" ? (
-          <AdminDashboard />
-        ) : (
-          <main className="flex-1 overflow-auto p-8">
-            <div className="max-w-6xl mx-auto">
-              <h1 className="text-2xl font-bold mb-4">{activeItem}</h1>
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                <h2 className="text-lg font-semibold mb-2">Current Section: {activeItem}</h2>
-                <p className="text-gray-600">
-                  This is the {activeItem} section. Content for this section would be implemented here.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="font-semibold mb-2">Feature 1</h3>
-                  <p className="text-gray-600 text-sm">Content specific to {activeItem}</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="font-semibold mb-2">Feature 2</h3>
-                  <p className="text-gray-600 text-sm">Content specific to {activeItem}</p>
-                </div>
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                  <h3 className="font-semibold mb-2">Feature 3</h3>
-                  <p className="text-gray-600 text-sm">Content specific to {activeItem}</p>
-                </div>
-              </div>
+      <div
+        className={`flex-1 flex flex-col ${
+          sidebarExpanded ? "ml-80" : "ml-16"
+        } transition-all duration-300`}
+      >
+        {/* Header */}
+        <div
+          className={`fixed top-0 ${
+            sidebarExpanded ? "left-80" : "left-16"
+          } right-0 px-6 py-4 bg-white  z-20 transition-all duration-300`}
+        >
+          <div className="flex justify-between items-center">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search for all items..."
+                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
-          </main>
-        )}
+            <div className="flex items-center space-x-4">
+              <NotificationButton />
+              <NavLink 
+                to="/admin/profile"
+                className="flex items-center space-x-2 hover:bg-gray-100 rounded-lg p-2 transition-colors duration-200"
+              >
+                <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+                <div>
+                  <div className="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                  <div className="text-xs text-green-500">Online</div>
+                </div>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 pt-16 overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
