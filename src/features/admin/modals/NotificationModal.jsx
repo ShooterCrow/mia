@@ -1,4 +1,4 @@
-    import { useState, useRef, useEffect } from "react";
+    import { useState } from "react";
     import { Bell, AlertTriangle, User, CheckCircle, Check, Trash2 } from "lucide-react";
 
     // Mock notification data (unchanged)
@@ -41,25 +41,7 @@
     },
     ];
 
-    const NotificationDropdown = ({ isOpen, onClose, notifications = notificationData }) => {
-    const dropdownRef = useRef(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            onClose();
-        }
-        };
-
-        if (isOpen) {
-        document.addEventListener("mousedown", handleClickOutside);
-        }
-
-        return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [isOpen, onClose]);
-
+    const NotificationModal = ({ isOpen, onClose, notifications = notificationData }) => {
     const getPriorityColor = (priority) => {
         switch (priority.toLowerCase()) {
         case "high priority":
@@ -78,15 +60,33 @@
     if (!isOpen) return null;
 
     return (
-        <div
-        ref={dropdownRef}
-        className="absolute right-0  w-[626px] h-[460px] mt-2  gap-[23px] bg-white  rounded-xl shadow-2xl border gap-[23px]  "
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white w-[626px] h-[460px] rounded-xl shadow-2xl border mx-4">
         
-        >
         {/* Header */}
-        <div className="p-4 border-b border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-900">Notifications</h3>
-            <p className="text-sm text-gray-500 mt-1">{unreadCount} Unread notifications</p>
+        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+            <div>
+                <h3 className="text-lg font-semibold text-gray-900">Notifications</h3>
+                <p className="text-sm text-gray-500 mt-1">{unreadCount} Unread notifications</p>
+            </div>
+            <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600"
+            >
+                <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
         </div>
             <div className=" ">
                     {/* Recent Notification Label */}
@@ -168,26 +168,27 @@
             </button>
         </div>
         </div>
+        </div>
     );
     };
 
     export default function NotificationButton() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const unreadCount = notificationData.filter((n) => !n.isRead).length;
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
     };
 
-    const closeDropdown = () => {
-        setIsDropdownOpen(false);
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
         <div className="relative">
         <button
             className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors"
-            onClick={toggleDropdown}
+            onClick={toggleModal}
             aria-label={`View notifications (${unreadCount} unread)`}
         >
             <Bell className="w-6 h-6 text-gray-600" />
@@ -198,7 +199,7 @@
             )}
         </button>
 
-        <NotificationDropdown isOpen={isDropdownOpen} onClose={closeDropdown} notifications={notificationData} />
+        <NotificationModal isOpen={isModalOpen} onClose={closeModal} notifications={notificationData} />
         </div>
     );
     }

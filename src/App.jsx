@@ -35,8 +35,8 @@ import Communication from "./features/admin/pages/Communication";
 import DisputeResolution from "./features/admin/pages/DisputeResolution";
 import SellerManagement from "./features/admin/pages/SellerManagement";
 import AdminProfile from "./features/admin/pages/AdminProfile";
-import UserProfileOrderHistory from "./features/admin/pages/UserProfileOrderHistory";
 import ProtectedAdminRoute from "./components/auth/ProtectedAdminRoute";
+import PlatformSettings from "./features/admin/pages/PlatformSettings";
 
 function App() {
   return (
@@ -99,7 +99,7 @@ function App() {
         >
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<UserManagement />} />
-          <Route path="users/:email" element={<UserProfileOrderHistory />} /> 
+          <Route path="users/:email" element={<AnalyticAndReports />} /> 
           <Route path="products" element={<ProductManagement />} />
           <Route path="sellers" element={<SellerManagement />} />
           <Route path="orders" element={<OrdersAndPayment />} />
@@ -108,7 +108,7 @@ function App() {
           <Route path="communication" element={<Communication />} />
           <Route path="disputes" element={<DisputeResolution />} />
           <Route path="profile" element={<AdminProfile />} /> {/* Add this route */}
-          <Route path="settings" element={<div>Settings Page</div>} />
+          <Route path="settings" element={<PlatformSettings />} />
           <Route path="logout" element={<Navigate to="/login" replace />} />
         </Route>
       </Routes>

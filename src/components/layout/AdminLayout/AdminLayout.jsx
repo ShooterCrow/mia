@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Home,
   Users,
@@ -15,12 +15,45 @@ import {
   Search,
   UserCircle,
 } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAdminLayout } from "./AdminLayoutContext";
 import NotificationButton from "../../../features/admin/modals/NotificationModal";
 
 const AdminLayout = () => {
   const { sidebarExpanded, toggleSidebar } = useAdminLayout();
+  const navigate = useNavigate();
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    if (profileDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
+
+  const toggleProfileDropdown = () => {
+    setProfileDropdownOpen(!profileDropdownOpen);
+  };
+
+  const handleGoToProfile = () => {
+    setProfileDropdownOpen(false);
+    navigate('/admin/profile');
+  };
+
+  const handleSignOut = () => {
+    setProfileDropdownOpen(false);
+    navigate('/login');
+  };
 
   // Sidebar links
   const sidebarLinks = [
@@ -162,16 +195,39 @@ const AdminLayout = () => {
             </div>
             <div className="flex items-center space-x-4">
               <NotificationButton />
-              <NavLink 
-                to="/admin/profile"
-                className="flex items-center space-x-2 hover:bg-gray-100 rounded-lg p-2 transition-colors duration-200"
-              >
-                <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                <div>
-                  <div className="text-sm font-medium text-gray-900">Sarah Johnson</div>
-                  <div className="text-xs text-green-500">Online</div>
-                </div>
-              </NavLink>
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={toggleProfileDropdown}
+                  className="flex items-center space-x-2 hover:bg-gray-100 rounded-lg p-2 transition-colors duration-200"
+                >
+                  <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+                  <div>
+                    <div className="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                    <div className="text-xs text-green-500">Online</div>
+                  </div>
+                </button>
+                
+                {profileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                    <div className="py-1">
+                      <button
+                        onClick={handleGoToProfile}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                      >
+                        <UserCircle className="w-4 h-4" />
+                        <span>Go to profile</span>
+                      </button>
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center space-x-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
