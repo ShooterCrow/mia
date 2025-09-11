@@ -8,13 +8,14 @@ import {
   TrendingUp,
   MoreHorizontal,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserActionsModal from "../modals/UserActionsModal";
 import EmailModal from "../modals/EmailModal";
 import SuspendModal from "../modals/SuspendModal";
 import MessageCardModal from "../modals/MessageCardModal";
 
 const UserManagement = () => {
+  const navigate = useNavigate();
   const users = [
     {
       name: "Sarah Johnson",
@@ -97,8 +98,8 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Total Users</div>
             <Users className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">15,000</div>
-          <div className="flex items-center text-green-600 text-sm">
+          <div className="text-2xl font-bold text-gray-900 mb-2">33,000</div>
+          <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
             +12.5% from last month
           </div>
@@ -108,10 +109,10 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Active Users</div>
             <div className="w-5 h-5 rounded-full bg-gray-200"></div>
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">3,000</div>
-          <div className="flex items-center text-green-600 text-sm">
+          <div className="text-2xl font-bold text-gray-900 mb-2">22,000</div>
+          <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            +22.5% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
@@ -119,20 +120,21 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Verified Users</div>
             <ShoppingCart className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">1,000</div>
-          <div className="flex items-center text-green-600 text-sm">
-            <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+          <div className="text-2xl font-bold text-gray-900 mb-2">23,000</div>
+          <div className="flex items-center text-red-500 text-sm">
+            <TrendingUp className="w-4 h-4 mr-1 rotate-180" />
+            -12.5% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-gray-600 text-sm">New This Week</div>
+            <div className="text-gray-600 text-sm">New this week</div>
             <Package className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">6,400</div>
-          <div className="flex items-center text-green-600 text-sm">
-            <span className="text-gray-600">+12.5% from last month</span>
+          <div className="text-2xl font-bold text-gray-900 mb-2">250</div>
+          <div className="flex items-center text-[#00A991] text-sm">
+            <TrendingUp className="w-4 h-4 mr-1" />
+            +17.5% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
@@ -140,9 +142,10 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Suspended</div>
             <Package className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">6,400</div>
-          <div className="flex items-center text-green-600 text-sm">
-            <span className="text-gray-600">+12.5% from last month</span>
+          <div className="text-2xl font-bold text-gray-900 mb-2">32</div>
+          <div className="flex items-center text-[#00A991] text-sm">
+            <TrendingUp className="w-4 h-4 mr-1" />
+            +17.5% from last month
           </div>
         </div>
       </div>
@@ -160,18 +163,26 @@ const UserManagement = () => {
           </div>
           <div className="flex items-center space-x-4">
             <select className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>All Orders</option>
-              <option>Completed</option>
+              <option>All status</option>
+              <option>Active</option>
+              <option>Suspended</option>
               <option>Pending</option>
             </select>
             <select className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>All Payment</option>
-              <option>Paid</option>
-              <option>Unpaid</option>
+              <option>All roles</option>
+              <option>Buyer</option>
+              <option>Seller</option>
+            </select>
+            <select className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>All time</option>
+              <option>Today</option>
+              <option>This week</option>
+              <option>This month</option>
+              <option>This Quarter</option>
             </select>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 text-sm font-medium">
               <Download className="w-4 h-4" />
-              <span>Export data</span>
+              <span>Export</span>
             </button>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 text-sm font-medium">
               <Download className="w-4 h-4" />
@@ -186,14 +197,14 @@ const UserManagement = () => {
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
           <thead>
             <tr className="bg-gray-50">
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">User</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Status</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Role</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Verification</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Join date</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Activity</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Last seen</th>
-              <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600">Actions</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">User</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Status</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Role</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Verification</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Join date</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Activity</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Last seen</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600"></th>
             </tr>
           </thead>
           <tbody>
@@ -204,7 +215,9 @@ const UserManagement = () => {
               const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
 
               const handleAction = (action) => {
-                if (action === "email") {
+                if (action === "view") {
+                  navigate("/admin/analytics");
+                } else if (action === "email") {
                   setIsEmailModalOpen(true);
                 } else if (action === "suspend") {
                   setIsSuspendModalOpen(true);
@@ -223,13 +236,13 @@ const UserManagement = () => {
               };
 
               return (
-                <tr key={index} className="border-t">
-                  <td className="py-3 px-4">
-                    <div className="flex items-center space-x-2">
+                <tr key={index} className="border-t hover:bg-gray-50">
+                  <td className="py-4 px-6">
+                    <div className="flex items-center space-x-3">
                       <img
-                        src={`https://i.pravatar.cc/40?img=${index + 1}`}
+                        src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
                         alt={user.name}
-                        className="w-8 h-8 rounded-full"
+                        className="w-10 h-10 rounded-full object-cover"
                       />
                       <Link to={`/admin/users/${user.email}`} className="hover:text-blue-600">
                         <div className="font-medium text-gray-900">{user.name}</div>
@@ -237,35 +250,42 @@ const UserManagement = () => {
                       </Link>
                     </div>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-4 px-6">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs ${
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
                         user.status === "active"
                           ? "bg-green-100 text-green-800"
                           : user.status === "Suspended"
                           ? "bg-red-100 text-red-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          : "bg-orange-100 text-orange-800"
                       }`}
                     >
                       {user.status}
                     </span>
                   </td>
-                  <td className="py-3 px-4">{user.role}</td>
-                  <td className="py-3 px-4">
+                  <td className="py-4 px-6">
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                      {user.role}
+                    </span>
+                  </td>
+                  <td className="py-4 px-6">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs ${
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
                         user.verification === "Verified"
                           ? "bg-blue-100 text-blue-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          : "bg-orange-100 text-orange-800"
                       }`}
                     >
                       {user.verification}
                     </span>
                   </td>
-                  <td className="py-3 px-4">{user.joinDate}</td>
-                  <td className="py-3 px-4">{user.activity}</td>
-                  <td className="py-3 px-4">{user.lastSeen}</td>
-                  <td className="py-3 px-4 relative">
+                  <td className="py-4 px-6 text-gray-600">{user.joinDate}</td>
+                  <td className="py-4 px-6">
+                    <div className="text-gray-900 font-medium">{user.activity.split(' (')[0]}</div>
+                    <div className="text-gray-500 text-sm">{user.activity.split(' (')[1]?.replace(')', '')}</div>
+                  </td>
+                  <td className="py-4 px-6 text-gray-600">{user.lastSeen}</td>
+                  <td className="py-4 px-6 relative">
                     <button
                       className="text-gray-500 hover:text-gray-700"
                       onClick={() => setIsUserMenuOpen(true)}

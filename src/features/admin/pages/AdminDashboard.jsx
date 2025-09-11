@@ -15,17 +15,15 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
 } from "recharts";
-import NotificationButton from "../modals/NotificationModal";
 
 // Sample data for charts (unchanged)
 const salesByCountryData = [
-  { name: "USA", sales: 30, flag: "🇺🇸", growth: "+28.8%", color: "#ef4444" },
-  { name: "Nigeria", sales: 30, flag: "🇳🇬", growth: "-15.8%", color: "#ef4444" },
-  { name: "Ghana", sales: 30, flag: "🇬🇭", growth: "-15.8%", color: "#ef4444" },
-  { name: "Kenya", sales: 25, flag: "🇰🇪", growth: "+35.8%", color: "#ef4444" },
+  { name: "Nigeria", sales: 30, flag: "🇺🇸", growth: "+28.8%", color: "#ef4444" },
+  { name: "Ghana", sales: 30, flag: "🇧🇷", growth: "-15.8%", color: "#ef4444" },
+  { name: "Kenya", sales: 25, flag: "🇦🇺", growth: "+35.8%", color: "#ef4444" },
 ];
 
 const userSignupsData = [
@@ -69,7 +67,7 @@ const AdminDashboard = () => {
             <Users className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">15,000</div>
-          <div className="flex items-center text-green-600 text-sm">
+          <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
             +12.5% from last month
           </div>
@@ -80,7 +78,7 @@ const AdminDashboard = () => {
             <div className="w-5 h-5 rounded-full bg-gray-200"></div>
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">3,000</div>
-          <div className="flex items-center text-green-600 text-sm">
+          <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
             +12.5% from last month
           </div>
@@ -91,7 +89,7 @@ const AdminDashboard = () => {
             <ShoppingCart className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">1,000</div>
-          <div className="flex items-center text-green-600 text-sm">
+          <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
             +12.5% from last month
           </div>
@@ -102,8 +100,9 @@ const AdminDashboard = () => {
             <Package className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">6,400</div>
-          <div className="flex items-center text-green-600 text-sm">
-            <span className="text-gray-600">+12.5% from last month</span>
+          <div className="flex items-center text-[#00A991] text-sm">
+            <TrendingUp className="w-4 h-4 mr-1" />
+            +12.5% from last month
           </div>
         </div>
       </div>
@@ -172,20 +171,20 @@ const AdminDashboard = () => {
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={weeklyReportData}>
+              <AreaChart data={weeklyReportData} style={{ outline: 'none' }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} />
                 <Tooltip />
-                <Line
+                <Area
                   type="monotone"
                   dataKey="customers"
-                  stroke="#10b981"
+                  stroke="#00A991"
                   strokeWidth={2}
-                  fill="#10b981"
-                  fillOpacity={0.1}
+                  fill="#00A991"
+                  fillOpacity={0.2}
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -198,7 +197,7 @@ const AdminDashboard = () => {
               {[4, 6, 3, 8, 5, 7, 4, 9, 6, 8, 5, 7, 9, 6, 4].map((height, idx) => (
                 <div
                   key={idx}
-                  className="bg-teal-500 rounded-sm flex-1"
+                  className="bg-[#009883] rounded-sm flex-1"
                   style={{ height: `${height * 6}px` }}
                 ></div>
               ))}
@@ -222,8 +221,8 @@ const AdminDashboard = () => {
                   <div className="flex items-center space-x-2">
                     <div className="w-16 h-2 bg-gray-200 rounded-full">
                       <div
-                        className="h-2 bg-red-500 rounded-full"
-                        style={{ width: `${(country.sales / 30) * 100}%` }}
+                        className="h-2 rounded-full"
+                        style={{ width: `${(country.sales / 30) * 100}%`, backgroundColor: '#00A991' }}
                       ></div>
                     </div>
                     <span
@@ -242,7 +241,7 @@ const AdminDashboard = () => {
         <div className="rounded-xl shadow-sm border border-gray-100 p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">Top Performing Product</h3>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-100">
               <div className="flex items-center space-x-4">
                 <span className="text-lg font-bold text-gray-900">1</span>
                 <div>
@@ -254,7 +253,7 @@ const AdminDashboard = () => {
                 Bestseller
               </span>
             </div>
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-100">
               <div className="flex items-center space-x-4">
                 <span className="text-lg font-bold text-gray-900">2</span>
                 <div>
@@ -266,7 +265,7 @@ const AdminDashboard = () => {
                 Trending
               </span>
             </div>
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-100">
               <div className="flex items-center space-x-4">
                 <span className="text-lg font-bold text-gray-900">3</span>
                 <div>
@@ -274,7 +273,7 @@ const AdminDashboard = () => {
                   <div className="text-gray-600 text-sm">© 184 Views • $300</div>
                 </div>
               </div>
-              <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">
+              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
                 Trending
               </span>
             </div>
@@ -295,7 +294,7 @@ const AdminDashboard = () => {
                 <XAxis dataKey="month" axisLine={false} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} />
                 <Tooltip />
-                <Bar dataKey="signups" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="signups" fill="#00A991" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
