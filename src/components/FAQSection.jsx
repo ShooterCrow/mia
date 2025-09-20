@@ -15,7 +15,7 @@ const FAQSection = () => {
       id: 2,
       question: "How do I buy a product on this website",
       answer: "To buy a product, browse our catalog, select the item you want, and contact the seller directly through our messaging system. The seller will guide you through the payment and delivery process."
-    },
+    }, 
     {
       id: 3,
       question: "Do you offer international shipping?",
