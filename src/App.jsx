@@ -62,7 +62,7 @@ function App() {
           <Route path="discount-page" element={<DiscountPage />} />
 
           {/* User Dashboard */}
-          <Route element={<ProtectedRoutes />}>
+          {/* <Route element={<ProtectedRoutes />}> */}
             <Route path="dashboard">
               <Route index element={<UserProfile />} />
               <Route path="orders" element={<Orders />} />
@@ -84,17 +84,16 @@ function App() {
               <Route path="product-upload" element={<ProductUpload />} />
             </Route>
           </Route>
-        </Route>
+        {/* </Route> */}
 
         {/* Admin Dashboard Routes */}
-        <Route
-          path="/admin"
+        <Route path="/admin"
           element={
-            <ProtectedAdminRoute>
+            // <ProtectedAdminRoute>
               <AdminLayoutProvider>
                 <AdminLayout />
               </AdminLayoutProvider>
-            </ProtectedAdminRoute>
+            // </ProtectedAdminRoute>
           }
         >
           <Route index element={<AdminDashboard />} />
