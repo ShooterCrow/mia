@@ -1,18 +1,20 @@
 import { User, Bell, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useGetUserByIdQuery } from "./userApiSlice";
-import { useAuth } from "../../hooks/useAuth";
+import { useGetUserByIdQuery, useGetUserProfileQuery } from "./userApiSlice";
+import useAuth from "../../hooks/useAuth";
 
 function UserProfile() {
   const { userId } = useAuth()
   const [activeTab, setActiveTab] = useState('profile');
-  const { data } = useGetUserByIdQuery(userId, {
-    skip: !userId,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-    retry: 3
-  });
-  console.log(data, "User data fetched from API");
+  const { data } = useGetUserProfileQuery(
+  //   "", {
+  //   skip: !userId,
+  //   refetchOnFocus: true,
+  //   refetchOnMountOrArgChange: true,
+  //   retry: 3
+  // }
+);
+  console.log(userId, "User data fetched from API");
   const [profileData, setProfileData] = useState({
     firstName: data?.full_name || "",
     lastName: data?.last_name || "",

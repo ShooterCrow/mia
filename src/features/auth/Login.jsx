@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LeftSide from "./LeftSide";
 import { Link, useNavigate } from "react-router";
 import { useLoginMutation } from "./authApiSlice";
-import { useAuth } from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { auth, googleProvider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 
@@ -14,29 +14,31 @@ const LogIn = () => {
     email: '',
     password: ''
   });
-  const { isAuthenticated } = useAuth()
-  console.log(isAuthenticated, "isAuthenticated in Login component");
+  const { isLoggedIn } = useAuth()
+  
 
   // Handle successful login
   useEffect(() => {
-    if (isSuccess || isAuthenticated) {
+    if (isSuccess || isLoggedIn) {
       console.log(emailLoginLoading, isError, error, isSuccess);
       navigate("/dashboard");
     }
-  }, [isSuccess, isAuthenticated, navigate]);
+  }, [isSuccess, isLoggedIn, navigate]);
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault();
     setGoogleLoading(true);
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const token = await result.user.getIdToken();
 
       // Send this token to your backend for validation or login
-      const loginResult = await login({ googleToken: token });
+      const loginResult = await login({ googleToken: token }).unwrap();
       console.log(token, "Google token received", loginResult, "Login result from backend");
 
       if (loginResult.success) {
         console.log("Google sign-in successful");
+        // Navigation will be handled by the useEffect
       } else {
         console.error("Backend login failed:", loginResult.message);
       }
@@ -54,7 +56,7 @@ const LogIn = () => {
         email: formData.email,
         password: formData.password
       }).unwrap();
-      // Success handling is done in useEffect
+      
     } catch (error) {
       console.error("Login failed:", error);
       // Error handling can be done here or through the error state
@@ -101,6 +103,7 @@ const LogIn = () => {
               {/* Google Sign In Button */}
               <div className="mb-3">
                 <button
+                  type="button"
                   onClick={handleGoogleSignIn}
                   disabled={isLoading}
                   className={`w-full h-14 rounded-2xl px-6 py-4 flex items-center justify-center gap-4 border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -136,7 +139,7 @@ const LogIn = () => {
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
               </div>
 
-              {/* Email Sign In Form */}
+              {/* Email Sign In Form - Added onSubmit handler */}
               <form onSubmit={handleEmailSignIn} className="space-y-6 mb-8">
                 {/* Email Field */}
                 <div>
@@ -172,10 +175,10 @@ const LogIn = () => {
                   />
                 </div>
 
-                {/* Sign In Button */}
+                {/* Sign In Button - Changed to type="submit" */}
                 <button
-                  // type="submit"
-                  // disabled={isLoading || !formData.agreeToTerms}
+                  type="submit"
+                  disabled={isLoading}
                   className={`w-full h-14 rounded-2xl bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 text-white font-medium text-base transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-100 dark:focus:ring-red-800 ${isLoading ? "opacity-50 cursor-not-allowed" : ""
                     }`} >
                   {emailLoginLoading ? (

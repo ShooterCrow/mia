@@ -2,24 +2,23 @@
 import React from 'react';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser, selectIsAuthenticated } from './authSlice';
+import { selectCurrentUser } from './authSlice';
+import useAuth from '../../hooks/useAuth';
 
-export const ProtectedRoutes = ({ children, requireVerification = false }) => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectCurrentUser);
-  const location = useLocation();
+export const ProtectedRoutes = ({ allowedRoles }) => {
+    const { roles, isLoggedIn, email } = useAuth();
+    const location = useLocation();
+    console.log(isLoggedIn)
 
-  // If not authenticated at all, redirect to login
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
+    if (!isLoggedIn) {
+        return <Navigate to="/login" state={{ from: location }} replace />;
+    }
 
-  // If verification is required and user is not verified, redirect to verification page
-  if (requireVerification && user && !user.is_verified) {
-    return <Navigate to="/verify" state={{ from: location }} replace />;
-  }
+    const content = (
+        ["buyer", "seller", "user", "admin"].some(role => allowedRoles.includes(role))
+            ? <Outlet />
+            : <Navigate to="/" state={{ from: location }} replace />
+    )
 
-  // If used as layout route (with nested routes), render Outlet
-  // If used with children prop, render children
-  return children ? children : <Outlet />;
+    return content
 };

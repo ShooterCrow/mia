@@ -22,7 +22,7 @@ const ProtectedAdminRoute = ({ children }) => {
   }
 
   // Check if user is authenticated and has admin role
-  const isAdmin = user && user.role === 'admin';
+  const isAdmin = user && user.userRoles === 'buyer';
 
   if (!isAdmin) {
     // Redirect to login or unauthorized page

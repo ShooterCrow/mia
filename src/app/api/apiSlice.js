@@ -18,17 +18,29 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+    let result = await baseQuery(args, api, extraOptions);
 
-  // Handle token expiration (401/403)
-  if (result?.error?.status === 401 || result?.error?.status === 403) {
-    // Since your PHP backend doesn't have refresh tokens, just clear credentials
-    // and redirect to login
-    api.dispatch(clearCredentials());
-    window.location.href = "/login";
+    if (result?.error?.status === 403) {
+        // Try to get a new token
+        const refreshResult = await baseQuery('/auth/refresh-token', api, extraOptions);
+
+        if (refreshResult?.data) {
+            // Store the new token
+            api.dispatch(setCredentials({ ...refreshResult.data }));
+            // Retry the original query with new token
+            result = await baseQuery(args, api, extraOptions);
+        } else {
+            // If refresh fails, handle logout here
+            if (refreshResult?.error?.status === 403) {
+                refreshResult.error.data.message = 'Your login has expired.';
+            }
+            api.dispatch(clearCredentials());
+            // Redirect to login page using window.location
+            window.location.href = '/login';
+            return refreshResult;
+        }
+    }
     return result;
-  }
-  return result;
 };
 
 export const apiSlice = createApi({

@@ -20,7 +20,7 @@ import Flag from 'react-world-flags';
 import Dropdown from '../Dropdown';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import UserDropdown from './UserLayout/UserDropdown';
-import { useAuth } from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Header = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const location = useLocation()
     const locationSignIn = location.pathname.includes("/login")
-    const { isAuthenticated } = useAuth()
+    const { isLoggedIn } = useAuth()
 
     const languageToCountry = {
         en: 'US',
@@ -263,21 +263,26 @@ const Header = () => {
                                 </div>
 
                                 {/* Sign In Button and User Dropdown */}
-                                {/* < Link to={"/dashboard/profile"}>
-                                    <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
-                                        <User className="w-4 h-4" />
-                                        <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
-                                    </div>
-                                </Link> */}
-                                {isAuthenticated ? (
-                                    <UserDropdown />
+                                {isLoggedIn ? (
+                                    <>
+                                        <Link to="/dashboard/profile">
+                                            <div className="flex items-center gap-1 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400">
+                                                <User className="w-4 h-4" />
+                                                <span className="text-xs lg:text-sm hidden lg:inline">Account</span>
+                                            </div>
+                                        </Link>
+                                        <UserDropdown />
+                                    </>
                                 ) : (
                                     <Link to={locationSignIn ? "/signup" : "/login"}>
-                                        <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                                            <span className="text-xs sm:text-sm">{locationSignIn ? "Sign Up" : "Log In"}</span>
+                                        <div className="flex items-center justify-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 transition-colors">
+                                            <span className="text-xs sm:text-sm">
+                                                {locationSignIn ? "Sign Up" : "Log In"}
+                                            </span>
                                         </div>
-                                    </Link>)
-                                }
+                                    </Link>
+                                )}
+
                             </div>
                         </div>
                     </div>
@@ -417,7 +422,7 @@ const Header = () => {
                                     Account & Support
                                 </h3>
                                 <div className="space-y-1">
-                                    {isAuthenticated ? (
+                                    {isLoggedIn ? (
                                         <UserDropdown />
                                     ) : (
                                         <Link

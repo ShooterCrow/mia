@@ -115,7 +115,9 @@ const SignUp = () => {
 
   // Form state
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
     email: '',
     password: '',
     confirmPassword: '',    
@@ -190,8 +192,16 @@ const SignUp = () => {
   const validateForm = () => {
     const errors = {};
 
-    if (!formData.fullName.trim()) {
-      errors.fullName = 'Full name is required';
+    if (!formData.firstName.trim()) {
+      errors.firstName = 'First name is required';
+    }
+
+    if (!formData.lastName.trim()) {
+      errors.lastName = 'Last name is required';
+    }
+
+    if (!formData.userName.trim()) {
+      errors.userName = 'User name is required';
     }
 
     if (!formData.email.trim()) {
@@ -218,6 +228,7 @@ const SignUp = () => {
 
   const handleEmailSignUp = async (e) => {
     e.preventDefault();
+    console.log(formData)
      
     if (!formData.agreeToTerms) {
       return;
@@ -229,7 +240,9 @@ const SignUp = () => {
 
     try {
       const result = await register({
-        fullName: formData.fullName,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        userName: formData.userName,
         email: formData.email,
         password: formData.password
       }).unwrap();
@@ -245,7 +258,9 @@ const SignUp = () => {
 
       // Reset form
       setFormData({
-        fullName: '',
+        firstName: '',
+        lastName: '',
+        userName: '',
         email: '',
         password: '',
       });
@@ -371,25 +386,69 @@ const SignUp = () => {
                     <span className="text-sm">Back to options</span>
                   </button>
 
-                  {/* Full Name Field */}
+                  {/* First Name Field */}
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Full Name
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      First Name
                     </label>
                     <input
                       type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`w-full h-12 px-4 py-3 border-2 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 transition-all duration-200 ${formErrors.fullName
+                      className={`w-full h-12 px-4 py-3 border-2 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 transition-all duration-200 ${formErrors.firstName
                         ? 'border-red-500 focus:border-red-500'
                         : 'border-gray-200 dark:border-gray-600 focus:border-blue-500'
                         }`}
-                      placeholder="Enter your full name"
+                      placeholder="Enter your first name"
                     />
-                    {formErrors.fullName && (
-                      <p className="mt-1 text-sm text-red-500">{formErrors.fullName}</p>
+                    {formErrors.firstName && (
+                      <p className="mt-1 text-sm text-red-500">{formErrors.firstName}</p>
+                    )}
+                  </div>
+
+                  {/* Last Name Field */}
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className={`w-full h-12 px-4 py-3 border-2 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 transition-all duration-200 ${formErrors.lastName
+                        ? 'border-red-500 focus:border-red-500'
+                        : 'border-gray-200 dark:border-gray-600 focus:border-blue-500'
+                        }`}
+                      placeholder="Enter your last name"
+                    />
+                    {formErrors.lastName && (
+                      <p className="mt-1 text-sm text-red-500">{formErrors.lastName}</p>
+                    )}
+                  </div>
+
+                  {/* user Name Field */}
+                  <div>
+                    <label htmlFor="userName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      User Name
+                    </label>
+                    <input
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      value={formData.userName}
+                      onChange={handleInputChange}
+                      className={`w-full h-12 px-4 py-3 border-2 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-800 transition-all duration-200 ${formErrors.userName
+                        ? 'border-red-500 focus:border-red-500'
+                        : 'border-gray-200 dark:border-gray-600 focus:border-blue-500'
+                        }`}
+                      placeholder="Enter your user name"
+                    />
+                    {formErrors.userName && (
+                      <p className="mt-1 text-sm text-red-500">{formErrors.userName}</p>
                     )}
                   </div>
 
