@@ -6,6 +6,7 @@ import {
   Search,
   Download,
   TrendingUp,
+  TrendingDown,
 } from "lucide-react";
 import {
   BarChart,
@@ -18,6 +19,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { useGetAdminDashboardQuery } from "../adminApiSlice";
 
 // Sample data for charts (unchanged)
 const salesByCountryData = [
@@ -57,6 +59,17 @@ const weeklyReportData = [
 ];
 
 const AdminDashboard = () => {
+  const { data } = useGetAdminDashboardQuery()
+  const topStatistics = data?.data.topStatistics
+  const weeklyReportAnalytics = data?.data.weeklyReportAndAnalytics
+  const topProductsAndSignups = data?.data.topProductsAndSignups
+
+  const trenDir = (data) => {
+    let direction
+    data === "up" ? direction = true : data === "down" ? direction = false : null
+    return direction
+  }
+  console.log(data)
   return (
     <div className="p-6">
       {/* Metrics Overview */}
@@ -66,10 +79,10 @@ const AdminDashboard = () => {
             <div className="text-gray-600 text-sm">Total Users</div>
             <Users className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">15,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalUsers.count}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            +{topStatistics?.totalUsers.growthPercentage}% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-100">
@@ -77,10 +90,10 @@ const AdminDashboard = () => {
             <div className="text-gray-600 text-sm">Total Sellers</div>
             <div className="w-5 h-5 rounded-full bg-gray-200"></div>
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">3,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalSellers.count}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            +{topStatistics?.totalSellers.growthPercentage}% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-100">
@@ -88,10 +101,10 @@ const AdminDashboard = () => {
             <div className="text-gray-600 text-sm">Total Orders</div>
             <ShoppingCart className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">1,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalOrders.count}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            +{topStatistics?.totalOrders.growthPercentage}% from last month
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-100">
@@ -99,10 +112,10 @@ const AdminDashboard = () => {
             <div className="text-gray-600 text-sm">Total Product Listed</div>
             <Package className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">6,400</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalProductsListed.count}</div>
           <div className="flex items-center text-[#00A991] text-sm">
-            <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            {topStatistics?.totalProductsListed.trend === "up" ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
+            +{topStatistics?.totalProductsListed.growthPercentage}% from last month
           </div>
         </div>
       </div>
