@@ -69,7 +69,7 @@ const AdminDashboard = () => {
     data === "up" ? direction = true : data === "down" ? direction = false : null
     return direction
   }
-  console.log(data)
+  
   return (
     <div className="p-6">
       {/* Metrics Overview */}
@@ -80,8 +80,8 @@ const AdminDashboard = () => {
             <Users className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalUsers.count}</div>
-          <div className="flex items-center text-[#00A991] text-sm">
-            <TrendingUp className="w-4 h-4 mr-1" />
+          <div className={`flex items-center ${trenDir(topStatistics?.totalUsers.trend) ? "text-[#00A991]" : "text-[red]"} text-sm`}>
+            {trenDir(topStatistics?.totalUsers.trend) ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
             +{topStatistics?.totalUsers.growthPercentage}% from last month
           </div>
         </div>
@@ -91,8 +91,8 @@ const AdminDashboard = () => {
             <div className="w-5 h-5 rounded-full bg-gray-200"></div>
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalSellers.count}</div>
-          <div className="flex items-center text-[#00A991] text-sm">
-            <TrendingUp className="w-4 h-4 mr-1" />
+          <div className={`flex items-center ${trenDir(topStatistics?.totalSellers.trend) ? "text-[#00A991]" : "text-[red]"} text-sm`}>
+            {trenDir(topStatistics?.totalSellers.trend) ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
             +{topStatistics?.totalSellers.growthPercentage}% from last month
           </div>
         </div>
@@ -102,8 +102,8 @@ const AdminDashboard = () => {
             <ShoppingCart className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalOrders.count}</div>
-          <div className="flex items-center text-[#00A991] text-sm">
-            <TrendingUp className="w-4 h-4 mr-1" />
+          <div className={`flex items-center ${trenDir(topStatistics?.totalOrders.trend) ? "text-[#00A991]" : "text-[red]"} text-sm`}>
+            {trenDir(topStatistics?.totalOrders.trend) ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
             +{topStatistics?.totalOrders.growthPercentage}% from last month
           </div>
         </div>
@@ -113,8 +113,8 @@ const AdminDashboard = () => {
             <Package className="w-5 h-5 text-gray-400" />
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">{topStatistics?.totalProductsListed.count}</div>
-          <div className="flex items-center text-[#00A991] text-sm">
-            {topStatistics?.totalProductsListed.trend === "up" ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
+          <div className={`flex items-center ${trenDir(topStatistics?.totalProductsListed.trend) ? "text-[#00A991]" : "text-[red]"} text-sm`}>
+            {trenDir(topStatistics?.totalProductsListed.trend) ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
             +{topStatistics?.totalProductsListed.growthPercentage}% from last month
           </div>
         </div>
@@ -162,36 +162,37 @@ const AdminDashboard = () => {
           </div>
           <div className="grid grid-cols-5 gap-4 mb-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">52K</div>
+              <div className="text-2xl font-bold text-gray-900">{weeklyReportAnalytics?.weeklyReport.thisWeek.customers}</div>
               <div className="text-gray-600 text-sm">Customers</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">3.5K</div>
+              <div className="text-2xl font-bold text-gray-900">{weeklyReportAnalytics?.weeklyReport.thisWeek.totalProducts}</div>
               <div className="text-gray-600 text-sm">Total Products</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">2.5K</div>
+              <div className="text-2xl font-bold text-gray-900">{weeklyReportAnalytics?.weeklyReport.thisWeek.stockProducts}</div>
               <div className="text-gray-600 text-sm">Stock Products</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">0.5K</div>
+              <div className="text-2xl font-bold text-gray-900">{weeklyReportAnalytics?.weeklyReport.thisWeek.outOfStock}</div>
               <div className="text-gray-600 text-sm">Out of Stock</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">50K</div>
+              <div className="text-2xl font-bold text-gray-900">{weeklyReportAnalytics?.weeklyReport.thisWeek.orders}</div>
               <div className="text-gray-600 text-sm">Orders</div>
             </div>
           </div>
           <div className="h-64">
+            {/* REMEMBER TO SWITCH THIS TO ACTUAL BUYERS NOT JUST SIGNUPS */}
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={weeklyReportData} style={{ outline: 'none' }}>
+              <AreaChart data={weeklyReportAnalytics?.monthlyTrend} style={{ outline: 'none' }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} />
                 <Tooltip />
                 <Area
                   type="monotone"
-                  dataKey="customers"
+                  dataKey="count"
                   stroke="#00A991"
                   strokeWidth={2}
                   fill="#00A991"
@@ -295,14 +296,14 @@ const AdminDashboard = () => {
         <div className="rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-semibold text-gray-900">User signups over time</h3>
-            <select className="border border-gray-200 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {/* <select className="border border-gray-200 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option>This Month</option>
               <option>Last Month</option>
-            </select>
+            </select> */}
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={userSignupsData}>
+              <BarChart data={topProductsAndSignups?.userSignupsOverTime}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="month" axisLine={false} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} />
