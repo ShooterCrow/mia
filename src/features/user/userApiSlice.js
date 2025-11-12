@@ -4,14 +4,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
             query: (params) => ({
-                url: '/users',
+                url: '/users/admin/all',
                 method: 'GET',
                 params,
             }),
             providesTags: ['Users'],
         }),
-        getUserById: builder.query({
-            query: (id) => `/users/${id}`,
+        adminGetUserById: builder.query({
+            query: (id) => `/users/admin/${id}`,
             providesTags: (result, error, id) => [{ type: 'Users', id }],
         }),
         // Add the missing getUserProfile endpoint
@@ -28,9 +28,17 @@ export const userApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ['Users'],
         }),
         updateUser: builder.mutation({
+            query: ({ patch }) => ({
+                url: `/users/profile`,
+                method: 'PATCH',
+                body: patch,
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Users', id }],
+        }),
+        adminUpdateUser: builder.mutation({
             query: ({ id, ...patch }) => ({
-                url: `/users/${id}`,
-                method: 'PUT',
+                url: `/users/admin/${id}`,
+                method: 'PATCH',
                 body: patch,
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'Users', id }],
@@ -48,9 +56,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetUsersQuery,
-    useGetUserByIdQuery,
-    useGetUserProfileQuery, // Add this export
+    useAdminGetUserByIdQuery,
+    useGetUserProfileQuery,
     useCreateUserMutation,
     useUpdateUserMutation,
+    useAdminUpdateUserMutation,
     useDeleteUserMutation,
 } = userApiSlice;

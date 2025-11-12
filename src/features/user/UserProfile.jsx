@@ -1,10 +1,9 @@
 import { User, Bell, Shield } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useGetUserByIdQuery, useGetUserProfileQuery } from "./userApiSlice";
+import { useGetUserProfileQuery } from "./userApiSlice";
 import useAuth from "../../hooks/useAuth";
 
 function UserProfile() {
-  const { userId } = useAuth()
   const [activeTab, setActiveTab] = useState('profile');
   const { data } = useGetUserProfileQuery(
   //   "", {
@@ -14,31 +13,31 @@ function UserProfile() {
   //   retry: 3
   // }
 );
-  console.log(userId, "User data fetched from API");
-  const [profileData, setProfileData] = useState({
-    firstName: data?.full_name || "",
-    lastName: data?.last_name || "",
-    telephone: data?.phone_number || "+234",
-    email: data?.email || "",
-    city: data?.city || "",
-    username: data?.username || "",
-    country: data?.country || "",
-    occupation: data?.occupation || "",
-    gender: data?.gender || "Male"
+const [profileData, setProfileData] = useState({
+  firstName: data?.data?.firstName || "",
+    lastName: data?.data?.lastName || "",
+    telephone: data?.data?.phone_number || "+234",
+    email: data?.data?.email || "",
+    city: data?.data?.city || "",
+    username: data?.data?.userName || "",
+    country: data?.data?.country || "",
+    occupation: data?.data?.occupation || "",
+    gender: data?.data?.gender || "Male"
   });
+  console.log(data?.data, "User data fetched from API");
 
   useEffect(() => {
     if (data) {
       setProfileData({
-        firstName: data.full_name || "",
-        lastName: data.last_name || "",
-        telephone: data.phone_number || "+234",
-        email: data.email || "",
-        city: data.city || "",
-        username: data.username || "",
-        country: data.country || "",
-        occupation: data.occupation || "",
-        gender: data.gender || "Male"
+        firstName: data?.data.firstName || "",
+        lastName: data?.data.lastName || "",
+        telephone: data?.data.phone_number || "+234",
+        email: data?.data.email || "",
+        city: data?.data.city || "",
+        username: data?.data.userName || "",
+        country: data?.data.country || "",
+        occupation: data?.data.occupation || "",
+        gender: data?.data.gender || "Male"
       });
     }
   }, [data]);

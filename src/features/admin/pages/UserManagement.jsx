@@ -13,9 +13,63 @@ import UserActionsModal from "../modals/UserActionsModal";
 import EmailModal from "../modals/EmailModal";
 import SuspendModal from "../modals/SuspendModal";
 import MessageCardModal from "../modals/MessageCardModal";
+import { useGetUsersQuery } from "../../user/userApiSlice";
+import { formatDate } from "../../../utilities/formatDate";
 
 const UserManagement = () => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { data } = useGetUsersQuery()
+  const usersData = data?.data
+
+  const separateByMonth = (items) => {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    // Calculate last month
+    const lastMonthDate = new Date(currentYear, currentMonth - 1, 1);
+    const lastMonth = lastMonthDate.getMonth();
+    const lastMonthYear = lastMonthDate.getFullYear();
+
+    const result = {
+      thisMonth: [],
+      lastMonth: []
+    };
+
+    items?.forEach(item => {
+      const itemDate = new Date(item.createdAt);
+      const itemMonth = itemDate.getMonth();
+      const itemYear = itemDate.getFullYear();
+
+      if (itemMonth === currentMonth && itemYear === currentYear) {
+        result.thisMonth.push(item);
+      } else if (itemMonth === lastMonth && itemYear === lastMonthYear) {
+        result.lastMonth.push(item);
+      }
+    });
+
+    return result;
+  }
+
+  const monthlyProgressPercentage = (data) => {
+    const lastMonth = data.lastMonth;
+    const thisMonth = data.thisMonth;
+
+    // Handle edge case where lastMonth is empty
+    if (lastMonth.length === 0) {
+      return { color: "green", value: "0% from last month" };
+    }
+
+    const monthlyProgress = ((thisMonth.length - lastMonth.length) / lastMonth.length) * 100;
+    const color = monthlyProgress >= 0 ? "green" : "red";
+
+    return { color, value: monthlyProgress.toFixed(2) + "% from last month" };
+  };
+
   const users = [
     {
       name: "Sarah Johnson",
@@ -98,10 +152,10 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Total Users</div>
             <Users className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">33,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{usersData?.totalUsers}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +12.5% from last month
+            {monthlyProgressPercentage(separateByMonth(usersData?.users)).value}
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-100">
@@ -109,10 +163,10 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Active Users</div>
             <div className="w-5 h-5 rounded-full bg-gray-200"></div>
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">22,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{usersData?.activeUsers?.length}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +22.5% from last month
+            {monthlyProgressPercentage(separateByMonth(usersData?.activeUsers)).value}
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
@@ -120,21 +174,21 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Verified Users</div>
             <ShoppingCart className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">23,000</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{usersData?.verifiedUsers?.length}</div>
           <div className="flex items-center text-red-500 text-sm">
             <TrendingUp className="w-4 h-4 mr-1 rotate-180" />
-            -12.5% from last month
+            {monthlyProgressPercentage(separateByMonth(usersData?.verifiedUsers)).value}
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-3">
-            <div className="text-gray-600 text-sm">New this week</div>
+            <div className="text-gray-600 text-sm">New this month</div>
             <Package className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">250</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{separateByMonth(usersData?.users).thisMonth.length}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +17.5% from last month
+            {monthlyProgressPercentage(separateByMonth(usersData?.users)).value}
           </div>
         </div>
         <div className="p-6 rounded-xl shadow-sm border border-gray-200">
@@ -142,10 +196,10 @@ const UserManagement = () => {
             <div className="text-gray-600 text-sm">Suspended</div>
             <Package className="w-5 h-5 text-gray-400" />
           </div>
-          <div className="text-2xl font-bold text-gray-900 mb-2">32</div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">{usersData?.suspendedUsers?.length}</div>
           <div className="flex items-center text-[#00A991] text-sm">
             <TrendingUp className="w-4 h-4 mr-1" />
-            +17.5% from last month
+            {monthlyProgressPercentage(separateByMonth(usersData?.suspendedUsers)).value}
           </div>
         </div>
       </div>
@@ -200,7 +254,7 @@ const UserManagement = () => {
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">User</th>
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Status</th>
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Role</th>
-              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Verification</th>
+              <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Email Verification</th>
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Join date</th>
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Activity</th>
               <th className="py-4 px-6 text-left text-sm font-semibold text-gray-600">Last seen</th>
@@ -208,11 +262,7 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => {
-              const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-              const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-              const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
-              const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+            {usersData?.users.map((user, index) => {
 
               const handleAction = (action) => {
                 if (action === "view") {
@@ -224,15 +274,15 @@ const UserManagement = () => {
                 } else if (action === "message") {
                   setIsMessageModalOpen(true);
                 }
-                console.log(`Action: ${action} for ${user.name}`);
+                console.log(`Action: ${action} for ${user.firstName}`);
               };
 
               const handleSuspendConfirm = () => {
-                console.log(`User ${user.name} suspended at ${new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' })}`);
+                console.log(`User ${user.firstName} suspended at ${new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' })}`);
               };
 
               const handleMessageSend = (message) => {
-                console.log(`Message sent to ${user.name}: ${message}`);
+                console.log(`Message sent to ${user.firstName}: ${message}`);
               };
 
               return (
@@ -241,48 +291,53 @@ const UserManagement = () => {
                     <div className="flex items-center space-x-3">
                       <img
                         src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-                        alt={user.name}
+                        alt={user.firstName}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                       <Link to={`/admin/users/${user.email}`} className="hover:text-blue-600">
-                        <div className="font-medium text-gray-900">{user.name}</div>
+                        <div className="font-medium text-gray-900">{user.firstName}</div>
                         <div className="text-sm text-gray-500">{user.email}</div>
                       </Link>
                     </div>
                   </td>
                   <td className="py-4 px-6">
                     <span
-                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                        user.status === "active"
-                          ? "bg-green-100 text-green-800"
-                          : user.status === "Suspended"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-orange-100 text-orange-800"
-                      }`}
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${user.isActive
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                        }`}
                     >
-                      {user.status}
+                      {user.isActive ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td className="py-4 px-6">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
-                      {user.role}
-                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {user.userRoles.map((role, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium"
+                        >
+                          {role}
+                        </span>
+                      ))}
+                    </div>
                   </td>
                   <td className="py-4 px-6">
                     <span
-                      className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                        user.verification === "Verified"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-orange-100 text-orange-800"
-                      }`}
+                      className={`px-3 py-1 rounded-lg text-sm font-medium ${user.emailVerified
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-orange-100 text-orange-800"
+                        }`}
                     >
-                      {user.verification}
+                      {user.emailVerified ? "Verified" : "Unverified"}
                     </span>
                   </td>
-                  <td className="py-4 px-6 text-gray-600">{user.joinDate}</td>
+                  <td className="py-4 px-6 text-gray-600">
+                    {formatDate(user.createdAt)}
+                  </td>
                   <td className="py-4 px-6">
-                    <div className="text-gray-900 font-medium">{user.activity.split(' (')[0]}</div>
-                    <div className="text-gray-500 text-sm">{user.activity.split(' (')[1]?.replace(')', '')}</div>
+                    <div className="text-gray-900 font-medium">{user?.activity?.split(' (')[0]}</div>
+                    <div className="text-gray-500 text-sm">{user?.activity?.split(' (')[1]?.replace(')', '')}</div>
                   </td>
                   <td className="py-4 px-6 text-gray-600">{user.lastSeen}</td>
                   <td className="py-4 px-6 relative">
@@ -295,23 +350,23 @@ const UserManagement = () => {
                     <UserActionsModal
                       isOpen={isUserMenuOpen}
                       onClose={() => setIsUserMenuOpen(false)}
-                      onAction={handleAction}
+                      onAction={() => navigate(`/admin/analytics/${user.id}`)}
                     />
                     <EmailModal
                       isOpen={isEmailModalOpen}
                       onClose={() => setIsEmailModalOpen(false)}
-                      userName={user.name}
+                      userName={user.firstName}
                     />
                     <SuspendModal
                       isOpen={isSuspendModalOpen}
                       onClose={() => setIsSuspendModalOpen(false)}
-                      userName={user.name}
+                      userName={user.firstName}
                       onConfirm={handleSuspendConfirm}
                     />
                     <MessageCardModal
                       isOpen={isMessageModalOpen}
                       onClose={() => setIsMessageModalOpen(false)}
-                      recipient={user.name}
+                      recipient={user.firstName}
                       onMessageSend={handleMessageSend}
                     />
                   </td>

@@ -20,7 +20,7 @@ const UserActionsModal = ({ isOpen, onClose, onAction }) => {
         <ul className="py-1">
           <li
             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center cursor-pointer"
-            onClick={() => handleAction("view")}
+            onClick={onAction}
           >
             <Eye className="w-4 h-4 mr-2" />
             View Profile

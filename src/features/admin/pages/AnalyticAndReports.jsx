@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Mail, Phone, MapPin, DollarSign, Calendar, ShoppingCart, AlertTriangle, Send, Key, Download, Eye, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import SuspendModal from "../modals/SuspendModal";
 import NotificationCard from "../modals/NotificationCard";
 import ResetPasswordModal from "../modals/ResetPasswordModal";
 import DeleteAccountModal from "../modals/DeleteAccountModal";
+import { useAdminGetUserByIdQuery } from '../../user/userApiSlice';
+import { useParams } from 'react-router-dom';
+import { formatDate } from '../../../utilities/formatDate';
 
 const AnalyticAndReports = () => {
+  const { userId } = useParams()
+  const { data, isLoading, isSuccess, isError, error } = useAdminGetUserByIdQuery(userId)
+  const user = data?.data
   // Mock user data
-  const user = {
-    name: "Sarah Johnson",
-    email: "SarahJohnson765@gmail.com",
-    status: "active",
-    role: "Buyer",
-    phone: "+1 (555) 123-4567",
-    address: "123, main street ikoyi, main island lagos",
-    totalSpent: "$1200",
-    joinDate: "15/06/2024",
-    ordersPlaced: 23,
-  };
+  // const user = {
+  //   name: "Sarah Johnson",
+  //   email: "SarahJohnson765@gmail.com",
+  //   status: "active",
+  //   role: "Buyer",
+  //   phone: "+1 (555) 123-4567",
+  //   address: "123, main street ikoyi, main island lagos",
+  //   totalSpent: "$1200",
+  //   joinDate: "15/06/2024",
+  //   ordersPlaced: 23,
+  // };
 
   const orderData = [
     { id: 'ORD-001', date: '15/01/2024', amount: '$200.99', items: 5, status: 'delivered' },
@@ -33,42 +39,42 @@ const AnalyticAndReports = () => {
 
   // Mock activity log data
   const activityLogData = [
-    { 
-      id: 1, 
-      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use', 
-      date: '15/01/2024', 
+    {
+      id: 1,
+      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use',
+      date: '15/01/2024',
       time: '14:30:00',
       type: 'order',
       color: 'blue'
     },
-    { 
-      id: 2, 
-      action: 'Updated profile information- name-Aisha to-Aishatu Ibrahim', 
-      date: '15/01/2024', 
+    {
+      id: 2,
+      action: 'Updated profile information- name-Aisha to-Aishatu Ibrahim',
+      date: '15/01/2024',
       time: '14:30:00',
       type: 'profile',
       color: 'yellow'
     },
-    { 
-      id: 3, 
-      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use', 
-      date: '15/01/2024', 
+    {
+      id: 3,
+      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use',
+      date: '15/01/2024',
       time: '14:30:00',
       type: 'order',
       color: 'blue'
     },
-    { 
-      id: 4, 
-      action: 'Updated profile information- name-Aisha to-Aishatu Ibrahim', 
-      date: '15/01/2024', 
+    {
+      id: 4,
+      action: 'Updated profile information- name-Aisha to-Aishatu Ibrahim',
+      date: '15/01/2024',
       time: '14:30:00',
       type: 'profile',
       color: 'red'
     },
-    { 
-      id: 5, 
-      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use', 
-      date: '15/01/2024', 
+    {
+      id: 5,
+      action: 'Placed Order ORD-002- Wireless Headphone-3hours long lasting battery for everyday use',
+      date: '15/01/2024',
       time: '14:30:00',
       type: 'order',
       color: 'green'
@@ -103,22 +109,22 @@ const AnalyticAndReports = () => {
 
   // Handle modal confirmation actions
   const handleSuspendConfirm = (suspensionData) => {
-    console.log(`User ${user.name} suspended:`, suspensionData);
+    console.log(`User ${user?.firstName} suspended:`, suspensionData);
     setIsSuspendModalOpen(false);
   };
 
   const handleNotificationConfirm = (notificationData) => {
-    console.log(`Notification sent to ${user.name}:`, notificationData);
+    console.log(`Notification sent to ${user?.firstName}:`, notificationData);
     setIsNotificationModalOpen(false);
   };
 
   const handleResetPasswordConfirm = (resetData) => {
-    console.log(`Password reset initiated for ${user.name}:`, resetData);
+    console.log(`Password reset initiated for ${user?.firstName}:`, resetData);
     setIsResetPasswordModalOpen(false);
   };
 
   const handleDeleteAccountConfirm = (deleteData) => {
-    console.log(`Account deleted for ${user.name}:`, deleteData);
+    console.log(`Account deleted for ${user?.firstName}:`, deleteData);
     setIsDeleteAccountModalOpen(false);
   };
 
@@ -127,51 +133,65 @@ const AnalyticAndReports = () => {
       {/* Profile Header */}
       <div className="flex items-start gap-8 mb-12 bg-white border border-gray-200 rounded-xl p-8">
         <div className="w-24 h-24 rounded-full overflow-hidden flex-shrink-0">
-          <img 
-            src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" 
-            alt={user.name} 
+          <img
+            src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+            alt={user?.firstName}
             className="w-full h-full object-cover"
           />
         </div>
-        
+
         <div className="flex-1">
           <div className="flex items-center gap-4 mb-3">
-            <h1 className="text-3xl font-semibold text-gray-900">{user.name}</h1>
-            <span className="px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-lg">{user.status}</span>
-            <span className="px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg">{user.role}</span>
+            <h1 className="text-3xl font-semibold text-gray-900">{user?.firstName}</h1>
+            <span className={`px-3 py-1 text-sm font-medium rounded-lg ${user?.isActive
+                ? "text-green-700 bg-green-100"
+                : "text-red-700 bg-red-100"
+              }`}>
+              {user?.isActive ? "Active" : "Inactive"}
+            </span>
+
+            <div className="flex flex-wrap gap-2">
+              {user?.userRoles.map((role, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg" >
+                  {role}
+                </span>
+              ))}
+            </div>
           </div>
-          <p className="text-gray-600 text-lg mb-8">{user.email}</p>
-          
+          <p className="text-gray-600 text-lg mb-8">{user?.email}</p>
+
           {/* Contact Info */}
           <div className="space-y-4 text-gray-700">
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-gray-500" />
-              <span className="text-base">{user.email}</span>
+              <span className="text-base">{user?.email || "Not Available"}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-gray-500" />
-              <span className="text-base">{user.phone}</span>
+              <span className="text-base">{user?.phone || "Not Available"}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-gray-500" />
-              <span className="text-base">{user.address}</span>
+              <span className="text-base">{user?.address || "Not Available"}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <DollarSign className="w-5 h-5 text-gray-500" />
-              <span className="text-base">Total Spent {user.totalSpent}</span>
+              <span className="text-base">Total Spent {user?.totalSpent || "Not Available"}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-gray-500" />
-              <span className="text-base">Joined {user.joinDate}</span>
+              <span className="text-base">Joined {formatDate(user?.createdAt)}</span>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <ShoppingCart className="w-5 h-5 text-gray-500" />
-              <span className="text-base">{user.ordersPlaced} Orders Placed</span>
+              <span className="text-base">{user?.ordersPlaced || "NaN"} Orders Placed</span>
             </div>
           </div>
         </div>
@@ -181,25 +201,22 @@ const AnalyticAndReports = () => {
       <div className="mb-8">
         <div className="flex space-x-8 border-b border-gray-200">
           <button
-            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${
-              activeTab === 'orderHistory' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${activeTab === 'orderHistory' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
             onClick={() => setActiveTab('orderHistory')}
           >
             Order History
           </button>
           <button
-            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${
-              activeTab === 'activityLog' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${activeTab === 'activityLog' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
             onClick={() => setActiveTab('activityLog')}
           >
             Activity Log
           </button>
           <button
-            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${
-              activeTab === 'adminAction' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+            className={`pb-4 px-1 border-b-2 font-medium text-lg transition-colors ${activeTab === 'adminAction' ? 'border-red-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
             onClick={() => setActiveTab('adminAction')}
           >
             Admin Action
@@ -248,12 +265,11 @@ const AnalyticAndReports = () => {
                     {order.items}
                   </td>
                   <td className="px-6 py-5">
-                    <span 
-                      className={`inline-flex px-3 py-1 text-sm font-medium rounded-lg ${
-                        order.status === 'delivered' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
+                    <span
+                      className={`inline-flex px-3 py-1 text-sm font-medium rounded-lg ${order.status === 'delivered'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-blue-100 text-blue-800'
+                        }`}
                     >
                       {order.status}
                     </span>
@@ -268,18 +284,17 @@ const AnalyticAndReports = () => {
       {activeTab === 'activityLog' && (
         <div className="bg-white">
           <h2 className="text-xl font-semibold text-gray-900 mb-8">Activity Timeline</h2>
-          
+
           <div className="space-y-6">
             {activityLogData.map((activity) => (
               <div key={activity.id} className="flex items-start space-x-4">
-                <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${
-                  activity.color === 'blue' ? 'bg-blue-500' :
+                <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${activity.color === 'blue' ? 'bg-blue-500' :
                   activity.color === 'yellow' ? 'bg-yellow-500' :
-                  activity.color === 'red' ? 'bg-red-500' :
-                  activity.color === 'green' ? 'bg-green-500' :
-                  'bg-gray-500'
-                }`}></div>
-                
+                    activity.color === 'red' ? 'bg-red-500' :
+                      activity.color === 'green' ? 'bg-green-500' :
+                        'bg-gray-500'
+                  }`}></div>
+
                 <div className="flex-1 min-w-0">
                   <p className="text-base font-medium text-gray-900 mb-2">
                     {activity.action}
@@ -301,7 +316,7 @@ const AnalyticAndReports = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-8">Account Status</h2>
             <div className="space-y-4">
               {/* Suspend Account */}
-              <div 
+              <div
                 className="flex items-center justify-between p-6 bg-gray-50 rounded-xl border cursor-pointer hover:bg-gray-100"
                 onClick={handleSuspendAccountClick}
               >
@@ -315,7 +330,7 @@ const AnalyticAndReports = () => {
               </div>
 
               {/* Send Notification */}
-              <div 
+              <div
                 className="flex items-center justify-between p-6 bg-gray-50 rounded-xl border cursor-pointer hover:bg-gray-100"
                 onClick={handleSendNotificationClick}
               >
@@ -329,7 +344,7 @@ const AnalyticAndReports = () => {
               </div>
 
               {/* Reset Password */}
-              <div 
+              <div
                 className="flex items-center justify-between p-6 bg-gray-50 rounded-xl border cursor-pointer hover:bg-gray-100"
                 onClick={handleResetPasswordClick}
               >
@@ -365,7 +380,7 @@ const AnalyticAndReports = () => {
               </div>
 
               {/* Delete Account */}
-              <div 
+              <div
                 className="flex items-center justify-between p-6 bg-gray-50 rounded-xl border cursor-pointer hover:bg-gray-100"
                 onClick={handleDeleteAccountClick}
               >
@@ -386,28 +401,28 @@ const AnalyticAndReports = () => {
       <SuspendModal
         isOpen={isSuspendModalOpen}
         onClose={() => setIsSuspendModalOpen(false)}
-        userName={user.name}
+        userName={user?.firstName}
         onConfirm={handleSuspendConfirm}
       />
 
       <NotificationCard
         isOpen={isNotificationModalOpen}
         onClose={() => setIsNotificationModalOpen(false)}
-        userName={user.name}
+        userName={user?.firstName}
         onConfirm={handleNotificationConfirm}
       />
 
       <ResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={() => setIsResetPasswordModalOpen(false)}
-        userName={user.name}
+        userName={user?.firstName}
         onConfirm={handleResetPasswordConfirm}
       />
 
       <DeleteAccountModal
         isOpen={isDeleteAccountModalOpen}
         onClose={() => setIsDeleteAccountModalOpen(false)}
-        userName={user.name}
+        userName={user?.firstName}
         onConfirm={handleDeleteAccountConfirm}
       />
     </div>

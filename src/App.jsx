@@ -113,7 +113,7 @@ function App() {
             <Route path="sellers" element={<SellerManagement />} />
             <Route path="orders" element={<OrdersAndPayment />} />
             <Route path="transactions" element={<Transaction />} />
-            <Route path="analytics" element={<AnalyticAndReports />} />
+            <Route path="analytics/:userId" element={<AnalyticAndReports />} />
             <Route path="communication" element={<Communication />} />
             <Route path="disputes" element={<DisputeResolution />} />
             <Route path="profile" element={<AdminProfile />} />

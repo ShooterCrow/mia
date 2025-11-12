@@ -18,8 +18,11 @@ import {
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAdminLayout } from "./AdminLayoutContext";
 import NotificationButton from "../../../features/admin/modals/NotificationModal";
+import { useGetUserProfileQuery } from "../../../features/user/userApiSlice";
+import useAuth from "../../../hooks/useAuth";
 
 const AdminLayout = () => {
+  const { firstName, lastName } = useAuth()
   const { sidebarExpanded, toggleSidebar } = useAdminLayout();
   const navigate = useNavigate();
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -78,9 +81,8 @@ const AdminLayout = () => {
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-screen ${
-          sidebarExpanded ? "w-80" : "w-16"
-        } bg-[#009883] to-teal-600 shadow-xl transition-all duration-300 flex flex-col z-10`}
+        className={`fixed top-0 left-0 h-screen ${sidebarExpanded ? "w-80" : "w-16"
+          } bg-[#009883] to-teal-600 shadow-xl transition-all duration-300 flex flex-col z-10`}
       >
         {/* Sidebar Header */}
         <div className="p-6 border-b border-teal-400/30">
@@ -100,17 +102,15 @@ const AdminLayout = () => {
                   to={link.path}
                   end={link.path === "/admin"}
                   className={({ isActive }) =>
-                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
-                      isActive
-                        ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
-                        : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
+                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${isActive
+                      ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
+                      : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
                     } ${!sidebarExpanded ? "justify-center" : ""}`
                   }
                 >
                   <Icon
-                    className={`flex-shrink-0 ${
-                      sidebarExpanded ? "w-5 h-5" : "w-6 h-6"
-                    }`}
+                    className={`flex-shrink-0 ${sidebarExpanded ? "w-5 h-5" : "w-6 h-6"
+                      }`}
                   />
                   {sidebarExpanded && (
                     <span className="ml-4 font-medium text-sm text-left flex-1">
@@ -133,17 +133,15 @@ const AdminLayout = () => {
                   key={idx}
                   to={link.path}
                   className={({ isActive }) =>
-                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${
-                      isActive
-                        ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
-                        : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
+                    `w-full flex items-center px-4 py-4 rounded-xl transition-all duration-200 group ${isActive
+                      ? "bg-white/20 text-white backdrop-blur-sm shadow-lg border border-white/20"
+                      : "text-white/80 hover:bg-white/10 hover:text-white hover:shadow-md"
                     } ${!sidebarExpanded ? "justify-center" : ""}`
                   }
                 >
                   <Icon
-                    className={`flex-shrink-0 ${
-                      sidebarExpanded ? "w-5 h-5" : "w-6 h-6"
-                    }`}
+                    className={`flex-shrink-0 ${sidebarExpanded ? "w-5 h-5" : "w-6 h-6"
+                      }`}
                   />
                   {sidebarExpanded && (
                     <span className="ml-4 font-medium text-sm text-left flex-1">
@@ -164,9 +162,8 @@ const AdminLayout = () => {
             aria-label={sidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
           >
             <ChevronLeft
-              className={`w-4 h-4 transition-transform ${
-                !sidebarExpanded ? "rotate-180" : ""
-              }`}
+              className={`w-4 h-4 transition-transform ${!sidebarExpanded ? "rotate-180" : ""
+                }`}
             />
           </button>
         </div>
@@ -174,15 +171,13 @@ const AdminLayout = () => {
 
       {/* Main Content Container */}
       <div
-        className={`flex-1 flex flex-col ${
-          sidebarExpanded ? "ml-80" : "ml-16"
-        } transition-all duration-300`}
+        className={`flex-1 flex flex-col ${sidebarExpanded ? "ml-80" : "ml-16"
+          } transition-all duration-300`}
       >
         {/* Header */}
         <div
-          className={`fixed top-0 ${
-            sidebarExpanded ? "left-80" : "left-16"
-          } right-0 px-6 py-4 bg-white  z-20 transition-all duration-300`}
+          className={`fixed top-0 ${sidebarExpanded ? "left-80" : "left-16"
+            } right-0 px-6 py-4 bg-white  z-20 transition-all duration-300`}
         >
           <div className="flex justify-between items-center">
             <div className="relative flex-1 max-w-md">
@@ -202,11 +197,11 @@ const AdminLayout = () => {
                 >
                   <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                    <div className="text-sm font-medium text-gray-900">{firstName && (firstName + " " + lastName)}</div>
                     <div className="text-xs text-green-500">Online</div>
                   </div>
                 </button>
-                
+
                 {profileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                     <div className="py-1">

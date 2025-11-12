@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, ChevronDown, Settings, Store, Package, MessageCircle, HelpCircle, Plus, LogOut } from 'lucide-react';
+import { User, ChevronDown, Settings, Store, Package, MessageCircle, HelpCircle, Plus, LogOut, ShieldUser } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useGetUserByIdQuery, useGetUserProfileQuery } from '../../../features/user/userApiSlice';
+import { useGetUserProfileQuery } from '../../../features/user/userApiSlice';
 import useAuth from '../../../hooks/useAuth';
 
 // Mobile Dropdown Component specifically for user menu
@@ -31,7 +31,7 @@ const MobileUserDropdown = ({ menuItems, onClose, username, full_name }) => {
 const UserDropdown = ({ onMobileClose }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const {userId} = useAuth();
+    const { userId } = useAuth();
     const { data } = useGetUserProfileQuery(userId, {
         skip: !userId,
         refetchOnFocus: true,
@@ -53,6 +53,7 @@ const UserDropdown = ({ onMobileClose }) => {
     }, []);
 
     const menuItems = [
+        ...(!data?.data?.userRoles.includes("admin") ? [{ icon: ShieldUser, label: 'Go to Admin Dashboard', path: '/admin', color: "blue" }] : []),
         { icon: Settings, label: 'Account setting', path: '/dashboard' },
         { icon: Store, label: 'Become a seller', path: '/dashboard/seller' },
         { icon: Package, label: 'My orders', path: '/dashboard/orders' },
