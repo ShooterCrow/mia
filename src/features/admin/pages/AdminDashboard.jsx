@@ -7,6 +7,8 @@ import {
   Download,
   TrendingUp,
   TrendingDown,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 import {
   BarChart,
@@ -28,48 +30,49 @@ const salesByCountryData = [
   { name: "Kenya", sales: 25, flag: "🇦🇺", growth: "+35.8%", color: "#ef4444" },
 ];
 
-const userSignupsData = [
-  { month: "Jan", signups: 800 },
-  { month: "Feb", signups: 1000 },
-  { month: "Mar", signups: 900 },
-  { month: "Apr", signups: 1100 },
-  { month: "May", signups: 1300 },
-  { month: "Jun", signups: 1000 },
-  { month: "Jul", signups: 900 },
-  { month: "Aug", signups: 1000 },
-  { month: "Sep", signups: 1200 },
-  { month: "Oct", signups: 800 },
-  { month: "Nov", signups: 900 },
-  { month: "Dec", signups: 700 },
-];
-
-const weeklyReportData = [
-  { month: "Jan", customers: 15 },
-  { month: "Feb", customers: 20 },
-  { month: "Mar", customers: 25 },
-  { month: "Apr", customers: 22 },
-  { month: "May", customers: 30 },
-  { month: "Jun", customers: 35 },
-  { month: "Jul", customers: 25 },
-  { month: "Aug", customers: 28 },
-  { month: "Sep", customers: 32 },
-  { month: "Oct", customers: 30 },
-  { month: "Nov", customers: 28 },
-  { month: "Dec", customers: 25 },
-];
-
 const AdminDashboard = () => {
-  const { data } = useGetAdminDashboardQuery()
-  const topStatistics = data?.data.topStatistics
-  const weeklyReportAnalytics = data?.data.weeklyReportAndAnalytics
-  const topProductsAndSignups = data?.data.topProductsAndSignups
+  const { data, isLoading, isError, error } = useGetAdminDashboardQuery();
+  const topStatistics = data?.data.topStatistics;
+  const weeklyReportAnalytics = data?.data.weeklyReportAndAnalytics;
+  const topProductsAndSignups = data?.data.topProductsAndSignups;
 
   const trenDir = (data) => {
-    let direction
-    data === "up" ? direction = true : data === "down" ? direction = false : null
-    return direction
+    let direction;
+    data === "up" ? direction = true : data === "down" ? direction = false : null;
+    return direction;
+  };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-[#00A991] animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading dashboard...</p>
+        </div>
+      </div>
+    );
   }
-  
+
+  // Error state
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-red-900 font-semibold mb-1">Error Loading Dashboard</h3>
+              <p className="text-red-700 text-sm">
+                {error?.data?.message || error?.message || "Failed to load dashboard data. Please try again."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6">
       {/* Metrics Overview */}
@@ -183,7 +186,6 @@ const AdminDashboard = () => {
             </div>
           </div>
           <div className="h-64">
-            {/* REMEMBER TO SWITCH THIS TO ACTUAL BUYERS NOT JUST SIGNUPS */}
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={weeklyReportAnalytics?.monthlyTrend} style={{ outline: 'none' }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -296,10 +298,6 @@ const AdminDashboard = () => {
         <div className="rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-semibold text-gray-900">User signups over time</h3>
-            {/* <select className="border border-gray-200 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>This Month</option>
-              <option>Last Month</option>
-            </select> */}
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
