@@ -7,6 +7,8 @@ import {
   Download,
   TrendingUp,
   MoreHorizontal,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import UserActionsModal from "../modals/UserActionsModal";
@@ -22,15 +24,14 @@ const UserManagement = () => {
   const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { data } = useGetUsersQuery()
-  const usersData = data?.data
+  const { data, isLoading, isError, error } = useGetUsersQuery();
+  const usersData = data?.data;
 
   const separateByMonth = (items) => {
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
 
-    // Calculate last month
     const lastMonthDate = new Date(currentYear, currentMonth - 1, 1);
     const lastMonth = lastMonthDate.getMonth();
     const lastMonthYear = lastMonthDate.getFullYear();
@@ -53,13 +54,12 @@ const UserManagement = () => {
     });
 
     return result;
-  }
+  };
 
   const monthlyProgressPercentage = (data) => {
     const lastMonth = data.lastMonth;
     const thisMonth = data.thisMonth;
 
-    // Handle edge case where lastMonth is empty
     if (lastMonth.length === 0) {
       return { color: "green", value: "0% from last month" };
     }
@@ -70,78 +70,36 @@ const UserManagement = () => {
     return { color, value: monthlyProgress.toFixed(2) + "% from last month" };
   };
 
-  const users = [
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "active",
-      role: "Buyer",
-      verification: "Verified",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "Suspended",
-      role: "Buyer",
-      verification: "Pending",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "Pending",
-      role: "Seller",
-      verification: "Verified",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "active",
-      role: "Buyer",
-      verification: "Verified",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "Suspended",
-      role: "Buyer",
-      verification: "Pending",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "active",
-      role: "Buyer",
-      verification: "Verified",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-    {
-      name: "Sarah Johnson",
-      email: "SarahJohnson765@gmail.com",
-      status: "active",
-      role: "Buyer",
-      verification: "Verified",
-      joinDate: "15/01/2024",
-      activity: "$2000 (12 orders)",
-      lastSeen: "2 hours ago",
-    },
-  ];
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-[#00A991] animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading users...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <div className="flex items-start space-x-3">
+            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-red-900 font-semibold mb-1">Error Loading Users</h3>
+              <p className="text-red-700 text-sm">
+                {error?.data?.message || error?.message || "Failed to load user data. Please try again."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
